@@ -250,6 +250,22 @@
             width: 30% !important;
             margin: 0 !important
         }
+
+        .filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .filter>*:first-child {}
+
+        .sub-filter {
+            /* width: 60%; */
+            /* margin-left: 20%; */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
     <style>
         .right-content {
@@ -257,6 +273,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: top;
         }
 
         .right-box {
@@ -355,6 +372,19 @@
                     <div class="container-detail">
                         <div class="unit-header">
                             <span>Loại yêu cầu dịch vụ</span>
+                        </div>
+                        <div class="filter">
+                            <div>Vui lòng lựa chọn Loại Yêu Cầu mà bạn muốn.</div>
+                            <div class="sub-filter">
+                                <input id="search" placeholder="Nhập từ khóa tìm kiếm">
+                                <span>Đơn vị tiếp nhận</span>
+                                <select name="" id="">
+                                    <option>
+                                    </option>
+                                </select>
+                                <input type="submit" value="Lọc">
+                            </div>
+
                         </div>
                         <div class="detail">
                             <!-- <div class="group-box" >
@@ -957,6 +987,27 @@
                 getCurrentGroup = listGroup.pop();
                 var detailData = (groupData.filter(x => x.groupName.trim() === getCurrentGroup))[0].properties;
                 console.log('detailData', detailData);
+
+                /*
+                  Màn hình danh sách chi tiết nghiệp vụ
+                 */
+
+                // Xóa danh sách  nghiệp vụ lần chọn trước
+                var removeBoxesDetail = document.querySelectorAll(".detail-box");
+                for (var i = 0; i < removeBoxesDetail.length; i++) {
+                    let detailBox = removeBoxesDetail[i];
+                    detailBox.parentNode.removeChild(detailBox);
+                }
+                // Khởi tạo danh sách  nghiệp vụ
+                var detailElements = document.getElementsByClassName('detail');
+                detailData.map(function (item) {
+                    let div = document.createElement('div');
+                    div.innerHTML = `${item.deptName}-${item.detail}`;
+                    div.classList.add('detail-box');
+                    for (let i = 0; i < detailElements.length; i++) {
+                        detailElements[i].appendChild(div);
+                    }
+                })
             })
         })
     </script>

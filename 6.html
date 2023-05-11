@@ -333,7 +333,8 @@
                             <span>Vui lòng lựa chọn Nhóm Nghiệp Vụ mà bạn muốn.</span>
                         </div>
                         <div class="group">
-                            <div class="group-box">
+
+                            <!-- <div class="group-box">
                                 <input type="radio" id="javascript1" name="fav_language" value="JavaScript">
                                 <label for="javascript1">JavaScript 1</label>
                             </div>
@@ -344,22 +345,7 @@
                             <div class="group-box">
                                 <input type="radio" id="javascript3" name="fav_language" value="JavaScript">
                                 <label for="javascript3">JavaScript 3</label>
-                            </div>
-                        </div>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button" value="Previous" />
-                    <input type="button" name="next" class="next action-button" value="Next" id="nextGroup" />
-                </fieldset>
-                <fieldset>
-                    <div class="container-group">
-                        <h2>Nhóm Nghiệp vụ</h2>
-                        <div class="group">
-                            <!-- <div class="group-box" >
-                                    Nhờ thu hoàn trả thẻ
-                                </div>
-                                <div class="group-box" >
-                                    Nghiệp vụ kế toán thẻ khác
-                                </div> -->
+                            </div> -->
                         </div>
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
@@ -367,7 +353,9 @@
                 </fieldset>
                 <fieldset>
                     <div class="container-detail">
-                        <h2>Màn hình ess ở đây</h2>
+                        <div class="unit-header">
+                            <span>Loại yêu cầu dịch vụ</span>
+                        </div>
                         <div class="detail">
                             <!-- <div class="group-box" >
                                     Nhờ thu hoàn trả thẻ
@@ -889,12 +877,12 @@
                     }
                 ]
             }
-        ]
+        ];
     </script>
     <script>
         /*
        Màn hình danh sách khối
-   */
+        */
         // Khởi tạo danh sách khối
         var unitElements = document.getElementsByClassName('unit');
         data.forEach(function (item) {
@@ -926,27 +914,36 @@
         nextUnit.addEventListener('click', () => {
             getCurrentUnit = listUnit.pop();
             var groupData = (data.filter(x => x.unitName.trim() === getCurrentUnit))[0].properties;
-            // console.log('2',(data.filter(x => x.unitName.trim() === getCurrentUnit))[0].properties)
+
             /*
                 Màn hình danh sách nhóm nghiệp vụ
             */
             // Xóa danh sách nhóm nghiệp vụ lần chọn trước
             var removeBoxes = document.querySelectorAll(".group-box");
+
             for (var i = 0; i < removeBoxes.length; i++) {
                 let groupBox = removeBoxes[i];
                 groupBox.parentNode.removeChild(groupBox);
             }
+
+
             // Khởi tạo danh sách nhóm nghiệp vụ
             var groupElements = document.getElementsByClassName('group');
             groupData.map(function (item) {
                 let div = document.createElement('div');
-                div.innerHTML = item.groupName;
                 div.classList.add('group-box');
-                for (let i = 0; i < groupElements.length; i++) {
-                    groupElements[i].appendChild(div);
-                }
+                var input = document.createElement('input');
+                input.type = 'radio';
+                input.name = 'my-group';
+                div.appendChild(input);
+                var label = document.createElement('label');
+                label.htmlFor = 'my-group';
+                label.textContent = item.groupName;
+                div.appendChild(label);
+                groupElements[i].appendChild(div);
             })
-            // Handle sự kiện click danh sách phòng ban
+
+            // Handle sự kiện click danh sách nhóm nghiệp vụ
             var listGroup = [];
             const groupBoxes = document.querySelectorAll('.group-box');
             groupBoxes.forEach(box => {
@@ -954,72 +951,82 @@
                     listGroup.push(box.textContent.trim());
                 });
             });
+            var getCurrentGroup = "";
+            var nextGroup = document.getElementById('nextGroup');
+            nextGroup.addEventListener('click', () => {
+                getCurrentGroup = listGroup.pop();
+                var detailData = (groupData.filter(x => x.groupName.trim() === getCurrentGroup))[0].properties;
+                console.log('detailData', detailData);
+            })
         })
     </script>
     <script>
-        // Click in unit css
-        function handleClick() {
-            var spans = document.querySelectorAll('.unit-box span');
-            spans.forEach(span => {
-                var parent = span.parentElement;
-                parent.addEventListener('click', () => {
-                    var allParents = document.querySelectorAll('.unit-box');
-                    allParents.forEach(element => {
-                        element.classList.remove('unit-border');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Click in unit css
+            function handleClick() {
+                var spans = document.querySelectorAll('.unit-box span');
+                spans.forEach(span => {
+                    var parent = span.parentElement;
+                    parent.addEventListener('click', () => {
+                        var allParents = document.querySelectorAll('.unit-box');
+                        allParents.forEach(element => {
+                            element.classList.remove('unit-border');
+                        });
+                        handleSpanClick(span);
                     });
-                    handleSpanClick(span);
                 });
-            });
-        }
+            }
 
-        function handleSpanClick(span) {
-            var value = span.textContent;
+            function handleSpanClick(span) {
+                var value = span.textContent;
 
-            span.parentElement.classList.add('unit-border');
-            console.log(value);
-            // Do something with the value, such as updating the UI or sending it to a server
-        }
+                span.parentElement.classList.add('unit-border');
+                // Do something with the value, such as updating the UI or sending it to a server
+            }
 
-        handleClick();
+            handleClick();
 
-        // Click in group css
-        function handleGroupClick() {
-            var labels = document.querySelectorAll('.group-box label');
-            labels.forEach(label => {
-                var parent = label.parentElement;
-                parent.addEventListener('click', () => {
-                    var allParents = document.querySelectorAll('.group-box');
-                    allParents.forEach(element => {
-                        element.classList.remove('group-border');
-
+            // Click in unit css
+            function handleGroupClick() {
+                var labels = document.querySelectorAll('.group-box label');
+                labels.forEach(label => {
+                    var parent = label.parentElement;
+                    parent.addEventListener('click', () => {
+                        var allParents = document.querySelectorAll('.group-box');
+                        allParents.forEach(element => {
+                            element.classList.remove('group-border');
+                        });
+                        handleLabelClick(label);
                     });
-                    handleLabelClick(label);
                 });
-            });
-        }
+            }
 
-        function handleLabelClick(label) {
-            var value = label.textContent;
-            label.parentElement.querySelector('input[type="radio"]').checked = true;
-            label.parentElement.classList.add('group-border');
-            console.log(value);
-            // Do something with the value, such as updating the UI or sending it to a server
-        }
+            function handleLabelClick(label) {
+                var value = label.textContent;
+                label.parentElement.classList.add('group-border');
+                // Do something with the value, such as updating the UI or sending it to a server
+            }
 
-        handleGroupClick();
+            handleClick();
 
-        // Tu dong xuong dong element trong man hinh khoi
-        var unitBoxes = document.querySelectorAll('.unit-box');
-        if (unitBoxes.length > 4 && unitBoxes.length % 4 == 0) {
-            var unit = document.createElement('div');
-            unit.classList.add('unit');
-            unitBoxes.forEach(box => {
-                unit.appendChild(box);
-            });
-            // Replace the existing parent element with the new 'unit' element
-            var parent = document.querySelector('.unit-box').parentNode;
-            parent.parentNode.replaceChild(unit, parent);
-        }
+
+
+            // Tu dong xuong dong element trong man hinh khoi
+            var unitBoxes = document.querySelectorAll('.unit-box');
+            if (unitBoxes.length > 4 && unitBoxes.length % 4 == 0) {
+                var unit = document.createElement('div');
+                unit.classList.add('unit');
+                unitBoxes.forEach(box => {
+                    unit.appendChild(box);
+                });
+                // Replace the existing parent element with the new 'unit' element
+                var parent = document.querySelector('.unit-box').parentNode;
+                parent.parentNode.replaceChild(unit, parent);
+            }
+
+            // Tu dong xuong dong element trong man hinh nhom nghiep vu
+        });
+
 
     </script>
 </body>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Multi Step Form with Progress Bar using jQuery and CSS3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        /* html {
+            background: #fff;
+            font-size: 10px !important;
+        }
+
+        body {
+            background-color: #fff;
+            height: 100%;
+        } */
+
+        header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 3.4rem;
+            line-height: 4.6rem;
+            text-align: center;
+            color: #170F49;
+        }
+
+        .sub-title {
+            font-weight: 400;
+            font-size: 1.8rem;
+            line-height: 3rem;
+            text-align: center;
+            color: #6F6C90;
+        }
+
+        #progressbar li {
+            width: 25%;
+        }
+
+        /* #progressbar li:before {
+            width: 3.4rem;
+            line-height: 3.4rem;
+            border-radius: 10rem;
+            color:#1091F4
+        } */
+        .unit,
+        .dept,
+        .group,
+        .detail {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .unit-box,
+        .dept-box,
+        .group-box {
+            height: 200px;
+            width: 200px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #msform {
+            min-width: 80rem
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span class="title">Chọn dịch vụ</span>
+        <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và chọn loại
+            yêu cầu cần gửi dịch vụ</span>
+    </header>
+    <form id="msform">
+        <ul id="progressbar">
+            <li class="active">Khối</li>
+            <li>Phòng ban</li>
+            <li>Nhóm nghiệp vụ</li>
+            <li>Nghiệp vụ</li>
+        </ul>
+        <!-- fieldsets -->
+        <fieldset>
+            <div class="container-unit">
+                <h2>Khối</h2>
+                <div class="unit">
+                    <!-- <div class="unit-box">
+                        Khối bán lẻ
+                    </div>
+                    <div class="unit-box">
+                        Khối nhân sự
+                    </div>
+                    <div class="unit-box">
+                        Khối vận hành
+                    </div> -->
+                </div>
+            </div>
+            <input type="button" name="next" class="next action-button" value="Next" id="nextUnit" />
+        </fieldset>
+        <fieldset>
+            <div class="container-dept">
+                <h2>Phòng ban</h2>
+                <div class="dept">
+                    <!-- <div class="dept-box">
+                        Quy trình chính sách sản phẩm và phí
+                    </div>
+                    <div class="dept-box">
+                        Quản lý rủi ro
+                    </div>
+                    <div class="dept-box">
+                        Vận hành hệ thống
+                    </div> -->
+                </div>
+            </div>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="button" name="next" class="next action-button" value="Next" id="nextDept" />
+        </fieldset>
+        <fieldset>
+            <div class="container-group">
+                <h2>Nhóm Nghiệp vụ</h2>
+                <div class="group">
+                    <!-- <div class="group-box" >
+                        Nhờ thu hoàn trả thẻ
+                    </div>
+                    <div class="group-box" >
+                        Nghiệp vụ kế toán thẻ khác
+                    </div> -->
+                </div>
+            </div>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+            <input type="button" name="next" class="next action-button" value="Next" id="nextGroup" />
+        </fieldset>
+        <fieldset>
+            <div class="container-detail">
+                <h2>Màn hình ess ở đây</h2>
+                <div class="detail">
+                    <!-- <div class="group-box" >
+                        Nhờ thu hoàn trả thẻ
+                    </div>
+                    <div class="group-box" >
+                        Nghiệp vụ kế toán thẻ khác
+                    </div> -->
+                </div>
+            </div>
+            <input type="button" name="previous" class="previous action-button" value="Previous" />
+        </fieldset>
+    </form>
+    <!-- partial -->
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+    <script src="./script.js"></script>
+    <script>
+        const data = [
+            {
+                unitName: "Khối Bán lẻ",
+                properties: [
+                    {
+                        deptName: "Phòng Phát triển kinh doanh",
+                        properties: [
+                            {
+                                groupName: "Nghiệp vụ thanh toán",
+                                properties: [
+                                    {
+                                        detailName: "Báo có đơn vị chấp nhận thẻ",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Nhờ thu, hoàn trả",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Nghiệp vụ kế toán thẻ khác",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                            {
+                                groupName: "Nghiệp vụ quy trình chính sách sản phẩm dịch vụ và phí",
+                                properties: [
+                                    {
+                                        detailName: "Dịch vụ eBank ( bao gồm iPay/ BankPlus/ SMS tài khoản DDA",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Sản phẩm tín dụng bán lẻ",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Sản phẩm huy động vốn và phí",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Sản phẩm thẻ",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Hỗ trợ nghiệp vụ thẻ",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        deptName: "Phòng Phát triển sản phẩm",
+                        properties: [
+                            {
+                                groupName: "Nghiệp vụ quản lý rủi ro",
+                                properties: [
+                                    {
+                                        detailName: "Quản lý rủi ro bán lẻ",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Tra soát thừa thiếu quỹ ATM",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Tra soát giao dịch thẻ",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                            {
+                                groupName: "Nghiệp vụ vận hành hệ thống",
+                                properties: [
+                                    {
+                                        detailName: "Hỗ trợ thiết bị đầu cuối: ATM, POS, OBU",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Hệ thống: Fimi, ITC, IUC",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "SMS Biến động số dư thẻ Tín dụng",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            },
+            {
+                unitName: "Khối Nhân sự ",
+                properties: [
+                    {
+                        deptName: "Phòng Phát triển kinh doanh 1",
+                        properties: [
+                            {
+                                groupName: "Nghiệp vụ thanh toán 1",
+                                properties: [
+                                    {
+                                        detailName: "Báo có đơn vị chấp nhận thẻ 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Nhờ thu, hoàn trả 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Nghiệp vụ kế toán thẻ khác 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                            {
+                                groupName: "Nghiệp vụ quy trình chính sách sản phẩm dịch vụ và phí 1",
+                                properties: [
+                                    {
+                                        detailName: "Dịch vụ eBank ( bao gồm iPay/ BankPlus/ SMS tài khoản DDA 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Sản phẩm tín dụng bán lẻ 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Sản phẩm huy động vốn và phí 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Sản phẩm thẻ 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Hỗ trợ nghiệp vụ thẻ 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        deptName: "Phòng Phát triển sản phẩm 1",
+                        properties: [
+                            {
+                                groupName: "Nghiệp vụ quản lý rủi ro 1 ",
+                                properties: [
+                                    {
+                                        detailName: "Quản lý rủi ro bán lẻ 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Tra soát thừa thiếu quỹ ATM 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Tra soát giao dịch thẻ 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                            {
+                                groupName: "Nghiệp vụ vận hành hệ thống 1",
+                                properties: [
+                                    {
+                                        detailName: "Hỗ trợ thiết bị đầu cuối: ATM, POS, OBU 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "Hệ thống: Fimi, ITC, IUC 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                    {
+                                        detailName: "SMS Biến động số dư thẻ Tín dụng 1",
+                                        properties: "sarah.johnson@example.com",
+                                    },
+                                ]
+                            },
+                        ]
+                    },
+                ]
+            }
+        ]
+    </script>
+    <script>
+        /*
+            Màn hình danh sách phòng ban
+        */
+        // Lấy dữ liệu phòng ban
+        function handleEventDept(deptData) {
+
+        }
+
+
+    </script>
+    <script>
+        /*
+            Màn hình danh sách khối
+        */
+        // Khởi tạo danh sách khối
+        var unitElements = document.getElementsByClassName('unit');
+        data.forEach(function (item) {
+            let div = document.createElement('div');
+            div.innerHTML = item.unitName;
+            div.classList.add('unit-box');
+            for (let i = 0; i < unitElements.length; i++) {
+                unitElements[i].appendChild(div);
+            }
+        });
+
+        // Handle sự kiện click danh sách khối
+        var listUnit = [];
+        const unitBoxes = document.querySelectorAll('.unit-box');
+        unitBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                listUnit.push(box.textContent.trim())
+            });
+        });
+
+        // Handle nút next trong danh sách khối
+        var getCurrentUnit = ""
+        var nextUnit = document.getElementById('nextUnit');
+        nextUnit.addEventListener('click', () => {
+            getCurrentUnit = listUnit.pop();
+            var deptData = (data.filter(x => x.unitName.trim() === getCurrentUnit))[0].properties;
+
+            /*
+                Màn hình danh sách phòng ban
+            */
+            // Xóa danh sách phòng ban lần chọn trước
+            var removeBoxes = document.querySelectorAll(".dept-box");
+            for (var i = 0; i < removeBoxes.length; i++) {
+                let deptBox = removeBoxes[i];
+                deptBox.parentNode.removeChild(deptBox);
+            }
+            // Khởi tạo danh sách phòng ban
+            var deptElements = document.getElementsByClassName('dept');
+            deptData.map(function (item) {
+                let div = document.createElement('div');
+                div.innerHTML = item.deptName;
+                div.classList.add('dept-box');
+                for (let i = 0; i < deptElements.length; i++) {
+                    deptElements[i].appendChild(div);
+                }
+            })
+            // Handle sự kiện click danh sách phòng ban
+            var listDept = [];
+            const deptBoxes = document.querySelectorAll('.dept-box');
+            deptBoxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    listDept.push(box.textContent.trim());
+                });
+            });
+
+            // Handle nút next trong danh sách phòng ban
+            var getCurrentDept = ""
+            var nextDept = document.getElementById('nextDept');
+            nextDept.addEventListener('click', () => {
+                getCurrentDept = listDept.pop();
+                var groupData = (deptData.filter(x => x.deptName.trim() === getCurrentDept))[0].properties;
+
+                /*
+                    Màn hình danh sách nhóm nghiệp vụ
+                */
+
+                // Xóa danh sách nhóm nghiệp vụ lần chọn trước
+                var removeBoxesGroup = document.querySelectorAll(".group-box");
+                for (var i = 0; i < removeBoxesGroup.length; i++) {
+                    let groupBox = removeBoxesGroup[i];
+                    groupBox.parentNode.removeChild(groupBox);
+                }
+                // Khởi tạo danh sách nhóm nghiệp vụ
+                var groupElements = document.getElementsByClassName('group');
+                groupData.map(function (item) {
+                    let div = document.createElement('div');
+                    div.innerHTML = item.groupName;
+                    div.classList.add('group-box');
+                    for (let i = 0; i < groupElements.length; i++) {
+                        groupElements[i].appendChild(div);
+                    }
+                })
+
+                // Handle sự kiện click danh sách nhóm nghiệp vụ
+                var listGroup = [];
+                const groupBoxes = document.querySelectorAll('.group-box');
+                groupBoxes.forEach(box => {
+                    box.addEventListener('click', () => {
+                        listGroup.push(box.textContent.trim());
+                    });
+                });
+
+                // Handle nút next trong danh sách nhóm nghiệp vụ
+                var getCurrentGroup = ""
+                var nextGroup = document.getElementById('nextGroup');
+                nextGroup.addEventListener('click', () => {
+                    getCurrentGroup = listGroup.pop();
+                    var detailData = (groupData.filter(x => x.groupName.trim() === getCurrentGroup))[0].properties;
+
+                    /*
+                     Màn hình danh sách chi tiết nghiệp vụ
+                    */
+
+                    // Xóa danh sách  nghiệp vụ lần chọn trước
+                    var removeBoxesDetail = document.querySelectorAll(".detail-box");
+                    for (var i = 0; i < removeBoxesDetail.length; i++) {
+                        let detailBox = removeBoxesDetail[i];
+                        detailBox.parentNode.removeChild(detailBox);
+                    }
+                    // Khởi tạo danh sách  nghiệp vụ
+                    var detailElements = document.getElementsByClassName('detail');
+                    detailData.map(function (item) {
+                        let div = document.createElement('div');
+                        div.innerHTML = item.detailName;
+                        div.classList.add('detail-box');
+                        for (let i = 0; i < detailElements.length; i++) {
+                            detailElements[i].appendChild(div);
+                        }
+                    })
+                });
+            });
+        })
+    </script>
+
+</body>
+
+</html>

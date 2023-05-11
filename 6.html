@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CodePen - Multi Step Form with Progress Bar using jQuery and CSS3</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        html {
+            background: #fff;
+            font-size: 10px !important;
+        }
+
+        body {
+            background-color: #F0F8FE;
+            height: 100%;
+        }
+
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background: #F0F8FE;
+            margin-top: 1.1rem;
+        }
+
+        .left-content {
+            width: 75%;
+            min-height: 84rem;
+            border-radius: 1.5rem;
+            background: #fff;
+        }
+
+        .right-content {
+            width: 16%;
+            min-height: 84rem;
+            border-radius: 1.5rem;
+        }
+
+        .left-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 3.4rem;
+            line-height: 4.6rem;
+            text-align: center;
+            color: #170F49;
+        }
+
+        .sub-title {
+            font-weight: 400;
+            font-size: 1.8rem;
+            line-height: 3rem;
+            text-align: center;
+            color: #6F6C90;
+        }
+
+        #progressbar li {
+            width: 33%;
+        }
+
+        /* #progressbar li:before {
+            width: 3.4rem;
+            line-height: 3.4rem;
+            border-radius: 10rem;
+            color:#1091F4
+        } */
+        .unit {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .unit-box {
+            height: 200px;
+            width: 200px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #msform {
+            width: 95%;
+            margin-top: 1.4rem;
+            border: 0.1rem solid #EFF0F7;
+            box-shadow: 0 0.5rem 1.6rem rgba(8, 15, 52, 0.06);
+            border-top-left-radius: 3.4rem;
+            border-top-right-radius: 3.4rem;
+            background: #fff;
+            /* border-radius: 3.4rem; */
+        }
+
+        #progressbar {
+            padding-top: 3.1rem;
+            width: 38%;
+            margin-left: 31%
+        }
+
+        #progressbar li:before {
+            width: 3.4rem;
+            height: 3.4rem;
+            border-radius: 34px;
+            font-size: 1.6rem;
+            line-height: 3.1rem;
+            background-color: #EFF0F6;
+            color: #6F6C90
+        }
+
+        #progressbar li:after {
+            background-color: red;
+        }
+
+        #progressbar li.active:before {
+            background-color: #1091F4;
+            color: #fff
+        }
+
+        #msform fieldset {
+            margin: 0;
+            border: none;
+            box-shadow: none;
+            border: 0.1rem solid #EFF0F7;
+            box-shadow: 0 0.5rem 1.6rem rgba(8, 15, 52, 0.06);
+            border-top: 0.1rem solid #D9DBE9;
+            /* border-bottom-left-radius: 3.4rem;
+            border-bottom-right-radius: 3.4rem; */
+            width: 100%;
+        }
+
+        #msform .action-button {
+            background: #1091F4;
+            border-radius: 5.6rem;
+            outline: none;
+            /* margin-left:90% */
+        }
+
+        #msform .action-button:hover,
+        #msform .action-button:focus {
+            box-shadow: none;
+        }
+
+        .unit-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 2.5rem;
+        }
+
+        .unit-header>*:first-child {
+            font-weight: 700;
+            font-size: 2.4rem;
+            line-height: 3.5rem;
+            color: #170F49;
+        }
+
+        .unit-header>*:last-child {
+            font-weight: 400;
+            font-size: 1.8rem;
+            line-height: 3rem;
+            color: #6F6C90;
+        }
+
+        .unit {
+            width: 60%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-left: 20%;
+            margin-bottom: 4rem;
+        }
+
+
+        .unit-box {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-evenly;
+            border: 0.1rem solid #CCDFF2;
+            border-radius: 0.5rem;
+            height: 16rem;
+            width: 16rem;
+            position: relative;
+        }
+
+        .unit-border {
+            border: 0.1rem solid #1091F4
+        }
+
+        .unit-box:hover {
+            cursor: pointer;
+        }
+
+        .unit-box>i {
+            font-size: 6.4rem;
+        }
+
+        .unit-box>span {
+            font-weight: 600;
+            font-size: 1.2rem;
+            line-height: 1.5rem;
+            width: 80%;
+        }
+
+        .group {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .group-box {
+            height: 10.8rem;
+            width: 28.4rem;
+            border: 0.1rem solid #EFF0F7;
+            box-shadow: 0 0.2rem 0.6rem rgba(19, 18, 66, 0.07);
+            border-radius: 1.6rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .group-box:hover {
+            cursor: pointer;
+        }
+
+        .group-box>label {
+            font-weight: 500;
+            font-size: 1.8rem;
+            line-height: 2rem;
+            color: #170F49;
+        }
+        .group-border{
+            border: 0.1rem solid #1091F4 !important
+        }
+        input[type="radio"] {
+            /* position: absolute; */
+            cursor: pointer;
+            width: 30% !important;
+            margin: 0 !important
+        }
+    </style>
+    <style>
+        .right-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .right-box{
+            width: 100%;
+            max-height: 20rem !important;
+            min-height: 18rem;
+            background: #fff;
+            border-radius: 1rem;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-content">
+            <div class="left-header">
+                <span class="title">Chọn dịch vụ</span>
+                <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và
+                    chọn
+                    loại
+                    yêu cầu cần gửi dịch vụ</span>
+            </div>
+            <form id="msform">
+                <ul id="progressbar">
+                    <li class="active">Khối</li>
+                    <li>Nhóm nghiệp vụ</li>
+                    <li>Nghiệp vụ</li>
+                </ul>
+                <!-- fieldsets -->
+                <fieldset>
+                    <div class="container-unit">
+                        <div class="unit-header">
+                            <span>Khối</span>
+                            <span>Vui lòng lựa chọn Khối cung cấp dịch vụ mà bạn muốn.</span>
+                        </div>
+                        <div class="unit">
+                            <div class="unit-box ">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 1</span>
+                            </div>
+                            <div class="unit-box">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 2</span>
+                            </div>
+                            <div class="unit-box">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 3</span>
+                            </div>
+                            <div class="unit-box">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 4</span>
+                            </div>
+                        </div>
+                        <div class="unit">
+                            <div class="unit-box">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 5</span>
+                            </div>
+                            <div class="unit-box">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 6</span>
+                            </div>
+                            <div class="unit-box">
+                                <i class="fa-solid fa-house"></i>
+                                <span>Khối khách hàng doanh nghiệp 7</span>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="next" class="next action-button" value="Next" id="nextUnit" />
+                </fieldset>
+                <fieldset>
+                    <div class="container-group">
+                        <div class="unit-header">
+                            <span>Nhóm nghiệp vụ</span>
+                            <span>Vui lòng lựa chọn Nhóm Nghiệp Vụ mà bạn muốn.</span>
+                        </div>
+                        <div class="group">
+                            <div class="group-box">
+                                <input type="radio" id="javascript1" name="fav_language" value="JavaScript">
+                                <label for="javascript1">JavaScript 1</label>
+                            </div>
+                            <div class="group-box">
+                                <input type="radio" id="javascript2" name="fav_language" value="JavaScript">
+                                <label for="javascript2">JavaScript 2</label>
+                            </div>
+                            <div class="group-box">
+                                <input type="radio" id="javascript3" name="fav_language" value="JavaScript">
+                                <label for="javascript3">JavaScript 3</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" value="Previous" />
+                    <input type="button" name="next" class="next action-button" value="Next" id="nextGroup" />
+                </fieldset>
+                <fieldset>
+                    <div class="container-group">
+                        <h2>Nhóm Nghiệp vụ</h2>
+                        <div class="group">
+                            <!-- <div class="group-box" >
+                                    Nhờ thu hoàn trả thẻ
+                                </div>
+                                <div class="group-box" >
+                                    Nghiệp vụ kế toán thẻ khác
+                                </div> -->
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" value="Previous" />
+                    <input type="button" name="next" class="next action-button" value="Next" id="nextGroup" />
+                </fieldset>
+                <fieldset>
+                    <div class="container-detail">
+                        <h2>Màn hình ess ở đây</h2>
+                        <div class="detail">
+                            <!-- <div class="group-box" >
+                                    Nhờ thu hoàn trả thẻ
+                                </div>
+                                <div class="group-box" >
+                                    Nghiệp vụ kế toán thẻ khác
+                                </div> -->
+                        </div>
+                    </div>
+                    <input type="button" name="previous" class="previous action-button" value="Previous" />
+                </fieldset>
+            </form>
+        </div>
+        <div class="right-content">
+            <div class="right-box">
+                a
+            </div>
+            <div class="right-box">
+                a
+            </div>
+            <div class="right-box">
+                a
+            </div>
+            <div class="right-box">
+                a
+            </div>
+        </div>
+    </div>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
+    <script src="./script.js"></script>
+    <script>
+        // Click in unit css
+        function handleClick() {
+            const spans = document.querySelectorAll('.unit-box span');
+            spans.forEach(span => {
+                var parent = span.parentElement;
+                parent.addEventListener('click', () => {
+                    var allParents = document.querySelectorAll('.unit-box');
+                    allParents.forEach(element => {
+                        element.classList.remove('unit-border');
+                    });
+                    handleSpanClick(span);
+                });
+            });
+        }
+
+        function handleSpanClick(span) {
+            const value = span.textContent;
+
+            span.parentElement.classList.add('unit-border');
+            console.log(value);
+            // Do something with the value, such as updating the UI or sending it to a server
+        }
+
+        handleClick();
+
+        // Click in group css
+        function handleGroupClick() {
+            const labels = document.querySelectorAll('.group-box label');
+            labels.forEach(label => {
+                var parent = label.parentElement;
+                parent.addEventListener('click', () => {
+                    var allParents = document.querySelectorAll('.group-box');
+                    allParents.forEach(element => {
+                        element.classList.remove('group-border');
+                    });
+                    handleLabelClick(label);
+                });
+            });
+        }
+
+        function handleLabelClick(label) {
+            const value = label.textContent;
+
+            label.parentElement.classList.add('group-border');
+            console.log(value);
+            // Do something with the value, such as updating the UI or sending it to a server
+        }
+
+        handleGroupClick();
+    </script>
+</body>
+
+</html>

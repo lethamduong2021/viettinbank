@@ -504,8 +504,9 @@
                                 </div>
                             </div> -->
                         </div>
+                        <div class="pagination"></div>
                     </div>
-                    <div class="pagination"></div>
+
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                 </fieldset>
             </form>
@@ -1107,6 +1108,11 @@
                     detailBox.parentNode.removeChild(detailBox);
                 }
                 var detailElements = document.getElementsByClassName('detail');
+
+                // Remove all sub-detail
+                const getSubDetail = document.querySelectorAll('.detail .sub-detail');
+                getSubDetail.forEach(x => x.remove());
+
                 var filterElement = document.getElementById('filter');
                 detailData.map(function (item) {
                     let subDetail = document.createElement("div");
@@ -1141,7 +1147,7 @@
 
                     // create the span element for "Trung tâm thẻ - Phòng kế toán tổng hợp"
                     let span2 = document.createElement("span");
-                    span2.className="name";
+                    span2.className = "name";
                     span2.textContent = `${getCurrentUnit} - ${item.deptName}`;
 
                     leftContent.appendChild(span1);

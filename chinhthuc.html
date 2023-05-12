@@ -126,18 +126,21 @@
             align-items: flex-start;
             margin-bottom: 2.5rem;
         }
+
         .unit-header>*:first-child {
             font-weight: 700;
             font-size: 2.4rem;
             line-height: 3.5rem;
             color: #170F49;
         }
+
         .unit-header>*:last-child {
             font-weight: 400;
             font-size: 1.8rem;
             line-height: 3rem;
             color: #6F6C90;
         }
+
         .unit {
             width: 60%;
             display: flex;
@@ -146,6 +149,8 @@
             margin-left: 20%;
             margin-bottom: 4rem;
         }
+
+
         .unit-box {
             display: flex;
             align-items: center;
@@ -158,27 +163,33 @@
             position: relative;
             margin-bottom: 4rem;
         }
+
         .unit-border {
             color: #1091F4;
             border: 0.1rem solid #1091F4
         }
+
         .unit-box:hover {
             cursor: pointer;
         }
+
         .unit-box>i {
             font-size: 6.4rem;
         }
+
         .unit-box>span {
             font-weight: 600;
             font-size: 1.2rem;
             line-height: 1.5rem;
             width: 80%;
         }
+
         .group {
             margin-bottom: 2rem;
             display: flex;
             justify-content: space-evenly;
         }
+
         .group-box {
             height: 10.8rem;
             width: 28.4rem;
@@ -188,34 +199,42 @@
             display: flex;
             align-items: center;
         }
+
         .group-box:hover {
             cursor: pointer;
         }
+
         .group-box>label {
             font-weight: 500;
             font-size: 1.8rem;
             line-height: 2rem;
             color: #170F49;
         }
+
         .group-border {
             border: 0.1rem solid #1091F4 !important
         }
+
         input[type="radio"] {
+            /* position: absolute; */
             cursor: pointer;
             width: 30% !important;
             margin: 0 !important
         }
+
         .filter {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .filter>*:first-child {
             font-weight: 400;
             font-size: 1.8rem;
             line-height: 3rem;
             color: #6F6C90;
         }
+
         .detail-header {
             display: flex;
             font-weight: 700;
@@ -224,12 +243,15 @@
             color: #170F49;
             margin-bottom: 2rem;
         }
+
         .sub-filter {
             width: 60%;
+            /* margin-left: 20%; */
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .sub-filter>*:first-child {
             background: #FAFBFC;
             border: 0.1rem solid #B3BAC5;
@@ -238,11 +260,13 @@
             width: 40% !important;
             outline: none;
         }
+
         .sub-filter>*:nth-child(2) {
             font-weight: 700;
             font-size: 1.4rem;
             line-height: 1.6rem;
         }
+
         .sub-filter>*:nth-child(3) {
             max-width: 25rem;
             min-width: 15rem;
@@ -252,6 +276,7 @@
             border-radius: 0.8rem;
             outline: none;
         }
+
         .sub-filter>*:last-child {
             width: 7.5rem !important;
             height: 3.6rem;
@@ -272,6 +297,7 @@
             justify-content: space-between;
             align-items: top;
         }
+
         .right-box {
             width: 100%;
             max-height: 20rem !important;
@@ -282,12 +308,16 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="left-content">
             <div class="left-header">
                 <span class="title">Chọn dịch vụ</span>
-                <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và chọn loại yêu cầu cần gửi dịch vụ</span>
+                <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và
+                    chọn
+                    loại
+                    yêu cầu cần gửi dịch vụ</span>
             </div>
             <form id="msform">
                 <ul id="progressbar">
@@ -338,6 +368,12 @@
 
                         </div>
                         <div class="detail">
+                            <!-- <div class="group-box" >
+                                    Nhờ thu hoàn trả thẻ
+                                </div>
+                                <div class="group-box" >
+                                    Nghiệp vụ kế toán thẻ khác
+                                </div> -->
                         </div>
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
@@ -365,6 +401,7 @@
         integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./script.js"></script>
+
     <script>
         var data = [
             {
@@ -854,6 +891,10 @@
         ];
     </script>
     <script>
+        /*
+       Màn hình danh sách khối
+        */
+        // Khởi tạo danh sách khối
         var unitElements = document.getElementsByClassName('unit');
         data.forEach(function (item) {
             let div = document.createElement('div');
@@ -868,6 +909,8 @@
                 unitElements[i].appendChild(div);
             }
         });
+
+        // Handle sự kiện click danh sách khối
         var listUnit = [];
         var unitBoxes = document.querySelectorAll('.unit-box');
         unitBoxes.forEach(box => {
@@ -875,16 +918,27 @@
                 listUnit.push(box.textContent.trim())
             });
         });
+
+        // Handle nút next trong danh sách khối
         var getCurrentUnit = ""
         var nextUnit = document.getElementById('nextUnit');
         nextUnit.addEventListener('click', () => {
             getCurrentUnit = listUnit.pop();
             var groupData = (data.filter(x => x.unitName.trim() === getCurrentUnit))[0].properties;
+
+            /*
+                Màn hình danh sách nhóm nghiệp vụ
+            */
+            // Xóa danh sách nhóm nghiệp vụ lần chọn trước
             var removeBoxes = document.querySelectorAll(".group-box");
+
             for (var i = 0; i < removeBoxes.length; i++) {
                 let groupBox = removeBoxes[i];
                 groupBox.parentNode.removeChild(groupBox);
             }
+
+
+            // Khởi tạo danh sách nhóm nghiệp vụ
             var groupElements = document.getElementsByClassName('group');
             groupData.map(function (item) {
                 let div = document.createElement('div');
@@ -899,6 +953,8 @@
                 div.appendChild(label);
                 groupElements[i].appendChild(div);
             })
+
+            // Handle sự kiện click danh sách nhóm nghiệp vụ
             var listGroup = [];
             const groupBoxes = document.querySelectorAll('.group-box');
             groupBoxes.forEach(box => {
@@ -912,11 +968,18 @@
                 getCurrentGroup = listGroup.pop();
                 var detailData = (groupData.filter(x => x.groupName.trim() === getCurrentGroup))[0].properties;
                 console.log('detailData', detailData);
+
+                /*
+                  Màn hình danh sách chi tiết nghiệp vụ
+                 */
+
+                // Xóa danh sách  nghiệp vụ lần chọn trước
                 var removeBoxesDetail = document.querySelectorAll(".detail-box");
                 for (var i = 0; i < removeBoxesDetail.length; i++) {
                     let detailBox = removeBoxesDetail[i];
                     detailBox.parentNode.removeChild(detailBox);
                 }
+                // Khởi tạo danh sách  nghiệp vụ
                 var detailElements = document.getElementsByClassName('detail');
                 detailData.map(function (item) {
                     let div = document.createElement('div');
@@ -931,6 +994,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Click in unit css
             function handleClick() {
                 var spans = document.querySelectorAll('.unit-box span');
                 spans.forEach(span => {
@@ -944,11 +1008,17 @@
                     });
                 });
             }
+
             function handleSpanClick(span) {
                 var value = span.textContent;
+
                 span.parentElement.classList.add('unit-border');
+                // Do something with the value, such as updating the UI or sending it to a server
             }
+
             handleClick();
+
+            // Click in unit css
             function handleGroupClick() {
                 var labels = document.querySelectorAll('.group-box label');
                 labels.forEach(label => {
@@ -962,11 +1032,18 @@
                     });
                 });
             }
+
             function handleLabelClick(label) {
                 var value = label.textContent;
                 label.parentElement.classList.add('group-border');
+                // Do something with the value, such as updating the UI or sending it to a server
             }
+
             handleClick();
+
+
+
+            // Tu dong xuong dong element trong man hinh khoi
             var unitBoxes = document.querySelectorAll('.unit-box');
             if (unitBoxes.length > 4 && unitBoxes.length % 4 == 0) {
                 var unit = document.createElement('div');
@@ -974,10 +1051,16 @@
                 unitBoxes.forEach(box => {
                     unit.appendChild(box);
                 });
+                // Replace the existing parent element with the new 'unit' element
                 var parent = document.querySelector('.unit-box').parentNode;
                 parent.parentNode.replaceChild(unit, parent);
             }
+
+            // Tu dong xuong dong element trong man hinh nhom nghiep vu
         });
+
+
     </script>
 </body>
+
 </html>

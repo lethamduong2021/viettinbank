@@ -482,7 +482,7 @@
                                 <select id="filter">
                                     <option value="all">Hiển thị tất cả</option>
                                 </select>
-                                <input type="submit" value="Lọc">
+                                <input type="submit" value="Lọc" style="visibility: hidden;">
                             </div>
 
                         </div>
@@ -1113,7 +1113,14 @@
                 const getSubDetail = document.querySelectorAll('.detail .sub-detail');
                 getSubDetail.forEach(x => x.remove());
 
+                // Remove all filter
                 var filterElement = document.getElementById('filter');
+                for (let i = filterElement.options.length - 1; i >= 0; i--) {
+                    // If the option value is not "all", remove the option element
+                    if (filterElement.options[i].value !== 'all') {
+                        filterElement.remove(i);
+                    }
+                }
                 detailData.map(function (item) {
                     let subDetail = document.createElement("div");
                     subDetail.className = "sub-detail";

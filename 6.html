@@ -14,10 +14,12 @@
             background: #fff;
             font-size: 10px !important;
         }
+
         body {
             background-color: #F0F8FE;
             height: 100%;
         }
+
         .container {
             width: 100%;
             display: flex;
@@ -25,22 +27,26 @@
             background: #F0F8FE;
             margin-top: 1.1rem;
         }
+
         .left-content {
             width: 75%;
             min-height: 84rem;
             border-radius: 1.5rem;
             background: #fff;
         }
+
         .right-content {
             width: 16%;
             min-height: 84rem;
             border-radius: 1.5rem;
         }
+
         .left-header {
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
+
         .title {
             font-weight: 700;
             font-size: 3.4rem;
@@ -48,6 +54,7 @@
             text-align: center;
             color: #170F49;
         }
+
         .sub-title {
             font-weight: 400;
             font-size: 1.8rem;
@@ -55,14 +62,23 @@
             text-align: center;
             color: #6F6C90;
         }
+
         #progressbar li {
             width: 33%;
+            font-weight: 700;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+            color: #1091F4;
+            margin-top: 1rem;
+            text-transform: none
         }
+
         .unit {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
         }
+
         .unit-box {
             height: 200px;
             width: 200px;
@@ -72,6 +88,7 @@
             justify-content: center;
             align-items: center;
         }
+
         #msform {
             width: 95%;
             margin-top: 1.4rem;
@@ -81,11 +98,13 @@
             border-top-right-radius: 3.4rem;
             background: #fff;
         }
+
         #progressbar {
             padding-top: 3.1rem;
             width: 38%;
             margin-left: 31%
         }
+
         #progressbar li:before {
             width: 3.4rem;
             height: 3.4rem;
@@ -95,13 +114,16 @@
             background-color: #EFF0F6;
             color: #6F6C90
         }
+
         #progressbar li:after {
             background-color: red;
         }
+
         #progressbar li.active:before {
             background-color: #1091F4;
             color: #fff
         }
+
         #msform fieldset {
             margin: 0;
             border: none;
@@ -111,33 +133,39 @@
             border-top: 0.1rem solid #D9DBE9;
             width: 100%;
         }
+
         #msform .action-button {
             background: #1091F4;
             border-radius: 5.6rem;
             outline: none;
         }
+
         #msform .action-button:hover,
         #msform .action-button:focus {
             box-shadow: none;
         }
+
         .unit-header {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             margin-bottom: 2.5rem;
         }
+
         .unit-header>*:first-child {
             font-weight: 700;
             font-size: 2.4rem;
             line-height: 3.5rem;
             color: #170F49;
         }
+
         .unit-header>*:last-child {
             font-weight: 400;
             font-size: 1.8rem;
             line-height: 3rem;
             color: #6F6C90;
         }
+
         .unit {
             width: 60%;
             display: flex;
@@ -146,6 +174,7 @@
             margin-left: 20%;
             margin-bottom: 4rem;
         }
+
         .unit-box {
             display: flex;
             align-items: center;
@@ -158,27 +187,33 @@
             position: relative;
             margin-bottom: 4rem;
         }
+
         .unit-border {
             color: #1091F4;
             border: 0.1rem solid #1091F4
         }
+
         .unit-box:hover {
             cursor: pointer;
         }
+
         .unit-box>i {
             font-size: 6.4rem;
         }
+
         .unit-box>span {
             font-weight: 600;
             font-size: 1.2rem;
             line-height: 1.5rem;
             width: 80%;
         }
+
         .group {
             margin-bottom: 2rem;
             display: flex;
             justify-content: space-evenly;
         }
+
         .group-box {
             height: 10.8rem;
             width: 28.4rem;
@@ -188,34 +223,41 @@
             display: flex;
             align-items: center;
         }
+
         .group-box:hover {
             cursor: pointer;
         }
+
         .group-box>label {
             font-weight: 500;
             font-size: 1.8rem;
             line-height: 2rem;
             color: #170F49;
         }
+
         .group-border {
             border: 0.1rem solid #1091F4 !important
         }
+
         input[type="radio"] {
             cursor: pointer;
             width: 30% !important;
             margin: 0 !important
         }
+
         .filter {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .filter>*:first-child {
             font-weight: 400;
             font-size: 1.8rem;
             line-height: 3rem;
             color: #6F6C90;
         }
+
         .detail-header {
             display: flex;
             font-weight: 700;
@@ -224,12 +266,14 @@
             color: #170F49;
             margin-bottom: 2rem;
         }
+
         .sub-filter {
             width: 60%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
         .sub-filter>*:first-child {
             background: #FAFBFC;
             border: 0.1rem solid #B3BAC5;
@@ -237,12 +281,19 @@
             height: 3.6rem;
             width: 40% !important;
             outline: none;
+            background: url("./iconsearch.png");
+            background-position: 1.3rem;
+            background-repeat: no-repeat;
+            background-size: 1.5rem;
+            padding-left: 4.3rem !important;
         }
+
         .sub-filter>*:nth-child(2) {
             font-weight: 700;
             font-size: 1.4rem;
             line-height: 1.6rem;
         }
+
         .sub-filter>*:nth-child(3) {
             max-width: 25rem;
             min-width: 15rem;
@@ -252,6 +303,7 @@
             border-radius: 0.8rem;
             outline: none;
         }
+
         .sub-filter>*:last-child {
             width: 7.5rem !important;
             height: 3.6rem;
@@ -262,6 +314,102 @@
             font-size: 1.4rem !important;
             line-height: 1.6rem;
             padding: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* detail */
+        .detail {
+            margin-top: 1.2rem;
+        }
+
+        .sub-detail {
+            height: 12.9rem;
+            background: #F7F9FB;
+            border-radius: 1.2rem;
+            width: 45%;
+        }
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.7rem 1.1rem !important;
+        }
+
+        .title>span {
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 2.1rem;
+            color: #1C1C1C;
+        }
+
+        .title>input[type=button] {
+            width: 8rem !important;
+            height: 2.7rem;
+            background: #4B7BEC;
+            border-radius: 0.4rem !important;
+            font-weight: 600;
+            font-size: 1.2rem !important;
+            line-height: 2rem;
+            color: #fff !important;
+            padding: 0 !important
+        }
+
+        .content {
+            display: flex;
+            padding: 0rem 1.1rem !important;
+            justify-content: space-between;
+
+
+        }
+
+        .left {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            padding-right: 1.6rem;
+            border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
+        }
+
+        .left>*:first-child {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            color: #1C1C1C;
+            text-align: left;
+        }
+
+        .left>*:last-child {
+            font-weight: 400;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+            color: #2466EB;
+            text-align: center;
+            padding: 0.25rem;
+            background: #F1F5FE;
+            border-radius: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        .right {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .right>*:first-child {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.6rem;
+            color: #1C1C1C;
+        }
+
+        .right>*:last-child {
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 2.1rem;
+            color: #1C1C1C;
         }
     </style>
     <style>
@@ -272,6 +420,7 @@
             justify-content: space-between;
             align-items: top;
         }
+
         .right-box {
             width: 100%;
             max-height: 20rem !important;
@@ -282,20 +431,22 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="left-content">
             <div class="left-header">
                 <span class="title">Chọn dịch vụ</span>
-                <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và chọn loại yêu cầu cần gửi dịch vụ</span>
+                <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và
+                    chọn loại yêu cầu cần gửi dịch vụ</span>
             </div>
             <form id="msform">
                 <ul id="progressbar">
                     <li class="active">Khối</li>
                     <li>Nhóm nghiệp vụ</li>
-                    <li >Nghiệp vụ</li>
+                    <li>Nghiệp vụ</li>
                 </ul>
-                <fieldset >
+                <fieldset>
                     <div class="container-unit">
                         <div class="unit-header">
                             <span>Khối</span>
@@ -338,6 +489,22 @@
 
                         </div>
                         <div class="detail">
+                            <div class="sub-detail">
+                                <div class="title">
+                                    <span>Nhờ thu, hoàn trả thẻ</span>
+                                    <input type="button" value="Gửi yêu cầu" />
+                                </div>
+                                <div class="content">
+                                    <div class="left">
+                                        <span>Đơn vị tiếp nhận</span>
+                                        <span>Trung tâm thẻ - Phòng kế toán tổng hợp</span>
+                                    </div>
+                                    <div class="right">
+                                        <span>Nhóm nghiệp vụ</span>
+                                        <span>Thanh toán</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
@@ -891,7 +1058,7 @@
                 div.classList.add('group-box');
                 var input = document.createElement('input');
                 input.type = 'radio';
-                input.name = 'my-group';
+                input.id = 'my-group';
                 div.appendChild(input);
                 var label = document.createElement('label');
                 label.htmlFor = 'my-group';
@@ -919,11 +1086,65 @@
                 }
                 var detailElements = document.getElementsByClassName('detail');
                 detailData.map(function (item) {
-                    let div = document.createElement('div');
-                    div.innerHTML = `${item.deptName}-${item.detail}`;
-                    div.classList.add('detail-box');
+                    let subDetail = document.createElement("div");
+                    subDetail.className = "sub-detail";
+
+                    let title = document.createElement("div");
+                    title.className = "title";
+
+                    let titleText = document.createElement("span");
+                    titleText.textContent = item.detail;
+                    title.appendChild(titleText);
+
+                    // create the input element for the button
+                    let button = document.createElement("input");
+                    button.type = "button";
+                    button.value = "Gửi yêu cầu";
+                    title.appendChild(button);
+
+                    subDetail.appendChild(title);
+
+                    // create the content div element
+                    let content = document.createElement("div");
+                    content.className = "content";
+
+                    // create the left-content div element
+                    let leftContent = document.createElement("div");
+                    leftContent.className = "left";
+
+                    // create the span element for "Đơn vị tiếp nhận"
+                    let span1 = document.createElement("span");
+                    span1.textContent = "Đơn vị tiếp nhận";
+
+                    // create the span element for "Trung tâm thẻ - Phòng kế toán tổng hợp"
+                    let span2 = document.createElement("span");
+                    span2.textContent = `${getCurrentUnit} - ${item.deptName}`;
+
+                    leftContent.appendChild(span1);
+                    leftContent.appendChild(span2);
+
+                    content.appendChild(leftContent);
+
+                    // create the right-content div element
+                    let rightContent = document.createElement("div");
+                    rightContent.className = "right";
+
+                    // create the span element for "Nhóm nghiệp vụ"
+                    let span3 = document.createElement("span");
+                    span3.textContent = "Nhóm nghiệp vụ";
+
+                    // create the span element for "Thanh toán"
+                    let span4 = document.createElement("span");
+                    span4.textContent = `${getCurrentGroup}`;
+
+                    rightContent.appendChild(span3);
+                    rightContent.appendChild(span4);
+
+                    content.appendChild(rightContent);
+
+                    subDetail.appendChild(content);
                     for (let i = 0; i < detailElements.length; i++) {
-                        detailElements[i].appendChild(div);
+                        detailElements[i].appendChild(subDetail);
                     }
                 })
             })
@@ -980,4 +1201,5 @@
         });
     </script>
 </body>
+
 </html>

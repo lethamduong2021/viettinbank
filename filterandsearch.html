@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var itemsPerPage = 2; // number of items to display per page
+            var numItems = $('.sub-content').length; // total number of items
+            var numPages = Math.ceil(numItems / itemsPerPage); // total number of pages
+            var currentPage = 1; // current page number
+
+            // show/hide items based on the current page number and filter/search criteria
+            function showPage(page, filterText) {
+                var startIndex = (page - 1) * itemsPerPage;
+                var endIndex = startIndex + itemsPerPage;
+                $('.sub-content').hide().filter(function () {
+                    var name = $(this).find('.name').text().trim();
+                    return filterText === 'all' || name.toLowerCase().includes(filterText.toLowerCase());
+                }).slice(startIndex, endIndex).show();
+            }
+
+            // initialize page navigation links
+            function initPagination(filterText) {
+                $('.pagination').empty();
+                for (var i = 1; i <= numPages; i++) {
+                    var link = $('<a>', {
+                        href: '#',
+                        text: i,
+                        click: function () {
+                            currentPage = parseInt($(this).text());
+                            showPage(currentPage, filterText);
+                            return false;
+                        }
+                    });
+                    $('.pagination').append(link);
+                }
+            }
+
+            // show initial page
+            var filterText = 'all';
+            showPage(currentPage, filterText);
+
+            // initialize pagination links
+            initPagination(filterText);
+
+            // handle search input
+            $('#search').on('input', function () {
+                filterText = $(this).val().trim();
+                currentPage = 1;
+                showPage(currentPage, filterText);
+                initPagination(filterText);
+            });
+
+            // handle select option change
+            $('select').on('change', function () {
+                filterText = $(this).val().trim();
+                currentPage = 1;
+                showPage(currentPage, filterText);
+                initPagination(filterText);
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <input type="text" id="search" />
+    <select id="filter">
+        <option value="all">Hiển thị tất cả</option>
+        <option value="Harry">Harry</option>
+        <option value="Potter">Potter</option>
+        <option value="Potter">Potter</option>
+    </select>
+    <div class="content">
+        <div class="sub-content">
+            <div class="name">
+                112Harry33
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                332Potter44
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Harry
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Harry
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Potter
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Harry
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Harry
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Harry
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="name">
+                Potter
+            </div>
+        </div>
+    </div>
+    <div class="pagination"></div>
+</body>
+
+</html>

@@ -479,17 +479,15 @@
                             <div class="sub-filter">
                                 <input id="search" placeholder="Nhập từ khóa tìm kiếm">
                                 <span>Đơn vị tiếp nhận</span>
-                                <select name="" id="">
-                                    <option value="all">
-                                        Tất cả
-                                    </option>
+                                <select id="filter">
+                                    <option value="all">Hiển thị tất cả</option>
                                 </select>
                                 <input type="submit" value="Lọc">
                             </div>
 
                         </div>
                         <div class="detail">
-                            <div class="sub-detail">
+                            <!-- <div class="sub-detail">
                                 <div class="title">
                                     <span>Nhờ thu, hoàn trả thẻ</span>
                                     <input type="button" value="Gửi yêu cầu" />
@@ -504,9 +502,10 @@
                                         <span>Thanh toán</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
+                    <div class="pagination"></div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                 </fieldset>
             </form>
@@ -1021,6 +1020,29 @@
         ];
     </script>
     <script>
+        // remove duplicates in select options
+        //remove duplicates in select option
+        function removeDuplicates(id) {
+            var selectElement = document.getElementById(id);
+            var options = selectElement.getElementsByTagName("option");
+
+            // Remove duplicate options
+            var optionValues = [];
+            for (var i = 0; i < selectElement.options.length; i++) {
+                var optionValue = selectElement.options[i].value;
+                if (optionValues.indexOf(optionValue) === -1) {
+                    optionValues.push(optionValue);
+                } else {
+                    selectElement.remove(i);
+                    i--;
+                }
+            }
+
+            // Change first option's text to "Hiển thị tất cả"
+            selectElement.options[0].text = "Hiển thị tất cả";
+        }
+    </script>
+    <script>
         var unitElements = document.getElementsByClassName('unit');
         data.forEach(function (item) {
             let div = document.createElement('div');
@@ -1085,6 +1107,7 @@
                     detailBox.parentNode.removeChild(detailBox);
                 }
                 var detailElements = document.getElementsByClassName('detail');
+                var filterElement = document.getElementById('filter');
                 detailData.map(function (item) {
                     let subDetail = document.createElement("div");
                     subDetail.className = "sub-detail";
@@ -1118,6 +1141,7 @@
 
                     // create the span element for "Trung tâm thẻ - Phòng kế toán tổng hợp"
                     let span2 = document.createElement("span");
+                    span2.className="name";
                     span2.textContent = `${getCurrentUnit} - ${item.deptName}`;
 
                     leftContent.appendChild(span1);
@@ -1146,7 +1170,16 @@
                     for (let i = 0; i < detailElements.length; i++) {
                         detailElements[i].appendChild(subDetail);
                     }
+
+                    // add values to select options
+                    let newOption = document.createElement("option");
+                    newOption.value = item.deptName;
+                    newOption.text = item.deptName;
+                    filterElement.add(newOption);
                 })
+
+                // remove duplicates select option
+                removeDuplicates('filter');
             })
         })
     </script>
@@ -1198,6 +1231,66 @@
                 var parent = document.querySelector('.unit-box').parentNode;
                 parent.parentNode.replaceChild(unit, parent);
             }
+
+
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var itemsPerPage = 2; // number of items to display per page
+            var numItems = $('.sub-detail').length; // total number of items
+            var numPages = Math.ceil(numItems / itemsPerPage); // total number of pages
+            var currentPage = 1; // current page number
+
+            // show/hide items based on the current page number and filter/search criteria
+            function showPage(page, filterText) {
+                var startIndex = (page - 1) * itemsPerPage;
+                var endIndex = startIndex + itemsPerPage;
+                $('.sub-detail').hide().filter(function () {
+                    var name = $(this).find('.name').text().trim();
+                    return filterText === 'all' || name.toLowerCase().includes(filterText.toLowerCase());
+                }).slice(startIndex, endIndex).show();
+            }
+
+            // initialize page navigation links
+            function initPagination(filterText) {
+                $('.pagination').empty();
+                for (var i = 1; i <= numPages; i++) {
+                    var link = $('<a>', {
+                        href: '#',
+                        text: i,
+                        click: function () {
+                            currentPage = parseInt($(this).text());
+                            showPage(currentPage, filterText);
+                            return false;
+                        }
+                    });
+                    $('.pagination').append(link);
+                }
+            }
+
+            // show initial page
+            var filterText = 'all';
+            showPage(currentPage, filterText);
+
+            // initialize pagination links
+            initPagination(filterText);
+
+            // handle search input
+            $('#search').on('input', function () {
+                filterText = $(this).val().trim();
+                currentPage = 1;
+                showPage(currentPage, filterText);
+                initPagination(filterText);
+            });
+
+            // handle select option change
+            $('select').on('change', function () {
+                filterText = $(this).val().trim();
+                currentPage = 1;
+                showPage(currentPage, filterText);
+                initPagination(filterText);
+            });
         });
     </script>
 </body>

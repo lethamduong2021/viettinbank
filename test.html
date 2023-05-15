@@ -3,280 +3,77 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CodePen - Multi Step Form with Progress Bar using jQuery and CSS3</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
-    <link rel="stylesheet" href="./menucollapse.css" />
     <style>
-        html {
-            background: #fff;
-            font-size: 10px !important;
-        }
-
-        body {
-            background-color: #F0F8FE;
-            height: 100%;
-        }
-
         .container {
             width: 100%;
-            display: flex;
-            justify-content: space-around;
-            background: #F0F8FE;
-            margin-top: 1.1rem;
+            height: 100%;
+
         }
 
-        .left-content {
-            width: 75%;
-            min-height: 84rem;
-            border-radius: 1.5rem;
-            background: #fff;
+        .block {
+            display: flex;
             padding: 20px 30px;
+            justify-content: space-between;
         }
 
-        .right-content {
-            width: 16%;
-            min-height: 84rem;
-            border-radius: 1.5rem;
+        .block>* {
+            width: 22%;
+            min-height: 200px;
+            background-color: #F7F8F9;
+            border-radius: 8px;
         }
 
-        .left-header {
+        .unit-content {
             display: flex;
             flex-direction: column;
-            justify-content: center;
         }
 
-        .title {
-            font-weight: 700;
-            font-size: 3.4rem;
-            line-height: 4.6rem;
-            text-align: center;
-            color: #170F49;
-        }
-
-        .sub-title {
-            font-weight: 400;
-            font-size: 1.8rem;
-            line-height: 3rem;
-            text-align: center;
-            color: #6F6C90;
-        }
-
-        .filter {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .filter>*:first-child {
-            font-weight: 400;
-            font-size: 1.8rem;
-            line-height: 3rem;
-            color: #6F6C90;
-        }
-
-        .detail-header {
-            display: flex;
-            font-weight: 700;
-            font-size: 2.4rem;
-            line-height: 3.5rem;
-            color: #170F49;
-            margin-bottom: 2rem;
-        }
-
-        .sub-filter {
-            width: 60%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sub-filter>*:first-child {
-            background: #FAFBFC;
-            border: 0.1rem solid #B3BAC5;
-            border-radius: 0.8rem;
-            height: 3.6rem;
-            width: 40% !important;
-            outline: none;
-            background: url("./iconsearch.png");
-            background-position: 1.3rem;
-            background-repeat: no-repeat;
-            background-size: 1.5rem;
-            padding-left: 4.3rem !important;
-        }
-
-        .sub-filter>*:nth-child(2) {
-            font-weight: 700;
-            font-size: 1.4rem;
-            line-height: 1.6rem;
-        }
-
-        .sub-filter>*:nth-child(3) {
-            max-width: 25rem;
-            min-width: 15rem;
-            height: 3.6rem;
-            background: #FFFFFF;
-            border: 0.1rem solid #EBECF0;
-            border-radius: 0.8rem;
-            outline: none;
-        }
-
-        .sub-filter>*:last-child {
-            width: 7.5rem !important;
-            height: 3.6rem;
-            color: #fff !important;
-            background: #60B2F0;
-            border-radius: 0.8rem !important;
-            vertical-align: middle !important;
-            font-size: 1.4rem !important;
-            line-height: 1.6rem;
-            padding: 0 !important;
-            margin-bottom: 0 !important;
-        }
-
-        /* detail */
-        .detail {
-            margin-top: 1.2rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .sub-detail {
-            height: 12.9rem;
-            background: #F7F9FB;
-            border-radius: 1.2rem;
-            width: 48%;
-        }
-
-        .title {
-            display: flex;
-            justify-content: space-between;
-            padding: 1.7rem 1.1rem !important;
-        }
-
-        .title>span {
-            font-weight: 600;
-            font-size: 1.4rem;
-            line-height: 2.1rem;
-            color: #1C1C1C;
-        }
-
-        .title>input[type=button] {
-            width: 8rem !important;
-            height: 2.7rem;
-            background: #4B7BEC;
-            border-radius: 0.4rem !important;
-            font-weight: 600;
-            font-size: 1.2rem !important;
-            line-height: 2rem;
-            color: #fff !important;
-            padding: 0 !important;
-            border: none !important;
-        }
-
-        .content {
-            display: flex;
-            padding: 0rem 1.1rem !important;
-            justify-content: space-between;
-
-
-        }
-
-        .left {
-            width: 70%;
-            display: flex;
-            flex-direction: column;
-            padding-right: 1.6rem;
-            border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
-        }
-
-        .left>*:first-child {
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            color: #1C1C1C;
-            text-align: left;
-        }
-
-        .left>*:last-child {
-            font-weight: 400;
-            font-size: 1.4rem;
-            line-height: 1.6rem;
-            color: #2466EB;
-            text-align: center;
-            padding: 0.25rem;
-            background: #F1F5FE;
-            border-radius: 0.8rem;
-            margin-top: 0.3rem;
-        }
-
-        .right {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            justify-content: space-between;
-        }
-
-        .right>*:first-child {
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.6rem;
-            color: #1C1C1C;
-        }
-
-        .right>*:last-child {
-            font-weight: 600;
-            font-size: 1.4rem;
-            line-height: 2.1rem;
-            color: #1C1C1C;
-        }
-    </style>
-    <style>
-        .right-content {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: top;
-        }
-
-        .right-box {
-            width: 100%;
-            max-height: 20rem !important;
-            min-height: 18rem;
-            background: #fff;
-            border-radius: 1rem;
-            box-sizing: border-box;
+        .unit-item {
+            height: 60px;
+            color: red;
+            list-style: none;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="container-detail">
-            <div class="main-menu">
-                <div class="menu">
-                    <ul class="menu-list">
-                        
-                    </ul>
+        <div class="block">
+            <div class="unit-block">
+                <div class="unit-header">Chon khoi</div>
+                <ul class="unit-content">
+
+                </ul>
+            </div>
+            <div class="group-block">
+                <div class="group-header">Chon nhom nghiep vu</div>
+                <div class="group-content">
+
                 </div>
+            </div>
+            <div class="dept-block">
+                <div class="dept-header">Chon phong ban</div>
+                <div class="dept-content">
+
+                </div>
+            </div>
+            <div class="detail-block">
+                <div class="detail-header">Chon loai yeu cau</div>
+                <ul class="detail-content">
+
+                </ul>
             </div>
         </div>
     </div>
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.4.js"
         integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
-        integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="./script.js"></script>
     <script>
-        var data = [
+        const data = [
             {
                 unitName: "Khối KHDN",
                 properties: [
@@ -440,7 +237,7 @@
                         properties: [
                             {
                                 deptName: "Phòng Phát triển nhân sự",
-                                detail: ["Tuyển dụng",
+                                properties: ["Tuyển dụng",
                                     "Hợp đồng lao động",
                                     "Điều động",
                                     "Bổ nhiệm, bổ nhiệm lại",
@@ -512,7 +309,7 @@
                         properties: [
                             {
                                 deptName: "Phòng TQT VKD",
-                                detail: ["Kết chuyển trạng thái ngoại tệ",
+                                properties: ["Kết chuyển trạng thái ngoại tệ",
                                     "Giao dịch mua bán ngoại tệ trên hệ thống Vision FX, Murex",
                                     "Giao dịch tương lai hàng hóa trên hệ thống Vision Commodity",
                                     "Giao dịch hoán đổi lãi suất trên hệ thống Murex"
@@ -525,7 +322,7 @@
                         properties: [
                             {
                                 deptName: "Trung tâm Quản lý tiền mặt",
-                                detail: ["Yêu cầu điều chuyển tiền mặt giữa chi nhánh và trung tâm quản lý tiền mặt",
+                                properties: ["Yêu cầu điều chuyển tiền mặt giữa chi nhánh và trung tâm quản lý tiền mặt",
                                     "Xử lý giao dịch nghi ngờ"
                                 ]
                             },
@@ -574,7 +371,7 @@
                                 properties: [
                                     {
                                         deptName: "Phòng Quản lý tuân thủ",
-                                        detail: ["Hỗ trợ giải đáp vướng mắc nghiệp vụ AML",
+                                        properties: ["Hỗ trợ giải đáp vướng mắc nghiệp vụ AML",
                                             "Hỗ trợ giải đáp về quy định NHCT về cung cấp thông tin khách hàng",
                                             "Yêu cầu tư vấn vấn đề pháp lý cho đơn vị TSC",
                                             "Yêu cầu tư vấn pháp lý liên quan đến hoạt động kinh doanh của chi nhánh"
@@ -587,7 +384,7 @@
                                 properties: [
                                     {
                                         deptName: "Phòng Quản lý tuân thủ",
-                                        detail: ["Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính",
+                                        properties: ["Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính",
                                             "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh"
                                         ]
                                     },
@@ -610,116 +407,138 @@
             }
         ];
     </script>
+
     <script>
-        $(document).ready(function () {
 
-            //Pagination
-            var itemsPerPage = 2; // number of items to display per page
-            var numItems = $('.sub-detail').length; // total number of items
-            var numPages = Math.ceil(numItems / itemsPerPage); // total number of pages
-            var currentPage = 1; // current page number
+        // Add unit
+        var $unit = $('.unit-content');
+        var icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+        data.forEach(function (item, index) {
+            let $li = $("<li>").addClass("unit-item");
+            let $button = $("<button>")
+                .addClass("unit-button")
+                .append(`${item.unitName}`)
+            $unit.append($li);
+            let icon = $('<i></i>'); // Create a new <i> element
+            icon.addClass(icons[index] ?? "gift");
+            $li.append(icon);
+            $li.append($button);
+        })
 
-            // Filter-box
-            var $menu = $(".menu");
+        function handleClickUnit() {
+            // Add a click event handler to the li elements
+            $('.unit-item').click(function () {
+                $('.radio-group').remove();
+                // Get the text inside the button element
+                let unitName = $(this).find('button.unit-button').text();
+                var groupData = data.filter(x => x.unitName === unitName)[0].properties;
+                let $group = $('.group-content');
+                let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+                groupData.map(function (item, index) {
+                    // $('.group-content .radio-group').remove();
+                    // Create a new radio button element
+                    let radioGroup = $('<input>').attr({
+                        type: 'radio',
+                        name: 'radioGroup',
+                        value: item.groupName
+                    })
 
-            // Hien thi tieu de: danh sach khoi
-            var $ul_header = $("<ul>").addClass("menu-list");
-            var $li_header = $("<li>").addClass("menu-item");
-            var $text_header = $("<span>").addClass("menu-button").text("Danh sách khối");
-            $menu.append($ul_header);
-            $ul_header.append($li_header);
-            $li_header.append($text_header);
+                    // Create a label for the radio button
+                    let label = $('<label>').text(item.groupName);
 
-            // Hien thi danh muc khoi
-            var $ul = $("<ul>").addClass("menu-list");
-            var icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
-            data.forEach(function (item, index) {
-                var $li = $("<li>").addClass("menu-item");
-                var $button = $("<button>")
-                    .addClass("menu-button ")
-                    .append($("<i>").attr("data-feather", icons[index] ?? "gift"))
-                    .append(`${item.unitName} (${item.properties.length})`)
-                    .append($("<i>").attr("data-feather", "chevron-right"));
-                $menu.append($ul);
-                $ul.append($li);
-                $li.append($button);
-                var groupData = item.properties;
-                // console.log("groupData", groupData);
-                if (groupData.length > 0) {
-                    // Hien thi danh muc nhom nghiep vu
-                    var $ul_group = $("<ul>").addClass("menu-sub-list");
-                    var $ul_group_header = $("<ul>").addClass("menu-header-sub-list");
-                    var $li_group_header = $("<li>").addClass("menu-item");
-                    var $text_group_header = $("<span>")
-                        .addClass("menu-button")
-                        .text(`Nhóm nghiệp vụ - ${item.unitName}`);
-                    $li.append($ul_group);
-                    $ul_group.append($ul_group_header);
-                    $ul_group_header.append($li_group_header);
-                    $li_group_header.append($text_group_header);
+                    // Append the radio button and label to a container element (e.g., a div)
+                    let container = $('<div>').append(radioGroup, label).addClass('radio-group');
 
-                    var colors = ["red", "green", "blue", "yellow", "gray", "orange"];
-                    groupData.forEach(function (groupItem, groupIndex) {
-                        var $li_group = $("<li>").addClass("menu-item");
-                        var $button_group = $("<button>")
-                            .addClass("menu-button menu-button--black")
-                            .append(
-                                $("<i>")
-                                    .attr("data-feather", "circle")
-                                    .css({ fill: colors[groupIndex] })
-                                    .attr("stroke-width", 0)
-                            )
-                            .append(`${groupItem.groupName} (${groupItem.properties.length})`)
-                            .append($("<i>").attr("data-feather", "chevron-right"));
-                        $li.append($ul_group);
-                        $ul_group.append($li_group);
-                        $li_group.append($button_group);
-                        var detailData = groupItem.properties;
-                        // console.log("detailData", detailData.length);
-                        if (detailData.length > 0) {
-                            var $ul_detail = $("<ul>").addClass("menu-sub-list");
-                            var $ul_detail_header = $("<ul>").addClass("menu-header-sub-list");
-                            var $li_detail_header = $("<li>").addClass("menu-item");
-                            var $text_detail_header = $("<span>")
-                                .addClass("menu-button")
-                                .text(`Nhóm nghiệp vụ ${groupItem.groupName} - ${item.unitName}`);
-                            $li_group.append($ul_detail);
-                            $ul_detail.append($ul_detail_header);
-                            $ul_detail_header.append($li_detail_header);
-                            $li_detail_header.append($text_detail_header);
-                            detailData.forEach(function (detailItem, detailIndex) {
-                                var $li_detail = $("<li>").addClass("menu-item menu-item-detail");
-                                var $button_detail = $("<button>")
-                                    .append($("<i>").attr("data-feather", "chevron-right"))
-                                    .addClass("menu-button menu-button-detail")
-                                    .append(detailItem.detail);
-                                //   .append($("<i>").attr("data-feather", "chevron-right"))
-                                var $div = $("<div>")
-                                    .addClass("button-dept")
-                                    .append(detailItem.deptName);
-                                $li_group.append($ul_detail);
-                                $ul_detail.append($li_detail);
-                                $li_detail.append($button_detail);
-                                $li_detail.append($div);
-                            });
-                            feather.replace();
-                        }
+                    // Append the container element to a parent element (e.g., a form or div)
+
+
+                    $group.append(container);
+                })
+                var deptData;
+                $('input[name=radioGroup]').first().prop('checked', true);
+                $('input[name=radioGroup]').on('change', function () {
+                    handleRadioGroupChange(groupData, unitName)
+                });
+                $('input[name=radioGroup]').first().trigger('change');
+
+            });
+
+            function handleRadioGroupChange(groupData, unitName) {
+                $('.radio-dept').remove();
+                let groupName = $('input[name=radioGroup]:checked').val();
+                console.log(groupName)
+                var deptData = groupData.filter(x => x.groupName === groupName)[0].properties;
+                let $dept = $('.dept-content');
+                let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+                deptData.map(function (item, index) {
+                    // Create a new radio button element
+                    let radioDept = $('<input>').attr({
+                        type: 'radio',
+                        name: 'radioDept',
+                        value: item.deptName
+                    })
+                    // Create a label for the radio button
+                    let label = $('<label>').text(item.deptName);
+                    let container = $('<div>').append(radioDept, label).addClass('radio-dept');
+                    $dept.append(container);
+                })
+                $('input[name=radioDept]').first().prop('checked', true);
+                $('input[name=radioDept]').on('change', function () {
+                    handleRadioDeptChange(deptData, unitName, groupName)
+                });
+                $('input[name=radioDept]').first().trigger('change');
+                function handleRadioDeptChange(deptData, unitName, groupName) {
+                    // console.log(unitName, groupName);
+                    $('.radio-detail').remove();
+                    $('.submit').remove();
+                    let deptName = $('input[name=radioDept]:checked').val();
+                    var detailData = deptData.filter(x => x.deptName === deptName)[0].properties;
+                    let $detail = $('.detail-content');
+                    let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+                    detailData.map(function (item, index) {
+                        // Create a new radio button element
+                        let radioDetail = $('<input>').attr({
+                            type: 'radio',
+                            name: 'radioDetail',
+                            value: item
+                        })
+                        // Create a label for the radio button
+                        let label = $('<label>').text(item);
+                        console.log('label', item);
+                        let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
+                        $detail.append(container);
+                    })
+                    $('input[name=radioDetail]').first().prop('checked', true);
+                    $('input[name=radioDetail]').on('change', function () {
+                        handleRadioDetailChange(unitName, groupName, deptName)
                     });
-                    feather.replace();
-                }
-            });
-            feather.replace();
+                    $('input[name=radioDetail]').first().trigger('change');
 
-            // handle event menu-item-detail
-            $('li.menu-item-detail').click(function () {
-                var $detail = $(this).find('.menu-button').text();
-                var $deptName = $(this).find('.button-dept').text();
-                console.log($detail, $deptName);
-                var $parentLi = $(this).parent('li');
-                console.log($parentLi);
-                toggleDisplay($('.main-menu'), $('.detail-menu'));
-            });
-        });
+
+                    // $detail.append(submitButton);
+                    console.log('detailData', detailData)
+                    function handleRadioDetailChange(unitName, groupName, deptName) {
+                        $('.submit').remove();
+                        let detail = $('input[name=radioDetail]:checked').val();
+                        console.log(groupName)
+                        let $detail = $('.detail-content');
+                        let submitButton = $('<input>');
+                        submitButton.attr({
+                            type: 'submit',
+                            class: 'submit'
+                        });
+                         $detail.append(submitButton);
+                        // Your logic or actions when the submit button is clicked
+                        submitButton.on('click', function () {
+                            // Your logic or actions when the submit button is clicked
+                            alert(`${unitName}, ${groupName}, ${deptName}, ${detail}`)
+                        });
+                    }
+                }
+            }
+        }
+        handleClickUnit();
+
     </script>
 </body>
 

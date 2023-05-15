@@ -1,101 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .unit,
-        .dept,
-        .major,
-        .detail {
-            display: flex;
-            justify-content: space-between;
+        .sidebar {
+            width: 200px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: -200px;
+            background-color: #ccc;
+            transition: left 0.3s ease-in-out;
         }
 
-        .box {
-            height: 200px;
-            width: 200px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .sidebar.active {
+            left: 0;
+        }
+
+        button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
         }
     </style>
 </head>
+
 <body>
-    <h1>Mời bạn chọn</h1>
-    <div class="container-unit">
-        <h2>Khối</h2>
-        <div class="unit">
-            <div class="box">
-                <input type="button" id="unit-1" value=" Khối khách hàng doanh nghiệp" />
-            </div>
-            <div class="box" id="unit-2">
-                Khối bán lẻ
-            </div>
-            <div class="box" id="unit-3">
-                Khối nhân sự
-            </div>
-            <div class="box" id="unit-4">
-                Khối vận hành
-            </div>
-        </div>
-    </div>
-    <div class="container-dept">
-        <h2>Phòng ban</h2>
-        <div class="dept">
-            <div class="box">
-                <input type="button" id="dept-1" value="Thanh toán" />
-            </div>
-            <div class="box" id="unit-2">
-                Quy trình chính sách sản phẩm và phí
-            </div>
-            <div class="box" id="unit-3">
-                Quản lý rủi ro
-            </div>
-            <div class="box" id="unit-4">
-                Vận hành hệ thống
-            </div>
-        </div>
-    </div>
-    <div class="container-major">
-        <h2>Nhóm Nghiệp vụ</h2>
-        <div class="major">
-            <div class="box">
-                <input type="button" id="major-1" value="Báo có đơn vị chấp nhận thẻ" />
-            </div>
-            <div class="box" id="unit-2">
-                Nhờ thu hoàn trả thẻ
-            </div>
-            <div class="box" id="unit-3">
-                Nghiệp vụ kế toán thẻ khác
-            </div>
-        </div>
-    </div>
-    <div class="container-detail">
-        <h2>Màn hình ess ở đây</h2>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"
-        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <!DOCTYPE html>
+<html>
+<head>
+	<title>Horizontal Sidebar Demo</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="script.js"></script>
+</head>
+<body>
+	<div class="sidebar">
+	  <a href="#">Link 1</a>
+	  <a href="#">Link 2</a>
+	  <a href="#">Link 3</a>
+	  <a href="#">Link 4</a>
+	</div>
+
+	<button onclick="toggleSidebar()">Show Sidebar</button>
+</body>
+</html>
+
     <script>
-        $(document).ready(function () {
-            $('.container-dept,.container-major,.container-detail').hide();
-        });
-        $('#unit-1').click(function () {
-            $('.container-unit,.container-major,.container-detail').hide();
-            $('.container-dept').show();
-            $('#dept-1').click(function () {
-                $('.container-unit,.container-dept,.container-detail').hide();
-                $('.container-major').show();
-                $('#major-1').click(function () {
-                    $('.container-unit,.container-dept,.container-major').hide();
-                    $('.container-detail').show();
-                })
-            })
-        })
+        function toggleSidebar() {
+            var sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        }
+
     </script>
 </body>
+
 </html>

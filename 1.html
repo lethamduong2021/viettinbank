@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vertical Collapse Menu</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+		/* Style the button that is used to toggle the menu */
+		.menu-btn {
+			background-color: #4CAF50;
+			color: white;
+			padding: 10px;
+			border: none;
+			cursor: pointer;
+			width: 100%;
+			font-size: 16px;
+			text-align: left;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		/* Style the icon inside the button */
+		.menu-btn .material-icons {
+			margin-right: 10px;
+			font-size: 24px;
+		}
+
+		/* Style the content that is hidden by default */
+		.menu-content {
+			display: none;
+			background-color: #f1f1f1;
+			padding: 10px;
+			border-radius: 4px;
+			box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+			margin-top: 10px;
+		}
+
+		/* Style the items inside the menu content */
+		.menu-content p {
+			margin: 0;
+			padding: 10px 0;
+			border-bottom: 1px solid #ccc;
+		}
+
+		/* Style the last item inside the menu content */
+		.menu-content p:last-of-type {
+			border-bottom: none;
+		}
+	</style>
+</head>
+<body>
+
+	<button class="menu-btn">
+		<span>Menu</span>
+	</button>
+	<div class="menu-content">
+		<p>Item 1</p>
+		<p>Item 2</p>
+		<p>Item 3</p>
+		<p>Item 4</p>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			// Add click event listener to the button to toggle the menu
+			$('.menu-btn').click(function() {
+				var menuContent = $('.menu-content');
+				if (menuContent.is(':visible')) {
+					menuContent.hide();
+				} else {
+					menuContent.show();
+				}
+			});
+		});
+	</script>
+
+</body>
+</html>

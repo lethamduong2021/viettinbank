@@ -29,6 +29,7 @@ body {
   background-color: var(--color-bg-secondary);
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(64, 64, 64, 0.15);
+  position: relative;
 }
 li {
   list-style: none !important;
@@ -80,7 +81,7 @@ li {
 }
 
 .menu-item {
-  position: relative;
+  /* position: relative; */
 }
 
 .menu-button {
@@ -142,9 +143,9 @@ li {
   stroke: var(--color-purple);
 }
 
-.main {
+.main-menu {
   position: absolute;
-  top: 5%;
+  top: 20%;
   left: 5%;
   right: 0;
   bottom: 0;

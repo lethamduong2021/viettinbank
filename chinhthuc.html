@@ -5,19 +5,22 @@
     <meta charset="UTF-8">
     <title>CodePen - Multi Step Form with Progress Bar using jQuery and CSS3</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+    <link rel="stylesheet" href="./menucollapse.css" />
     <style>
         html {
             background: #fff;
             font-size: 10px !important;
         }
+
         body {
             background-color: #F0F8FE;
             height: 100%;
         }
+
         .container {
             width: 100%;
             display: flex;
@@ -25,22 +28,27 @@
             background: #F0F8FE;
             margin-top: 1.1rem;
         }
+
         .left-content {
             width: 75%;
             min-height: 84rem;
             border-radius: 1.5rem;
             background: #fff;
+            padding: 20px 30px;
         }
+
         .right-content {
             width: 16%;
             min-height: 84rem;
             border-radius: 1.5rem;
         }
+
         .left-header {
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
+
         .title {
             font-weight: 700;
             font-size: 3.4rem;
@@ -48,178 +56,13 @@
             text-align: center;
             color: #170F49;
         }
+
         .sub-title {
             font-weight: 400;
             font-size: 1.8rem;
             line-height: 3rem;
             text-align: center;
             color: #6F6C90;
-        }
-        #progressbar li {
-            width: 33%;
-        }
-        .unit {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .unit-box {
-            height: 200px;
-            width: 200px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #msform {
-            width: 95%;
-            margin-top: 1.4rem;
-            border: 0.1rem solid #EFF0F7;
-            box-shadow: 0 0.5rem 1.6rem rgba(8, 15, 52, 0.06);
-            border-top-left-radius: 3.4rem;
-            border-top-right-radius: 3.4rem;
-            background: #fff;
-        }
-        #progressbar {
-            padding-top: 3.1rem;
-            width: 38%;
-            margin-left: 31%
-        }
-        #progressbar li:before {
-            width: 3.4rem;
-            height: 3.4rem;
-            border-radius: 34px;
-            font-size: 1.6rem;
-            line-height: 3.1rem;
-            background-color: #EFF0F6;
-            color: #6F6C90
-        }
-        #progressbar li:after {
-            background-color: red;
-        }
-        #progressbar li.active:before {
-            background-color: #1091F4;
-            color: #fff
-        }
-        #msform fieldset {
-            margin: 0;
-            border: none;
-            box-shadow: none;
-            border: 0.1rem solid #EFF0F7;
-            box-shadow: 0 0.5rem 1.6rem rgba(8, 15, 52, 0.06);
-            border-top: 0.1rem solid #D9DBE9;
-            width: 100%;
-        }
-        #msform .action-button {
-            background: #1091F4;
-            border-radius: 5.6rem;
-            outline: none;
-        }
-        #msform .action-button:hover,
-        #msform .action-button:focus {
-            box-shadow: none;
-        }
-        .unit-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 2.5rem;
-        }
-
-        .unit-header>*:first-child {
-            font-weight: 700;
-            font-size: 2.4rem;
-            line-height: 3.5rem;
-            color: #170F49;
-        }
-
-        .unit-header>*:last-child {
-            font-weight: 400;
-            font-size: 1.8rem;
-            line-height: 3rem;
-            color: #6F6C90;
-        }
-
-        .unit {
-            width: 60%;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            margin-left: 20%;
-            margin-bottom: 4rem;
-        }
-
-
-        .unit-box {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            justify-content: space-evenly;
-            border: 0.1rem solid #CCDFF2;
-            border-radius: 0.5rem;
-            height: 16rem;
-            width: 16rem;
-            position: relative;
-            margin-bottom: 4rem;
-        }
-
-        .unit-border {
-            color: #1091F4;
-            border: 0.1rem solid #1091F4
-        }
-
-        .unit-box:hover {
-            cursor: pointer;
-        }
-
-        .unit-box>i {
-            font-size: 6.4rem;
-        }
-
-        .unit-box>span {
-            font-weight: 600;
-            font-size: 1.2rem;
-            line-height: 1.5rem;
-            width: 80%;
-        }
-
-        .group {
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-evenly;
-        }
-
-        .group-box {
-            height: 10.8rem;
-            width: 28.4rem;
-            border: 0.1rem solid #EFF0F7;
-            box-shadow: 0 0.2rem 0.6rem rgba(19, 18, 66, 0.07);
-            border-radius: 1.6rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .group-box:hover {
-            cursor: pointer;
-        }
-
-        .group-box>label {
-            font-weight: 500;
-            font-size: 1.8rem;
-            line-height: 2rem;
-            color: #170F49;
-        }
-
-        .group-border {
-            border: 0.1rem solid #1091F4 !important
-        }
-
-        input[type="radio"] {
-            /* position: absolute; */
-            cursor: pointer;
-            width: 30% !important;
-            margin: 0 !important
         }
 
         .filter {
@@ -246,7 +89,6 @@
 
         .sub-filter {
             width: 60%;
-            /* margin-left: 20%; */
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -259,6 +101,11 @@
             height: 3.6rem;
             width: 40% !important;
             outline: none;
+            background: url("./iconsearch.png");
+            background-position: 1.3rem;
+            background-repeat: no-repeat;
+            background-size: 1.5rem;
+            padding-left: 4.3rem !important;
         }
 
         .sub-filter>*:nth-child(2) {
@@ -287,6 +134,105 @@
             font-size: 1.4rem !important;
             line-height: 1.6rem;
             padding: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        /* detail */
+        .detail {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .sub-detail {
+            height: 12.9rem;
+            background: #F7F9FB;
+            border-radius: 1.2rem;
+            width: 48%;
+        }
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.7rem 1.1rem !important;
+        }
+
+        .title>span {
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 2.1rem;
+            color: #1C1C1C;
+        }
+
+        .title>input[type=button] {
+            width: 8rem !important;
+            height: 2.7rem;
+            background: #4B7BEC;
+            border-radius: 0.4rem !important;
+            font-weight: 600;
+            font-size: 1.2rem !important;
+            line-height: 2rem;
+            color: #fff !important;
+            padding: 0 !important;
+            border: none !important;
+        }
+
+        .content {
+            display: flex;
+            padding: 0rem 1.1rem !important;
+            justify-content: space-between;
+
+
+        }
+
+        .left {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            padding-right: 1.6rem;
+            border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
+        }
+
+        .left>*:first-child {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            color: #1C1C1C;
+            text-align: left;
+        }
+
+        .left>*:last-child {
+            font-weight: 400;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+            color: #2466EB;
+            text-align: center;
+            padding: 0.25rem;
+            background: #F1F5FE;
+            border-radius: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        .right {
+            width: 30%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .right>*:first-child {
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.6rem;
+            color: #1C1C1C;
+        }
+
+        .right>*:last-child {
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 2.1rem;
+            color: #1C1C1C;
         }
     </style>
     <style>
@@ -312,73 +258,11 @@
 <body>
     <div class="container">
         <div class="left-content">
-            <div class="left-header">
-                <span class="title">Chọn dịch vụ</span>
-                <span class="sub-title">Người dùng khởi tạo yêu cầu lựa chọn Khối --> Nhóm nghiệp vụ --> Nghiệp vụ và
-                    chọn
-                    loại
-                    yêu cầu cần gửi dịch vụ</span>
+            <div class="container-detail">
+                <div class="main-menu">
+                    <div class="menu"></div>
+                </div>
             </div>
-            <form id="msform">
-                <ul id="progressbar">
-                    <li >Khối</li>
-                    <li>Nhóm nghiệp vụ</li>
-                    <li >Nghiệp vụ</li>
-                </ul>
-                <fieldset >
-                    <div class="container-unit">
-                        <div class="unit-header">
-                            <span>Khối</span>
-                            <span>Vui lòng lựa chọn Khối cung cấp dịch vụ mà bạn muốn.</span>
-                        </div>
-                        <div class="unit">
-                        </div>
-                    </div>
-                    <input type="button" name="next" class="next action-button" value="Next" id="nextUnit" />
-                </fieldset>
-                <fieldset>
-                    <div class="container-group">
-                        <div class="unit-header">
-                            <span>Nhóm nghiệp vụ</span>
-                            <span>Vui lòng lựa chọn Nhóm Nghiệp Vụ mà bạn muốn.</span>
-                        </div>
-                        <div class="group">
-                        </div>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button" value="Previous" />
-                    <input type="button" name="next" class="next action-button" value="Next" id="nextGroup" />
-                </fieldset>
-                <fieldset>
-                    <div class="container-detail">
-                        <div class="detail-header">
-                            <span>Loại yêu cầu dịch vụ</span>
-                        </div>
-                        <div class="filter">
-                            <div>Vui lòng lựa chọn Loại Yêu Cầu mà bạn muốn.</div>
-                            <div class="sub-filter">
-                                <input id="search" placeholder="Nhập từ khóa tìm kiếm">
-                                <span>Đơn vị tiếp nhận</span>
-                                <select name="" id="">
-                                    <option value="all">
-                                        Tất cả
-                                    </option>
-                                </select>
-                                <input type="submit" value="Lọc">
-                            </div>
-
-                        </div>
-                        <div class="detail">
-                            <!-- <div class="group-box" >
-                                    Nhờ thu hoàn trả thẻ
-                                </div>
-                                <div class="group-box" >
-                                    Nghiệp vụ kế toán thẻ khác
-                                </div> -->
-                        </div>
-                    </div>
-                    <input type="button" name="previous" class="previous action-button" value="Previous" />
-                </fieldset>
-            </form>
         </div>
         <div class="right-content">
             <div class="right-box">
@@ -400,8 +284,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"
         integrity="sha512-0QbL0ph8Tc8g5bLhfVzSqxe9GERORsKhIn1IrpxDAgUsbBGz/V7iSav2zzW325XGd1OMLdL4UiqRJj702IeqnQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
     <script src="./script.js"></script>
-
     <script>
         var data = [
             {
@@ -891,175 +775,165 @@
         ];
     </script>
     <script>
-        /*
-       Màn hình danh sách khối
-        */
-        // Khởi tạo danh sách khối
-        var unitElements = document.getElementsByClassName('unit');
-        data.forEach(function (item) {
-            let div = document.createElement('div');
-            div.classList.add('unit-box');
-            let iconElement = document.createElement('i');
-            iconElement.classList.add('fa-solid', 'fa-house');
-            div.appendChild(iconElement);
-            let spanElement = document.createElement('span');
-            spanElement.innerText = item.unitName;
-            div.appendChild(spanElement);
-            for (let i = 0; i < unitElements.length; i++) {
-                unitElements[i].appendChild(div);
-            }
-        });
+        $(document).ready(function () {
+    
+            //Pagination
+            var itemsPerPage = 2; // number of items to display per page
+            var numItems = $('.sub-detail').length; // total number of items
+            var numPages = Math.ceil(numItems / itemsPerPage); // total number of pages
+            var currentPage = 1; // current page number
 
-        // Handle sự kiện click danh sách khối
-        var listUnit = [];
-        var unitBoxes = document.querySelectorAll('.unit-box');
-        unitBoxes.forEach(box => {
-            box.addEventListener('click', () => {
-                listUnit.push(box.textContent.trim())
-            });
-        });
-
-        // Handle nút next trong danh sách khối
-        var getCurrentUnit = ""
-        var nextUnit = document.getElementById('nextUnit');
-        nextUnit.addEventListener('click', () => {
-            getCurrentUnit = listUnit.pop();
-            var groupData = (data.filter(x => x.unitName.trim() === getCurrentUnit))[0].properties;
-
-            /*
-                Màn hình danh sách nhóm nghiệp vụ
-            */
-            // Xóa danh sách nhóm nghiệp vụ lần chọn trước
-            var removeBoxes = document.querySelectorAll(".group-box");
-
-            for (var i = 0; i < removeBoxes.length; i++) {
-                let groupBox = removeBoxes[i];
-                groupBox.parentNode.removeChild(groupBox);
+            // show/hide items based on the current page number and filter/search criteria
+            function showPage(page, filterText) {
+                var startIndex = (page - 1) * itemsPerPage;
+                var endIndex = startIndex + itemsPerPage;
+                $('.sub-detail').hide().filter(function () {
+                    var name = $(this).find('.name').text().trim();
+                    return filterText === 'all' || name.toLowerCase().includes(filterText.toLowerCase());
+                }).slice(startIndex, endIndex).show();
             }
 
-
-            // Khởi tạo danh sách nhóm nghiệp vụ
-            var groupElements = document.getElementsByClassName('group');
-            groupData.map(function (item) {
-                let div = document.createElement('div');
-                div.classList.add('group-box');
-                var input = document.createElement('input');
-                input.type = 'radio';
-                input.name = 'my-group';
-                div.appendChild(input);
-                var label = document.createElement('label');
-                label.htmlFor = 'my-group';
-                label.textContent = item.groupName;
-                div.appendChild(label);
-                groupElements[i].appendChild(div);
-            })
-
-            // Handle sự kiện click danh sách nhóm nghiệp vụ
-            var listGroup = [];
-            const groupBoxes = document.querySelectorAll('.group-box');
-            groupBoxes.forEach(box => {
-                box.addEventListener('click', () => {
-                    listGroup.push(box.textContent.trim());
-                });
-            });
-            var getCurrentGroup = "";
-            var nextGroup = document.getElementById('nextGroup');
-            nextGroup.addEventListener('click', () => {
-                getCurrentGroup = listGroup.pop();
-                var detailData = (groupData.filter(x => x.groupName.trim() === getCurrentGroup))[0].properties;
-                console.log('detailData', detailData);
-
-                /*
-                  Màn hình danh sách chi tiết nghiệp vụ
-                 */
-
-                // Xóa danh sách  nghiệp vụ lần chọn trước
-                var removeBoxesDetail = document.querySelectorAll(".detail-box");
-                for (var i = 0; i < removeBoxesDetail.length; i++) {
-                    let detailBox = removeBoxesDetail[i];
-                    detailBox.parentNode.removeChild(detailBox);
+            // initialize page navigation links
+            function initPagination(filterText) {
+                $('.pagination').empty();
+                for (var i = 1; i <= numPages; i++) {
+                    var link = $('<a>', {
+                        href: '#',
+                        text: i,
+                        click: function () {
+                            currentPage = parseInt($(this).text());
+                            showPage(currentPage, filterText);
+                            return false;
+                        }
+                    });
+                    $('.pagination').append(link);
                 }
-                // Khởi tạo danh sách  nghiệp vụ
-                var detailElements = document.getElementsByClassName('detail');
-                detailData.map(function (item) {
-                    let div = document.createElement('div');
-                    div.innerHTML = `${item.deptName}-${item.detail}`;
-                    div.classList.add('detail-box');
-                    for (let i = 0; i < detailElements.length; i++) {
-                        detailElements[i].appendChild(div);
-                    }
-                })
-            })
-        })
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Click in unit css
-            function handleClick() {
-                var spans = document.querySelectorAll('.unit-box span');
-                spans.forEach(span => {
-                    var parent = span.parentElement;
-                    parent.addEventListener('click', () => {
-                        var allParents = document.querySelectorAll('.unit-box');
-                        allParents.forEach(element => {
-                            element.classList.remove('unit-border');
-                        });
-                        handleSpanClick(span);
+            }
+
+            // show initial page
+            var filterText = 'all';
+            showPage(currentPage, filterText);
+
+            // initialize pagination links
+            initPagination(filterText);
+
+            // handle search input
+            $('#search').on('input', function () {
+                filterText = $(this).val().trim();
+                currentPage = 1;
+                showPage(currentPage, filterText);
+                initPagination(filterText);
+            });
+
+            // handle select option change
+            $('select').on('change', function () {
+                filterText = $(this).val().trim();
+                currentPage = 1;
+                showPage(currentPage, filterText);
+                initPagination(filterText);
+            });
+
+            // Filter-box
+            var $menu = $(".menu");
+
+            // Hien thi tieu de: danh sach khoi
+            var $ul_header = $("<ul>").addClass("menu-list");
+            var $li_header = $("<li>").addClass("menu-item");
+            var $text_header = $("<span>").addClass("menu-button").text("Danh sách khối");
+            $menu.append($ul_header);
+            $ul_header.append($li_header);
+            $li_header.append($text_header);
+
+            // Hien thi danh muc khoi
+            var $ul = $("<ul>").addClass("menu-list");
+            var icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+            data.forEach(function (item, index) {
+                var $li = $("<li>").addClass("menu-item");
+                var $button = $("<button>")
+                    .addClass("menu-button menu-button--black")
+                    .append($("<i>").attr("data-feather", icons[index] ?? "gift"))
+                    .append(`${item.unitName} (${item.properties.length})`)
+                    .append($("<i>").attr("data-feather", "chevron-right"));
+                $menu.append($ul);
+                $ul.append($li);
+                $li.append($button);
+                var groupData = item.properties;
+                // console.log("groupData", groupData);
+                if (groupData.length > 0) {
+                    // Hien thi danh muc nhom nghiep vu
+                    var $ul_group = $("<ul>").addClass("menu-sub-list");
+                    var $ul_group_header = $("<ul>").addClass("menu-header-sub-list");
+                    var $li_group_header = $("<li>").addClass("menu-item");
+                    var $text_group_header = $("<span>")
+                        .addClass("menu-button")
+                        .text(`Nhóm nghiệp vụ - ${item.unitName}`);
+                    $li.append($ul_group);
+                    $ul_group.append($ul_group_header);
+                    $ul_group_header.append($li_group_header);
+                    $li_group_header.append($text_group_header);
+
+                    var colors = ["red", "green", "blue", "yellow", "gray", "orange"];
+                    groupData.forEach(function (groupItem, groupIndex) {
+                        var $li_group = $("<li>").addClass("menu-item");
+                        var $button_group = $("<button>")
+                            .addClass("menu-button menu-button--black")
+                            .append(
+                                $("<i>")
+                                    .attr("data-feather", "circle")
+                                    .css({ fill: colors[groupIndex] })
+                                    .attr("stroke-width", 0)
+                            )
+                            .append(`${groupItem.groupName} (${groupItem.properties.length})`)
+                            .append($("<i>").attr("data-feather", "chevron-right"));
+                        $li.append($ul_group);
+                        $ul_group.append($li_group);
+                        $li_group.append($button_group);
+                        var detailData = groupItem.properties;
+                        // console.log("detailData", detailData.length);
+                        if (detailData.length > 0) {
+                            var $ul_detail = $("<ul>").addClass("menu-sub-list");
+                            var $ul_detail_header = $("<ul>").addClass("menu-header-sub-list");
+                            var $li_detail_header = $("<li>").addClass("menu-item");
+                            var $text_detail_header = $("<span>")
+                                .addClass("menu-button")
+                                .text(`Nhóm nghiệp vụ ${groupItem.groupName} - ${item.unitName}`);
+                            $li_group.append($ul_detail);
+                            $ul_detail.append($ul_detail_header);
+                            $ul_detail_header.append($li_detail_header);
+                            $li_detail_header.append($text_detail_header);
+                            detailData.forEach(function (detailItem, detailIndex) {
+                                var $li_detail = $("<li>").addClass("menu-item menu-item-detail");
+                                var $button_detail = $("<button>")
+                                    .append($("<i>").attr("data-feather", "chevron-right"))
+                                    .addClass("menu-button menu-button-detail")
+                                    .append(detailItem.detail);
+                                //   .append($("<i>").attr("data-feather", "chevron-right"))
+                                var $div = $("<div>")
+                                    .addClass("button-dept")
+                                    .append(detailItem.deptName);
+                                $li_group.append($ul_detail);
+                                $ul_detail.append($li_detail);
+                                $li_detail.append($button_detail);
+                                $li_detail.append($div);
+                            });
+                            feather.replace();
+                        }
                     });
-                });
-            }
+                    feather.replace();
+                }
+            });
+            feather.replace();
 
-            function handleSpanClick(span) {
-                var value = span.textContent;
-
-                span.parentElement.classList.add('unit-border');
-                // Do something with the value, such as updating the UI or sending it to a server
-            }
-
-            handleClick();
-
-            // Click in unit css
-            function handleGroupClick() {
-                var labels = document.querySelectorAll('.group-box label');
-                labels.forEach(label => {
-                    var parent = label.parentElement;
-                    parent.addEventListener('click', () => {
-                        var allParents = document.querySelectorAll('.group-box');
-                        allParents.forEach(element => {
-                            element.classList.remove('group-border');
-                        });
-                        handleLabelClick(label);
-                    });
-                });
-            }
-
-            function handleLabelClick(label) {
-                var value = label.textContent;
-                label.parentElement.classList.add('group-border');
-                // Do something with the value, such as updating the UI or sending it to a server
-            }
-
-            handleClick();
-
-
-
-            // Tu dong xuong dong element trong man hinh khoi
-            var unitBoxes = document.querySelectorAll('.unit-box');
-            if (unitBoxes.length > 4 && unitBoxes.length % 4 == 0) {
-                var unit = document.createElement('div');
-                unit.classList.add('unit');
-                unitBoxes.forEach(box => {
-                    unit.appendChild(box);
-                });
-                // Replace the existing parent element with the new 'unit' element
-                var parent = document.querySelector('.unit-box').parentNode;
-                parent.parentNode.replaceChild(unit, parent);
-            }
-
-            // Tu dong xuong dong element trong man hinh nhom nghiep vu
+            // handle event menu-item-detail
+            $('li.menu-item-detail').click(function () {
+                var $detail = $(this).find('.menu-button').text();
+                var $deptName = $(this).find('.button-dept').text();
+                console.log($detail, $deptName);
+                var $parentLi = $(this).parent('li');
+                console.log($parentLi);
+                toggleDisplay($('.main-menu'), $('.detail-menu'));
+            });
         });
-
-
     </script>
 </body>
 

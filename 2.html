@@ -31,23 +31,36 @@
 
 <body>
     <!DOCTYPE html>
-<html>
-<head>
-	<title>Horizontal Sidebar Demo</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<script src="script.js"></script>
-</head>
-<body>
-	<div class="sidebar">
-	  <a href="#">Link 1</a>
-	  <a href="#">Link 2</a>
-	  <a href="#">Link 3</a>
-	  <a href="#">Link 4</a>
-	</div>
+    <html>
 
-	<button onclick="toggleSidebar()">Show Sidebar</button>
-</body>
-</html>
+    <head>
+        <title>Horizontal Sidebar Demo</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js"></script>
+    </head>
+
+    <body>
+        <div>
+            <li class="menu-item menu-item-detail"><button class="menu-button menu-button-detail"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-chevron-right">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>Yêu cầu trình chủ trương tiếp cập khách hàng doanh nghiệp lớn thuộc lĩnh vực hạn chế</button>
+                <div class="button-dept">Phòng Khách hàng doanh nghiệp lớn</div>
+            </li>
+            <li class="menu-item menu-item-detail"><button class="menu-button menu-button-detail"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-chevron-right">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>Yêu cầu trình chủ trương tiếp cập khách ádasdasdasdasd lĩnh vực hạn chế</button>
+                <div class="button-dept">Phòng Khách hàng doanh nghiệp lớn</div>
+            </li>
+        </div>
+    </body>
+
+    </html>
 
     <script>
         function toggleSidebar() {

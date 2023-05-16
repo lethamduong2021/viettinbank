@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="iconmoon.css">
     <style>
         .container {
             width: 100%;
@@ -30,17 +34,92 @@
         .unit-content {
             display: flex;
             flex-direction: column;
+            padding: 15px 12px;
+        }
+
+        .unit-content.hidden {
+            display: none;
         }
 
         .unit-item {
             height: 60px;
             color: red;
             list-style: none;
+            margin-left: 0.5rem
         }
 
         .hidden-dept {
             display: none;
         }
+
+        /* tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .tooltip .hidden-dept {
+            visibility: hidden;
+            width: 120px;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .hidden-dept {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .unit-header {
+            padding: 1.5rem 1.2rem;
+            height: 3.6rem;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icon {
+            color: #fff;
+            padding: 1.2rem 1.2rem;
+            border-radius: 0.8rem;
+            height: 100%;
+            margin-right: 1.5rem;
+        }
+
+        .header-icon:first-child {
+            background-color: #64CBF4;
+        }
+
+        .header-text {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            justify-content: space-between;
+            height: 3.4rem;
+        }
+
+        .header-text>*:first-child {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 25px;
+            color: #3E4954;
+        }
+
+        .header-collapse {}
     </style>
 </head>
 
@@ -48,7 +127,17 @@
     <div class="container">
         <div class="block">
             <div class="unit-block">
-                <div class="unit-header">Chon khoi</div>
+                <div class="unit-header">
+                    <div class="header-content">
+                        <i class="fa-solid fa-house header-icon"></i>
+                        <div class="header-text">
+                            <span>Chọn khối</span>
+                            <span>Khối nghiệp vụ</span>
+                        </div>
+                        <i class="fa-solid fa-house header-collapse"></i>
+                    </div>
+                </div>
+
                 <ul class="unit-content">
 
                 </ul>
@@ -581,96 +670,120 @@
     </script>
 
     <script>
-        var $unit = $('.unit-content');
-        var icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
-        data.forEach(function (item, index) {
-            let $li = $("<li>").addClass("unit-item");
-            let $button = $("<button>")
-                .addClass("unit-button")
-                .append(`${item.unitName}`);
-            $unit.append($li);
-            let icon = $('<i></i>');
-            icon.addClass(icons[index] ?? "gift");
-            $li.append(icon);
-            $li.append($button);
-        });
-        function handleClickUnit() {
-            $('.unit-item').click(function () {
-                $('.radio-group').remove();
-                $('.radio-detail').remove();
-                $('.submit').remove();
-                let unitName = $(this).find('button.unit-button').text();
-                let groupData = data.filter(x => x.unitName === unitName)[0].properties;
-                let level = data.filter(x => x.unitName === unitName)[0].level;
-                let $group = $('.group-content');
-                groupData.map(function (item, index) {
-                    let radioGroup = $('<input>').attr({
-                        type: 'radio',
-                        name: 'radioGroup',
-                        value: item.groupName
-                    })
-                    let label = $('<label>').text(item.groupName);
-                    let container = $('<div>').append(radioGroup, label).addClass('radio-group');
-                    $group.append(container);
-                })
-                $('input[name=radioGroup]').on('change', function () {
-                    handleRadioGroupChange(groupData, unitName, level);
-                });
+        $(document).ready(function () {
+            var $unit = $('.unit-content');
+            var icons = ["fa-solid fa-house"];
+            data.forEach(function (item, index) {
+                let $li = $("<li>").addClass("unit-item");
+                let $button = $("<button>")
+                    .addClass("unit-button")
+                    .append(`${item.unitName}`);
+                $unit.append($li);
+                let icon = $('<i></i>');
+                icon.addClass(icons[index] ?? "fa-solid fa-house");
+                $li.append(icon);
+                $li.append($button);
             });
-            function handleRadioGroupChange(groupData, unitName, level) {
-                $('.radio-detail').remove();
-                let groupName = $('input[name=radioGroup]:checked').val();
-                console.log('level', level);
-                if (level == 2) {
-                    let submitButton = $('<input>');
-                    submitButton.attr({
-                        type: 'submit',
-                        class: 'submit'
-                    });
-                    $('.group-content').append(submitButton);
-                    submitButton.on('click', function () {
-                        alert(`${unitName}, ${groupName}`);
-                    });
-                } else {
-                    var detailData = groupData.filter(x => x.groupName === groupName)[0].properties;
-                    let $detail = $('.detail-content');
-                    detailData.map(function (item, index) {
-                        let radioDetail = $('<input>').attr({
-                            type: 'radio',
-                            name: 'radioDetail',
-                            value: item.detail
-                        })
-                        let label = $('<label>').text(item.detail);
-                        let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
-
-                        // Thông tin ẩn để xử lý hover
-                        let hiddenLabel = $('<label>').text(item.deptName).addClass('hidden-dept');
-                        container.append(hiddenLabel);
-
-                        $detail.append(container);
-                    })
-                    $('input[name=radioDetail]').on('change', function () {
-                        handleRadioDetailChange(detailData, unitName, groupName);
-                    });
-                }
-                function handleRadioDetailChange(detailData, unitName, groupName) {
+            function handleClickUnit() {
+                $('.unit-item').click(function () {
+                    $('.radio-group').remove();
+                    $('.radio-detail').remove();
                     $('.submit').remove();
-                    let detail = $('input[name=radioDetail]:checked').val();
-                    let $parent = $('input[name=radioDetail]:checked').parent();
-                    console.log('parent: ', $parent.find('hidden-dept').text());
-                    let submitButton = $('<input>');
-                    submitButton.attr({
-                        type: 'submit',
-                        class: 'submit'
+                    let unitName = $(this).find('button.unit-button').text();
+                    let groupData = data.filter(x => x.unitName === unitName)[0].properties;
+                    let level = data.filter(x => x.unitName === unitName)[0].level;
+                    let $group = $('.group-content');
+                    groupData.map(function (item, index) {
+                        let radioGroup = $('<input>').attr({
+                            type: 'radio',
+                            name: 'radioGroup',
+                            value: item.groupName
+                        })
+                        let label = $('<label>').text(item.groupName);
+                        let container = $('<div>').append(radioGroup, label).addClass('radio-group');
+                        $group.append(container);
+                    })
+                    $('input[name=radioGroup]').on('change', function () {
+                        handleRadioGroupChange(groupData, unitName, level);
                     });
-                    $parent.append(submitButton);
-                    submitButton.on('click', function () {
-                        alert(`${unitName}, ${groupName},${detail}`);
-                    });
+                });
+                function handleRadioGroupChange(groupData, unitName, level) {
+                    $('.radio-detail').remove();
+                    let groupName = $('input[name=radioGroup]:checked').val();
+                    console.log('level', level);
+                    if (level == 2) {
+                        let submitButton = $('<a></a>');
+                        submitButton.attr({
+                            href: 'https://vnexpress.net/the-gioi',
+                            class: 'submit'
+                        }).text('Gui yeu cau');
+                        $('.group-content').append(submitButton);
+                        submitButton.on('click', function () {
+                            alert(`${unitName}, ${groupName}`);
+                        });
+                    } else {
+                        var detailData = groupData.filter(x => x.groupName === groupName)[0].properties;
+                        let $detail = $('.detail-content');
+                        detailData.map(function (item, index) {
+                            let radioDetail = $('<input>').attr({
+                                type: 'radio',
+                                name: 'radioDetail',
+                                value: item.detail
+                            });
+                            let label = $('<label>').text(item.detail).addClass('detail-label');
+                            let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
+
+                            // Thông tin ẩn để xử lý hover
+                            let hiddenLabel = $('<label>').text(item.deptName).addClass('hidden-dept');
+                            container.append(hiddenLabel);
+
+                            $detail.append(container);
+                        })
+                        $('input[name=radioDetail]').on('change', function () {
+                            handleRadioDetailChange(detailData, unitName, groupName);
+                        });
+                    }
+                    function handleRadioDetailChange(detailData, unitName, groupName) {
+                        $('.submit').remove();
+                        let detail = $('input[name=radioDetail]:checked').val();
+                        let $parent = $('input[name=radioDetail]:checked').parent();
+                        console.log('parent: ', $parent.find('hidden-dept').text());
+                        let submitButton = $('<a></a>');
+                        submitButton.attr({
+                            href: 'https://vnexpress.net/the-gioi',
+                            class: 'submit'
+                        }).text('Gui yeu cau');
+                        $parent.append(submitButton);
+                        submitButton.on('click', function () {
+                            alert(`${unitName}, ${groupName},${detail}`);
+                        });
+
+                        // hover tooltip
+                        // $parent.hover(
+                        //     function () {
+                        //         $(this).find('.hidden-dept').css('visibility', 'visible').animate({ opacity: 1 }, 300);
+                        //     },
+                        //     function () {
+                        //         $(this).find('.hidden-dept').animate({ opacity: 0 }, 300, function () {
+                        //             $(this).css('visibility', 'hidden');
+                        //         });
+                        //     }
+                        // );
+                    }
                 }
-            }
-        };
-        handleClickUnit();
+            };
+            handleClickUnit();
+
+            // toggle display
+            $('.unit-header').click(function () {
+                $(this).next('.unit-content').toggleClass('hidden');
+            });
+        })
+
+    </script>
+    <script>
+        // collapse content
+
     </script>
 </body>
 

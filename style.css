@@ -1,133 +1,259 @@
-/*custom font*/
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
-
-/*basic reset*/
-* {margin: 0; padding: 0;}
-
-html {
-	height: 100%;
-	/*Image only BG fallback*/
-	
-	/*background = gradient + image pattern combo*/
-	background: 
-		linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?cukskc');
+  src:  url('fonts/icomoon.eot?cukskc#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?cukskc') format('truetype'),
+    url('fonts/icomoon.woff?cukskc') format('woff'),
+    url('fonts/icomoon.svg?cukskc#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
 }
 
-body {
-	font-family: montserrat, arial, verdana;
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-/*form styles*/
-#msform {
-	width: 400px;
-	margin: 50px auto;
-	text-align: center;
-	position: relative;
+
+.icon-Drag:before {
+  content: "\e900";
+  color: #5e6c84;
 }
-#msform fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	box-sizing: border-box;
-	width: 80%;
-	margin: 0 10%;
-	
-	/*stacking fieldsets above each other*/
-	position: relative;
+.icon-alert:before {
+  content: "\e901";
+  color: #5e6c84;
 }
-/*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
-	display: none;
+.icon-analytics:before {
+  content: "\e902";
+  color: #5e6c84;
 }
-/*inputs*/
-#msform input, #msform textarea {
-	padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
+.icon-at:before {
+  content: "\e903";
+  color: #5e6c84;
 }
-/*buttons*/
-#msform .action-button {
-	width: 100px;
-	background: #27AE60;
-	font-weight: bold;
-	color: white;
-	border: 0 none;
-	border-radius: 1px;
-	cursor: pointer;
-	padding: 10px;
-	margin: 10px 5px;
-  text-decoration: none;
-  font-size: 14px;
+.icon-bag:before {
+  content: "\e904";
+  color: #5e6c84;
 }
-#msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+.icon-bookmark:before {
+  content: "\e905";
+  color: #5e6c84;
 }
-/*headings*/
-.fs-title {
-	font-size: 15px;
-	text-transform: uppercase;
-	color: #2C3E50;
-	margin-bottom: 10px;
+.icon-briefcase:before {
+  content: "\e906";
+  color: #5e6c84;
 }
-.fs-subtitle {
-	font-weight: normal;
-	font-size: 13px;
-	color: #666;
-	margin-bottom: 20px;
+.icon-calendar:before {
+  content: "\e907";
+  color: #5e6c84;
 }
-/*progressbar*/
-#progressbar {
-	margin-bottom: 30px;
-	overflow: hidden;
-	/*CSS counters to number the steps*/
-	counter-reset: step;
+.icon-cc:before {
+  content: "\e908";
+  color: #5e6c84;
 }
-#progressbar li {
-	list-style-type: none;
-	color: white;
-	text-transform: uppercase;
-	font-size: 9px;
-	width: 33.33%;
-	float: left;
-	position: relative;
+.icon-check:before {
+  content: "\e909";
+  color: #5e6c84;
 }
-#progressbar li:before {
-	content: counter(step);
-	counter-increment: step;
-	width: 20px;
-	line-height: 20px;
-	display: block;
-	font-size: 10px;
-	color: #333;
-	background: white;
-	border-radius: 3px;
-	margin: 0 auto 5px auto;
+.icon-clock:before {
+  content: "\e90a";
+  color: #5e6c84;
 }
-/*progressbar connectors*/
-#progressbar li:after {
-	content: '';
-	width: 100%;
-	height: 2px;
-	background: white;
-	position: absolute;
-	left: -50%;
-	top: 9px;
-	z-index: -1; /*put it behind the numbers*/
+.icon-close:before {
+  content: "\e90b";
+  color: #5e6c84;
 }
-#progressbar li:first-child:after {
-	/*connector not needed before the first step*/
-	content: none; 
+.icon-Copy:before {
+  content: "\e90c";
+  color: #5e6c84;
 }
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
-#progressbar li.active:before,  #progressbar li.active:after{
-	background: #27AE60;
-	color: white;
+.icon-down---arrow:before {
+  content: "\e90d";
+  color: #5e6c84;
+}
+.icon-down:before {
+  content: "\e90e";
+  color: #5e6c84;
+}
+.icon-edit:before {
+  content: "\e90f";
+  color: #5e6c84;
+}
+.icon-email:before {
+  content: "\e910";
+  color: #5e6c84;
+}
+.icon-eye:before {
+  content: "\e911";
+  color: #5e6c84;
+}
+.icon-flag:before {
+  content: "\e912";
+  color: #5e6c84;
+}
+.icon-folder:before {
+  content: "\e913";
+  color: #5e6c84;
+}
+.icon-folders:before {
+  content: "\e914";
+  color: #5e6c84;
+}
+.icon-graduate:before {
+  content: "\e915";
+  color: #5e6c84;
+}
+.icon-grid:before {
+  content: "\e916";
+  color: #5e6c84;
+}
+.icon-home:before {
+  content: "\e917";
+  color: #5e6c84;
+}
+.icon-image:before {
+  content: "\e918";
+  color: #5e6c84;
+}
+.icon-inbox:before {
+  content: "\e919";
+  color: #5e6c84;
+}
+.icon-left---arrow:before {
+  content: "\e91a";
+  color: #5e6c84;
+}
+.icon-left:before {
+  content: "\e91b";
+  color: #5e6c84;
+}
+.icon-location:before {
+  content: "\e91c";
+  color: #5e6c84;
+}
+.icon-logout:before {
+  content: "\e91d";
+  color: #5e6c84;
+}
+.icon-map:before {
+  content: "\e91e";
+  color: #5e6c84;
+}
+.icon-micro:before {
+  content: "\e91f";
+  color: #5e6c84;
+}
+.icon-minus:before {
+  content: "\e920";
+  color: #5e6c84;
+}
+.icon-notification:before {
+  content: "\e921";
+  color: #5e6c84;
+}
+.icon-off:before {
+  content: "\e922";
+  color: #5e6c84;
+}
+.icon-paper:before {
+  content: "\e923";
+  color: #5e6c84;
+}
+.icon-paperclip:before {
+  content: "\e924";
+  color: #5e6c84;
+}
+.icon-phone:before {
+  content: "\e925";
+  color: #5e6c84;
+}
+.icon-pie-chart:before {
+  content: "\e926";
+  color: #5e6c84;
+}
+.icon-plus:before {
+  content: "\e927";
+  color: #5e6c84;
+}
+.icon-Popup:before {
+  content: "\e928";
+  color: #5e6c84;
+}
+.icon-question:before {
+  content: "\e929";
+  color: #5e6c84;
+}
+.icon-right---arrow:before {
+  content: "\e92a";
+  color: #5e6c84;
+}
+.icon-right:before {
+  content: "\e92b";
+  color: #5e6c84;
+}
+.icon-settings:before {
+  content: "\e92c";
+  color: #5e6c84;
+}
+.icon-shopping:before {
+  content: "\e92d";
+  color: #5e6c84;
+}
+.icon-star:before {
+  content: "\e92e";
+  color: #5e6c84;
+}
+.icon-tag:before {
+  content: "\e92f";
+  color: #5e6c84;
+}
+.icon-thump-up:before {
+  content: "\e930";
+  color: #5e6c84;
+}
+.icon-trash:before {
+  content: "\e931";
+  color: #5e6c84;
+}
+.icon-Up--Down-Arrow:before {
+  content: "\e932";
+  color: #5e6c84;
+}
+.icon-Up--Down:before {
+  content: "\e933";
+  color: #5e6c84;
+}
+.icon-up:before {
+  content: "\e934";
+  color: #5e6c84;
+}
+.icon-up-1:before {
+  content: "\e935";
+  color: #5e6c84;
+}
+.icon-user:before {
+  content: "\e936";
+  color: #5e6c84;
+}
+.icon-users:before {
+  content: "\e937";
+  color: #5e6c84;
+}
+.icon-wallet:before {
+  content: "\e938";
+  color: #5e6c84;
+}
+.icon-zoom:before {
+  content: "\e939";
+  color: #5e6c84;
 }

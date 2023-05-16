@@ -21,7 +21,7 @@
         .block {
             display: flex;
             padding: 20px 30px;
-            justify-content: space-between;
+            /* justify-content: space-between; */
         }
 
         .block>* {
@@ -29,16 +29,27 @@
             min-height: 200px;
             background-color: #F7F8F9;
             border-radius: 8px;
+            margin-left: 3rem
         }
 
-        .unit-content {
+        .block>*:nth-child(3) {
+            min-width: 35%;
+        }
+
+        .unit-content,
+        .group-content,
+        .detail-content,
+        .request-content {
             display: flex;
             flex-direction: column;
             padding: 15px 12px;
             padding-top: 0;
         }
 
-        .unit-content.hidden {
+        .unit-content.hidden,
+        .group-content.hidden,
+        .detail-content.hidden,
+        .request-content.hidden {
             display: none;
         }
 
@@ -82,7 +93,7 @@
             opacity: 1;
         }
 
-        .unit-header {
+        .unit-header,.group-header,.detail-header,.request-header {
             padding: 1.5rem 1.2rem;
             height: 3.6rem;
         }
@@ -156,27 +167,56 @@
                 <div class="unit-header">
                     <div class="header-content">
                         <i class="fa-solid fa-house header-icon"></i>
-                        <div class="header-text">
+                        <div class="header-text text-unit">
                             <span>Chọn khối</span>
                             <span>Khối nghiệp vụ</span>
                         </div>
                         <i class="fa-solid fa-house header-collapse"></i>
                     </div>
                 </div>
-
                 <ul class="unit-content">
 
                 </ul>
             </div>
             <div class="group-block">
-                <div class="group-header">Chon nhom nghiep vu</div>
+                <div class="unit-header">
+                    <div class="header-content">
+                        <i class="fa-solid fa-house header-icon"></i>
+                        <div class="header-text text-group">
+                            <span></span>
+                        </div>
+                        <i class="fa-solid fa-house header-collapse"></i>
+                    </div>
+                </div>
                 <div class="group-content">
 
                 </div>
             </div>
             <div class="detail-block">
-                <div class="detail-header">Chon loai yeu cau</div>
+                <div class="unit-header">
+                    <div class="header-content">
+                        <i class="fa-solid fa-house header-icon"></i>
+                        <div class="header-text text-detail">
+                            <span></span>
+                        </div>
+                        <i class="fa-solid fa-house header-collapse"></i>
+                    </div>
+                </div>
                 <ul class="detail-content">
+
+                </ul>
+            </div>
+            <div class="request-block">
+                <div class="unit-header">
+                    <div class="header-content">
+                        <i class="fa-solid fa-house header-icon"></i>
+                        <div class="header-text text-request">
+                            <span>Gửi yêu cầu</span>
+                        </div>
+                        <i class="fa-solid fa-house header-collapse"></i>
+                    </div>
+                </div>
+                <ul class="request-content">
 
                 </ul>
             </div>
@@ -717,19 +757,21 @@
                     $('.unit-button.active').removeClass('active');
                     $(this).find('i').addClass('active');
                     $(this).find('button').addClass('active');
+
                     $('.radio-group').remove();
                     $('.radio-detail').remove();
                     $('.submit').remove();
                     let unitName = $(this).find('button.unit-button').text();
+                    $('.text-group span:nth-child(1)').text(unitName);
                     let groupData = data.filter(x => x.unitName === unitName)[0].properties;
 
                     let level = data.filter(x => x.unitName === unitName)[0].level;
                     if (level == 2) {
-                        $('.group-header').text('Gui yeu cau');
+                        $('.group-header').text('Loại yêu cầu');
                         $('.detail-block').hide();
                     }
-                    else{
-                        $('.group-header').text('Chon nhom nghiep vu');
+                    else {
+                        $('.group-header').text('Chọn nhóm nghiệp vụ');
                         $('.detail-block').show();
                     }
                     let $group = $('.group-content');
@@ -750,14 +792,16 @@
                 function handleRadioGroupChange(groupData, unitName, level) {
                     $('.radio-detail').remove();
                     let groupName = $('input[name=radioGroup]:checked').val();
+                    $('.text-detail span:nth-child(1)').text(groupName);
                     console.log('level', level);
                     if (level == 2) {
+                        $('.submit').remove();
                         let submitButton = $('<input>');
                         submitButton.attr({
                             type: 'submit',
                             class: 'submit'
                         });
-                        $('.group-content').append(submitButton);
+                        $('.request-content').append(submitButton);
                         submitButton.on('click', function () {
                             alert(`${unitName}, ${groupName}`);
                         });
@@ -786,15 +830,15 @@
                     function handleRadioDetailChange(detailData, unitName, groupName) {
                         $('.submit').remove();
                         let detail = $('input[name=radioDetail]:checked').val();
-                        let $parent = $('input[name=radioDetail]:checked').parent();
-                        console.log('parent: ', $parent);
+                        let $request = $('.request-content');
+                        console.log('parent: ', $request);
                         let submitButton = $('<input>');
                         submitButton.attr({
                             type: 'submit',
                             class: 'submit'
                         });
-        
-                        $parent.append(submitButton);
+
+                        $request.append(submitButton);
                         submitButton.on('click', function () {
                             alert(`${unitName}, ${groupName},${detail}`);
                         });
@@ -815,10 +859,19 @@
             };
             handleClickUnit();
 
+            function toggleDisplay(header, content) {
+                $(header).click(function () {
+                    $(this).next('content').toggleClass('hidden');
+                });
+            }
             // toggle display
-            $('.unit-header').click(function () {
-                $(this).next('.unit-content').toggleClass('hidden');
-            });
+            toggleDisplay('.unit-header', '.unit-content');
+            toggleDisplay('.group-header', '.group-content');
+            toggleDisplay('.detail-header', '.detail-content');
+            toggleDisplay('.request-header', '.request-content');
+            // $('.unit-header').click(function () {
+            //     $(this).next('.unit-content').toggleClass('hidden');
+            // });
         })
 
     </script>

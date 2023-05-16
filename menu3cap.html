@@ -786,12 +786,13 @@
                         $('.submit').remove();
                         let detail = $('input[name=radioDetail]:checked').val();
                         let $parent = $('input[name=radioDetail]:checked').parent();
-                        console.log('parent: ', $parent.find('hidden-dept').text());
-                        let submitButton = $('<a></a>');
+                        console.log('parent: ', $parent);
+                        let submitButton = $('<input>');
                         submitButton.attr({
                             type: 'submit',
                             class: 'submit'
                         });
+        
                         $parent.append(submitButton);
                         submitButton.on('click', function () {
                             alert(`${unitName}, ${groupName},${detail}`);

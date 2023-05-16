@@ -180,4 +180,6 @@ li {
   margin-bottom: 4px;
   background-color: var(--color-bg-primary-offset);
 }
-
+.hidden-dept{
+  display: none;
+}

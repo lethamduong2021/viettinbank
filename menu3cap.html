@@ -37,6 +37,10 @@
             color: red;
             list-style: none;
         }
+
+        .hidden-dept {
+            display: none;
+        }
     </style>
 </head>
 
@@ -499,54 +503,50 @@
                 unitName: "Khối Pháp chế tuân thủ",
                 properties: [
                     {
+
                         groupName: "Hỗ trợ chung",
                         properties: [
                             {
-                                groupName: "Hỗ trợ chung",
-                                properties: [
-                                    {
-                                        deptName: "Phòng Quản lý tuân thủ",
-                                        detail: "Hỗ trợ giải đáp vướng mắc nghiệp vụ AML"
-                                    },
-                                    {
-                                        deptName: "Phòng Quản lý tuân thủ",
-                                        detail: "Hỗ trợ giải đáp về quy định NHCT về cung cấp thông tin khách hàng "
-                                    },
-                                    {
-                                        deptName: "Phòng Pháp chế",
-                                        detail: "Yêu cầu tư vấn vấn đề pháp lý cho đơn vị TSC"
-                                    },
-                                    {
-                                        deptName: "Phòng Pháp chế",
-                                        detail: "Yêu cầu tư vấn pháp lý liên quan đến hoạt động kinh doanh của chi nhánh"
-                                    }
-                                ]
+                                deptName: "Phòng Quản lý tuân thủ",
+                                detail: "Hỗ trợ giải đáp vướng mắc nghiệp vụ AML"
                             },
                             {
-                                groupName: "Cung cấp thông tin khách hàng",
-                                properties: [
-                                    {
-                                        deptName: "Phòng Quản lý tuân thủ",
-                                        detail: "Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính"
-                                    },
-                                    {
-                                        deptName: "Phòng Quản lý tuân thủ",
-                                        detail: "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh "
-                                    }
-                                ]
+                                deptName: "Phòng Quản lý tuân thủ",
+                                detail: "Hỗ trợ giải đáp về quy định NHCT về cung cấp thông tin khách hàng "
                             },
                             {
-                                groupName: "Công việc pháp lý khác",
-                                properties: [
-                                    {
-                                        deptName: "Phòng Quản lý tuân thủ",
-                                        detail: "Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính"
-                                    },
-                                    {
-                                        deptName: "Phòng Quản lý tuân thủ",
-                                        detail: "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh "
-                                    }
-                                ]
+                                deptName: "Phòng Pháp chế",
+                                detail: "Yêu cầu tư vấn vấn đề pháp lý cho đơn vị TSC"
+                            },
+                            {
+                                deptName: "Phòng Pháp chế",
+                                detail: "Yêu cầu tư vấn pháp lý liên quan đến hoạt động kinh doanh của chi nhánh"
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Cung cấp thông tin khách hàng",
+                        properties: [
+                            {
+                                deptName: "Phòng Quản lý tuân thủ",
+                                detail: "Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính"
+                            },
+                            {
+                                deptName: "Phòng Quản lý tuân thủ",
+                                detail: "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh "
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Công việc pháp lý khác",
+                        properties: [
+                            {
+                                deptName: "Phòng Quản lý tuân thủ",
+                                detail: "Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính"
+                            },
+                            {
+                                deptName: "Phòng Quản lý tuân thủ",
+                                detail: "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh "
                             }
                         ]
                     }
@@ -587,24 +587,22 @@
             let $li = $("<li>").addClass("unit-item");
             let $button = $("<button>")
                 .addClass("unit-button")
-                .append(`${item.unitName}`)
+                .append(`${item.unitName}`);
             $unit.append($li);
             let icon = $('<i></i>');
             icon.addClass(icons[index] ?? "gift");
             $li.append(icon);
             $li.append($button);
-        })
+        });
         function handleClickUnit() {
             $('.unit-item').click(function () {
                 $('.radio-group').remove();
+                $('.radio-detail').remove();
                 $('.submit').remove();
                 let unitName = $(this).find('button.unit-button').text();
-                // console.log('level',da)
                 let groupData = data.filter(x => x.unitName === unitName)[0].properties;
                 let level = data.filter(x => x.unitName === unitName)[0].level;
-                // console.log('groupData', data.filter(x => x.unitName === unitName)[0].level);
                 let $group = $('.group-content');
-                let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
                 groupData.map(function (item, index) {
                     let radioGroup = $('<input>').attr({
                         type: 'radio',
@@ -615,82 +613,64 @@
                     let container = $('<div>').append(radioGroup, label).addClass('radio-group');
                     $group.append(container);
                 })
-                if (level == 2) {
-                    let groupName = $('input[name=radioGroup]:checked').val();
-                    let submitButton = $('<input>');
-                    submitButton.attr({
-                        type: 'submit',
-                        class: 'submit'
-                    });
-                    $group.append(submitButton);
-                    submitButton.on('click', function () {
-                        alert(`${unitName}, ${groupName}`)
-                    });
-                }
-                else {
-                    $('input[name=radioGroup]').on('change', function () {
-                        handleRadioGroupChange(groupData, unitName, level)
-                    });
-                }
-
+                $('input[name=radioGroup]').on('change', function () {
+                    handleRadioGroupChange(groupData, unitName, level);
+                });
             });
-
             function handleRadioGroupChange(groupData, unitName, level) {
                 $('.radio-detail').remove();
                 let groupName = $('input[name=radioGroup]:checked').val();
-                console.log(groupName)
-                var detailData = groupData.filter(x => x.groupName === groupName)[0].properties;
-                let $detail = $('.detail-content');
-                let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
-                detailData.map(function (item, index) {
-                    // Create a new radio button element
-                    let radioDetail = $('<input>').attr({
-                        type: 'radio',
-                        name: 'radioDetail',
-                        value: item.detail
-                    })
-                    // Create a label for the radio button
-                    let label = $('<label>').text(item.detail);
-                    let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
-                    $detail.append(container);
-                })
-                $('input[name=radioDetail]').on('change', function () {
-                    handleRadioDetailChange(detailData, unitName, groupName)
-                });
-                function handleRadioDetailChange(detailData, unitName, groupName) {
-                    $('.submit').remove();
-                    let detail = $('input[name=radioDetail]:checked').val();
-
-                    // var detailData = detailData.filter(x => x.deptName === deptName)[0].deptName;
-                    console.log('detailData:', detail);
-                    let $detail = $('.detail-content');
-                    // let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
-                    // detailData.map(function (item, index) {
-                    //     let radioDetail = $('<input>').attr({
-                    //         type: 'radio',
-                    //         name: 'radioDetail',
-                    //         value: item
-                    //     })
-                    //     let label = $('<label>').text(item);
-                    //     console.log('label', item);
-                    //     let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
-                    // $detail.append(container);
+                console.log('level', level);
+                if (level == 2) {
                     let submitButton = $('<input>');
                     submitButton.attr({
                         type: 'submit',
                         class: 'submit'
                     });
-                    $detail.append(submitButton);
+                    $('.group-content').append(submitButton);
                     submitButton.on('click', function () {
-                        alert(`${unitName}, ${groupName}, ${detail}`)
+                        alert(`${unitName}, ${groupName}`);
                     });
-                    // })
+                } else {
+                    var detailData = groupData.filter(x => x.groupName === groupName)[0].properties;
+                    let $detail = $('.detail-content');
+                    detailData.map(function (item, index) {
+                        let radioDetail = $('<input>').attr({
+                            type: 'radio',
+                            name: 'radioDetail',
+                            value: item.detail
+                        })
+                        let label = $('<label>').text(item.detail);
+                        let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
 
+                        // Thông tin ẩn để xử lý hover
+                        let hiddenLabel = $('<label>').text(item.deptName).addClass('hidden-dept');
+                        container.append(hiddenLabel);
+
+                        $detail.append(container);
+                    })
+                    $('input[name=radioDetail]').on('change', function () {
+                        handleRadioDetailChange(detailData, unitName, groupName);
+                    });
+                }
+                function handleRadioDetailChange(detailData, unitName, groupName) {
+                    $('.submit').remove();
+                    let detail = $('input[name=radioDetail]:checked').val();
+                    let $parent = $('input[name=radioDetail]:checked').parent();
+                    console.log('parent: ', $parent.find('hidden-dept').text());
+                    let submitButton = $('<input>');
+                    submitButton.attr({
+                        type: 'submit',
+                        class: 'submit'
+                    });
+                    $parent.append(submitButton);
+                    submitButton.on('click', function () {
+                        alert(`${unitName}, ${groupName},${detail}`);
+                    });
                 }
             }
-        }
+        };
         handleClickUnit();
-
     </script>
 </body>
 

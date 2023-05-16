@@ -455,11 +455,11 @@
                     $group.append(container);
                 })
                 var deptData;
-                $('input[name=radioGroup]').first().prop('checked', true);
+                // $('input[name=radioGroup]').first().prop('checked', true);
                 $('input[name=radioGroup]').on('change', function () {
                     handleRadioGroupChange(groupData, unitName)
                 });
-                $('input[name=radioGroup]').first().trigger('change');
+                // $('input[name=radioGroup]').first().trigger('change');
 
             });
 
@@ -482,11 +482,11 @@
                     let container = $('<div>').append(radioDept, label).addClass('radio-dept');
                     $dept.append(container);
                 })
-                $('input[name=radioDept]').first().prop('checked', true);
+                // $('input[name=radioDept]').first().prop('checked', true);
                 $('input[name=radioDept]').on('change', function () {
                     handleRadioDeptChange(deptData, unitName, groupName)
                 });
-                $('input[name=radioDept]').first().trigger('change');
+                // $('input[name=radioDept]').first().trigger('change');
                 function handleRadioDeptChange(deptData, unitName, groupName) {
                     // console.log(unitName, groupName);
                     $('.radio-detail').remove();
@@ -508,11 +508,11 @@
                         let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
                         $detail.append(container);
                     })
-                    $('input[name=radioDetail]').first().prop('checked', true);
+                    // $('input[name=radioDetail]').first().prop('checked', true);
                     $('input[name=radioDetail]').on('change', function () {
                         handleRadioDetailChange(unitName, groupName, deptName)
                     });
-                    $('input[name=radioDetail]').first().trigger('change');
+                    // $('input[name=radioDetail]').first().trigger('change');
 
 
                     // $detail.append(submitButton);

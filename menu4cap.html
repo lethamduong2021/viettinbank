@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
+    <style>
+        .container {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .block {
+            display: flex;
+            padding: 20px 30px;
+            justify-content: space-between;
+        }
+
+        .block>* {
+            width: 22%;
+            min-height: 200px;
+            background-color: #F7F8F9;
+            border-radius: 8px;
+        }
+
+        .unit-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .unit-item {
+            height: 60px;
+            color: red;
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="block">
+            <div class="unit-block">
+                <div class="unit-header">Chon khoi</div>
+                <ul class="unit-content">
+
+                </ul>
+            </div>
+            <div class="group-block">
+                <div class="group-header">Chon nhom nghiep vu</div>
+                <div class="group-content">
+
+                </div>
+            </div>
+            <div class="dept-block">
+                <div class="dept-header">Chon phong ban</div>
+                <div class="dept-content">
+
+                </div>
+            </div>
+            <div class="detail-block">
+                <div class="detail-header">Chon loai yeu cau</div>
+                <ul class="detail-content">
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        const data = [
+            {
+                unitName: "Khối KHDN",
+                properties: [
+                    {
+                        groupName: "Hỗ trợ chung",
+                        properties: [
+                            {
+                                deptName: "Phòng Khách hàng doanh nghiệp lớn",
+                                properties: ["Yêu cầu trình chủ trương tiếp cận khách hàng doanh nghiệp lớn ngoài địa bàn",
+                                    "Yêu cầu trình chủ trương tiếp cập khách hàng doanh nghiệp lớn thuộc lĩnh vực hạn chế",
+                                    "Yêu cầu giải đáp vướng mắc, làm rõ các nội dung liên quan đến chức năng nhiệm vụ của Phòng Khách hàng doanh nghiệp lớn"
+                                ],
+                            },
+                            {
+                                deptName: "Phòng Khách hàng doanh nghiệp vừa và nhỏ",
+                                properties: ["Yêu cầu trình chủ trương tiếp cận khách hàng doanh nghiệp vừa và nhỏ ngoài địa bàn",
+                                    "Yêu cầu trình chủ trương tiếp cập khách hàng doanh nghiệp vừa và nhỏ thuộc lĩnh vực hạn chế",
+                                    "Yêu cầu giải đáp vướng mắc phát sinh trong công tác đẩy bán"]
+                            },
+                            {
+                                deptName: "Phòng Khách hàng FDI và Nguồn vốn quốc tế",
+                                properties: ["Yêu cầu giải đáp vướng mắc, làm rõ các nội dung liên quan đến chức năng nhiệm vụ của Phòng Khách hàng FDI và Nguồn vốn quốc tế"]
+                            },
+                            {
+                                deptName: "Phòng Thúc đẩy kinh doanh",
+                                properties: ["Yêu cầu xem xét tính khả thi về yêu cầu Marketing nội bộ",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến các Chương trình của KHDN (Chương trình khuyến mại, ưu đãi, chương trình động lực, thi đua thúc đẩy bán,…)",
+                                    "Yêu cầu phát triển mới, điều chỉnh, chào bán giải pháp tài chính đối với Khách hàng",
+                                    "Yêu cầu hướng dẫn xây dựng Account Plan cho KHTC tại CN"]
+                            },
+                            {
+                                deptName: "Phòng Phát triển giải pháp tài chính",
+                                properties: ["Yêu cầu xem xét tính khả thi của yêu cầu phát triển sản phẩm KHDN (Huy động vốn, TTTM, Tiền gửi, Tín dụng, Thanh toán và Quản lý dòng tiền,…)",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến SPDV của khối KHDN (Huy động vốn, TTTM, Tiền gửi, Tín dụng, Thanh toán và Quản lý dòng tiền ,…)",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến kênh giao dịch điện tử đã triển khai của khối KHDN",
+                                    "Yêu cầu hỗ trợ liên quan đến các kênh giao dịch điện tử dành cho KHDN (eFAST, ERP, H2H, API, SMS Banking,…)",
+                                    "Yêu cầu hỗ trợ tra soát kinh phí công đoàn"]
+                            },
+                            {
+                                deptName: "Phòng Kế hoạch và Quản lý thông tin khách hàng",
+                                properties: ["Yêu cầu giải đáp vướng mắc, làm rõ các nội dung liên quan đến chức năng nhiệm vụ của Phòng Kế hoạch và Quản lý thông tin khách hàng"]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Ngoại lệ lãi suất",
+                        properties: [
+                            {
+                                deptName: "Phòng Khách hàng",
+                                properties: ["Yêu cầu ngoại lệ lãi suất"]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Xây dựng giải pháp tài chính (GPTC)",
+                        properties: [
+                            {
+                                deptName: "Phòng Khách hàng",
+                                properties: ["Yêu cầu  Xây dựng giải pháp tài chính (GPTC)"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                unitName: "Khối bán lẻ",
+                properties: [
+                    {
+                        groupName: "Thanh toán",
+                        properties: [
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng Kế toán Tổng hợp",
+                                properties: ["Nhờ thu, hoàn trả thẻ",
+                                    "Báo cáo đơn vị chấp nhận thẻ",
+                                    "Nghiệp vụ kế toán thẻ khác"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Quy trình chính sách sản phẩm và phí",
+                        properties: [
+                            {
+                                deptName: "Phòng Phát triển sản phẩm bán lẻ",
+                                properties: ["Sản phẩm tín dụng bán lẻ",
+                                    "Sản phẩm huy động vốn, phí và bảo hiểm"
+                                ]
+                            },
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng NCTT&PTSP thẻ",
+                                properties: ["Sản phẩm thẻ - Trình ngoại lệ phí phát hành thẻ"]
+                            },
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng Vận hành",
+                                properties: ["Sản phẩm thẻ - Quy trình chính sách sản phẩm thẻ",
+                                    "Hỗ trợ nghiệp vụ thẻ"]
+                            },
+                            {
+                                deptName: "Phòng Ngân hàng số",
+                                properties: ["Dịch vụ eBank (bao gồm iPay/ BankPlus/ SMS tài khoản DDA)"]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Quản lý rủi ro",
+                        properties: [
+                            {
+                                deptName: "Phòng Quản lý rủi ro bán lẻ",
+                                properties: ["Quản lý rủi ro bán lẻ"]
+                            },
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng Vận hành",
+                                properties: ["Tra soát thừa thiếu quỹ ATM"]
+                            },
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng Quản lý rủi ro nghiệp vụ thẻ",
+                                properties: ["Tra soát thẻ TDQT"]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Vận hành hệ thống",
+                        properties: [
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng Vận hành",
+                                properties: ["Thiết bị đầu cuối: ATM, POS",
+                                    "Hệ thống: Fimi, ITC, IUC, Hóa đơn tự in",
+                                    "SMS Biến động số dư thẻ TDQT"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Công tác kinh doanh",
+                        properties: [
+                            {
+                                deptName: "Phòng Kế hoạch và Quản lý tài chính bán lẻ",
+                                properties: ["Kế hoạch\chỉ tiêu KPI\Mạng lưới nhân sự",
+                                    "Marketing bán lẻ",
+                                    "Phát triển kinh doanh- Yêu cầu ngoại lệ về lãi suất",
+                                    "Phát triển kinh doanh- Yêu cầu ngoại lệ về cơ chế điều kiện tín dụng",
+                                    "Phát triển kinh doanh- Yêu cầu ngoại lệ khác",
+                                    "Phát triển kinh doanh- Giải đáp thắc mắc về QĐ, QTr SPDV Bán lẻ"
+                                ]
+                            },
+                            {
+                                deptName: "Trung Tâm Thẻ - Phòng Phát triển đối tác thẻ",
+                                properties: ["Doanh số thanh toán và kinh doanh thẻ"]
+                            }
+
+                        ]
+                    },
+
+                ],
+            },
+            {
+                unitName: "Khối nhân sự",
+                properties: [
+                    {
+                        groupName: "Nhân sự",
+                        properties: [
+                            {
+                                deptName: "Phòng Phát triển nhân sự",
+                                properties: ["Tuyển dụng",
+                                    "Hợp đồng lao động",
+                                    "Điều động",
+                                    "Bổ nhiệm, bổ nhiệm lại",
+                                    "Thôi giữ chức vụ, miễn nhiệm, từ chức",
+                                    "Thôi điều hành, tạm đình chỉ công việc",
+                                    "Thi đua khen thưởng",
+                                    "Quy hoạch cán bộ",
+                                    "Luân chuyển, chuyển đổi công việc",
+                                    "Đào tạo",
+                                    "KPI",
+                                    "Tiền lương",
+                                    "Nghỉ hưu, nghỉ 1062",
+                                    "Mạng lưới",
+                                    "Công tác Đảng, Đoàn"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        groupName: "Hỗ trợ chung",
+                        properties: [
+                            {
+                                deptName: "Trường Đào tạo và phát triển nguồn nhân lực",
+                                properties: ["Yêu cầu xây dựng bài giảng elearning"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                unitName: "Khối Vận hành",
+                properties: [
+                    {
+                        groupName: "Hỗ trợ chung",
+                        properties: [
+                            {
+                                deptName: "Trung tâm Tài trợ thương mại",
+                                properties: ["Yêu cầu giải đáp vướng mắc liên quan đến quy trình nghiệp vụ LC, nhờ thu nhập khẩu",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến quy trình nghiệp vụ bảo lãnh",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến quy trình nghiệp vụ bao thanh toán",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến quy trình nghiệp vụ LC, nhờ thu xuất khẩu và chiết khấu",
+                                    "Yêu cầu giải đáp vướng mắc liên quan đến quy trình nghiệp vụ chuyển tiền ngoại tệ",
+                                    "Yêu cầu giải đáp vướng mắc về các vấn đề liên quan đến nghiệp vụ Hỗ trợ tín dụng"
+                                ]
+                            },
+                            {
+                                deptName: "Phòng Quản lý chất lượng",
+                                properties: ["Yêu cầu giải đáp vướng mắc liên quan đến công tác quản lý chất lượng",
+                                    "Cung cấp báo cáo SLA định kỳ",
+                                    "Cung cấp báo cáo QLCL định kỳ",
+                                    "Cung cấp báo cáo 5S định kỳ"
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        groupName: "Hỗ trợ tác nghiệp & Quản trị tham số hệ thống",
+                        properties: [
+                            {
+                                deptName: "Phòng QLHT và HTKD",
+                                properties: ["Yêu cầu hỗ trợ tác nghiệp",
+                                    "Yêu cầu quản trị tham số hệ thống"
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        groupName: "Hạch toán kế toán",
+                        properties: [
+                            {
+                                deptName: "Phòng TQT VKD",
+                                properties: ["Kết chuyển trạng thái ngoại tệ",
+                                    "Giao dịch mua bán ngoại tệ trên hệ thống Vision FX, Murex",
+                                    "Giao dịch tương lai hàng hóa trên hệ thống Vision Commodity",
+                                    "Giao dịch hoán đổi lãi suất trên hệ thống Murex"
+                                ]
+                            },
+                        ]
+                    },
+                    {
+                        groupName: "Quản lý tiền mặt",
+                        properties: [
+                            {
+                                deptName: "Trung tâm Quản lý tiền mặt",
+                                properties: ["Yêu cầu điều chuyển tiền mặt giữa chi nhánh và trung tâm quản lý tiền mặt",
+                                    "Xử lý giao dịch nghi ngờ"
+                                ]
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                unitName: "Khối Mua sắm & Quản lý tài sản",
+                properties: [
+                    {
+                        groupName: "Dịch vụ tòa nhà",
+                        properties: [
+                            {
+                                deptName: "Phòng Quản trị và dịch vụ tài sản",
+                                properties: ["Dịch vụ sửa chữa, khắc phục sự cố",
+                                    "Dịch vụ cung cấp VPP, CCDC, nước uống, đổ mực",
+                                    "Rà soát, phản hồi và cập nhật tiến độ thực hiện các đề xuất cải tiến"]
+                            },
+                        ]
+                    }
+                ]
+            },
+            {
+                unitName: "Khối Công nghệ thông tin",
+                properties: [
+                    {
+                        groupName: "Hỗ trợ Công nghệ thông tin",
+                        properties: [
+                            {
+                                deptName: "Service Desk",
+                                properties: ["Yêu cầu hỗ trợ CNTT"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                unitName: "Khối Pháp chế tuân thủ",
+                properties: [
+                    {
+                        groupName: "Hỗ trợ chung",
+                        properties: [
+                            {
+                                groupName: "Hỗ trợ chung",
+                                properties: [
+                                    {
+                                        deptName: "Phòng Quản lý tuân thủ",
+                                        properties: ["Hỗ trợ giải đáp vướng mắc nghiệp vụ AML",
+                                            "Hỗ trợ giải đáp về quy định NHCT về cung cấp thông tin khách hàng",
+                                            "Yêu cầu tư vấn vấn đề pháp lý cho đơn vị TSC",
+                                            "Yêu cầu tư vấn pháp lý liên quan đến hoạt động kinh doanh của chi nhánh"
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                groupName: "Cung cấp thông tin khách hàng",
+                                properties: [
+                                    {
+                                        deptName: "Phòng Quản lý tuân thủ",
+                                        properties: ["Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính",
+                                            "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh"
+                                        ]
+                                    },
+                                ]
+                            },
+                            {
+                                groupName: "Công việc pháp lý khác",
+                                properties: [
+                                    {
+                                        deptName: "Phòng Quản lý tuân thủ",
+                                        properties: ["Yêu cầu cung cấp thông tin khách hàng tại Trụ sở chính",
+                                            "Yêu cầu cung cấp thông tin khách hàng tại Chi nhánh"
+                                        ]
+                                    },
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+    </script>
+
+    <script>
+
+        // Add unit
+        var $unit = $('.unit-content');
+        var icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+        data.forEach(function (item, index) {
+            let $li = $("<li>").addClass("unit-item");
+            let $button = $("<button>")
+                .addClass("unit-button")
+                .append(`${item.unitName}`)
+            $unit.append($li);
+            let icon = $('<i></i>'); // Create a new <i> element
+            icon.addClass(icons[index] ?? "gift");
+            $li.append(icon);
+            $li.append($button);
+        })
+
+        function handleClickUnit() {
+            // Add a click event handler to the li elements
+            $('.unit-item').click(function () {
+                $('.radio-group').remove();
+                // Get the text inside the button element
+                let unitName = $(this).find('button.unit-button').text();
+                var groupData = data.filter(x => x.unitName === unitName)[0].properties;
+                let $group = $('.group-content');
+                let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+                groupData.map(function (item, index) {
+                    // $('.group-content .radio-group').remove();
+                    // Create a new radio button element
+                    let radioGroup = $('<input>').attr({
+                        type: 'radio',
+                        name: 'radioGroup',
+                        value: item.groupName
+                    })
+
+                    // Create a label for the radio button
+                    let label = $('<label>').text(item.groupName);
+
+                    // Append the radio button and label to a container element (e.g., a div)
+                    let container = $('<div>').append(radioGroup, label).addClass('radio-group');
+
+                    // Append the container element to a parent element (e.g., a form or div)
+
+
+                    $group.append(container);
+                })
+                var deptData;
+                // $('input[name=radioGroup]').first().prop('checked', true);
+                $('input[name=radioGroup]').on('change', function () {
+                    handleRadioGroupChange(groupData, unitName)
+                });
+                // $('input[name=radioGroup]').first().trigger('change');
+
+            });
+
+            function handleRadioGroupChange(groupData, unitName) {
+                $('.radio-dept').remove();
+                let groupName = $('input[name=radioGroup]:checked').val();
+                console.log(groupName)
+                var deptData = groupData.filter(x => x.groupName === groupName)[0].properties;
+                let $dept = $('.dept-content');
+                let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+                deptData.map(function (item, index) {
+                    // Create a new radio button element
+                    let radioDept = $('<input>').attr({
+                        type: 'radio',
+                        name: 'radioDept',
+                        value: item.deptName
+                    })
+                    // Create a label for the radio button
+                    let label = $('<label>').text(item.deptName);
+                    let container = $('<div>').append(radioDept, label).addClass('radio-dept');
+                    $dept.append(container);
+                })
+                // $('input[name=radioDept]').first().prop('checked', true);
+                $('input[name=radioDept]').on('change', function () {
+                    handleRadioDeptChange(deptData, unitName, groupName)
+                });
+                // $('input[name=radioDept]').first().trigger('change');
+                function handleRadioDeptChange(deptData, unitName, groupName) {
+                    // console.log(unitName, groupName);
+                    $('.radio-detail').remove();
+                    $('.submit').remove();
+                    let deptName = $('input[name=radioDept]:checked').val();
+                    var detailData = deptData.filter(x => x.deptName === deptName)[0].properties;
+                    let $detail = $('.detail-content');
+                    let icons = ["anchor", "cloud", "heart", "moon", "star", "sun", "book"];
+                    detailData.map(function (item, index) {
+                        // Create a new radio button element
+                        let radioDetail = $('<input>').attr({
+                            type: 'radio',
+                            name: 'radioDetail',
+                            value: item
+                        })
+                        // Create a label for the radio button
+                        let label = $('<label>').text(item);
+                        console.log('label', item);
+                        let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
+                        $detail.append(container);
+                    })
+                    // $('input[name=radioDetail]').first().prop('checked', true);
+                    $('input[name=radioDetail]').on('change', function () {
+                        handleRadioDetailChange(unitName, groupName, deptName)
+                    });
+                    // $('input[name=radioDetail]').first().trigger('change');
+
+
+                    // $detail.append(submitButton);
+                    console.log('detailData', detailData)
+                    function handleRadioDetailChange(unitName, groupName, deptName) {
+                        $('.submit').remove();
+                        let detail = $('input[name=radioDetail]:checked').val();
+                        console.log(groupName)
+                        let $detail = $('.detail-content');
+                        let submitButton = $('<input>');
+                        submitButton.attr({
+                            type: 'submit',
+                            class: 'submit'
+                        });
+                         $detail.append(submitButton);
+                        // Your logic or actions when the submit button is clicked
+                        submitButton.on('click', function () {
+                            // Your logic or actions when the submit button is clicked
+                            alert(`${unitName}, ${groupName}, ${deptName}, ${detail}`)
+                        });
+                    }
+                }
+            }
+        }
+        handleClickUnit();
+
+    </script>
+</body>
+
+</html>

@@ -25,11 +25,13 @@
         }
 
         .block>* {
-            width: 22%;
-            min-height: 200px;
+            width: 20%;
+            min-height: 120px;
             background-color: #F7F8F9;
             border-radius: 8px;
-            margin-left: 3rem
+            margin-left: 3rem;
+            height: max-content;
+            max-height: 610px;
         }
 
         .block>*:nth-child(3) {
@@ -44,6 +46,21 @@
             flex-direction: column;
             padding: 15px 12px;
             padding-top: 0;
+
+        }
+
+        .request-content {
+            align-items: flex-end;
+        }
+
+        .request-content>input {
+            color: #fff;
+            background-color: #409FD4;
+            height: 44px;
+            width: 100px;
+            border-radius: 1.4rem;
+            outline: none;
+            border: none;
         }
 
         .unit-content.hidden,
@@ -51,6 +68,12 @@
         .detail-content.hidden,
         .request-content.hidden {
             display: none;
+        }
+
+        .unit-block,
+        .group-block,
+        .detail-block {
+            overflow: auto;
         }
 
         .unit-item {
@@ -93,7 +116,10 @@
             opacity: 1;
         }
 
-        .unit-header,.group-header,.detail-header,.request-header {
+        .unit-header,
+        .group-header,
+        .detail-header,
+        .request-header {
             padding: 1.5rem 1.2rem;
             height: 3.6rem;
         }
@@ -108,11 +134,23 @@
             padding: 1.2rem 1.2rem;
             border-radius: 0.8rem;
             height: 100%;
-            margin-right: 1.5rem;
+            margin-right: 1rem;
         }
 
-        .header-icon:first-child {
+        .icon1 {
             background-color: #64CBF4;
+        }
+
+        .icon2 {
+            background-color: #FF9F38;
+        }
+
+        .icon3 {
+            background-color: #6C5DD3;
+        }
+
+        .icon4 {
+            background-color: #F06A6A;
         }
 
         .header-text {
@@ -134,7 +172,7 @@
         .header-collapse {}
 
         .unit-status {
-            margin-right: 1.5rem;
+            margin-right: 1rem;
         }
 
         .unit-status::before {
@@ -143,6 +181,7 @@
 
         .unit-status.active::before {
             color: #6A81D5;
+            scale: 1.5;
         }
 
         .unit-button {
@@ -157,6 +196,41 @@
         .unit-button.active {
             color: #6A81D5;
         }
+
+        .radio-group,
+        .radio-detail {
+            padding: 13px 28px;
+            box-shadow: 0px 2px 11px rgba(69, 65, 164, 0.06), 0px 4px 10px rgba(31, 37, 89, 0.07);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+        }
+
+        .radio-group.active,
+        .radio-detail.active {
+            border: 1px solid red
+        }
+
+        .radio-group>input[type="radio"],
+        .radio-detail>input[type="radio"] {
+            margin-right: 2rem;
+            outline: none;
+            border: 2px solid #FF0000
+        }
+
+        .radio-group>input[type="radio"] .active {}
+
+        .radio-group>label,
+        .radio-detail>label {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #A8B3D2
+        }
+
+        .radio-group>label.active,
+        .radio-detail>label.active {
+            color: #6A81D5
+        }
     </style>
 </head>
 
@@ -166,7 +240,7 @@
             <div class="unit-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon"></i>
+                        <i class="fa-solid fa-house header-icon icon1"></i>
                         <div class="header-text text-unit">
                             <span>Chọn khối</span>
                             <span>Khối nghiệp vụ</span>
@@ -181,7 +255,7 @@
             <div class="group-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon"></i>
+                        <i class="fa-solid fa-house header-icon icon2"></i>
                         <div class="header-text text-group">
                             <span></span>
                         </div>
@@ -195,7 +269,7 @@
             <div class="detail-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon"></i>
+                        <i class="fa-solid fa-house header-icon icon3"></i>
                         <div class="header-text text-detail">
                             <span></span>
                         </div>
@@ -209,7 +283,7 @@
             <div class="request-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon"></i>
+                        <i class="fa-solid fa-house header-icon icon4"></i>
                         <div class="header-text text-request">
                             <span>Gửi yêu cầu</span>
                         </div>
@@ -751,8 +825,12 @@
                 $li.append(icon);
                 $li.append($button);
             });
+            $('.group-block').hide();
+            $('.detail-block').hide();
+            $('.request-block').hide();
             function handleClickUnit() {
                 $('.unit-item').click(function () {
+                    $('.group-block').show();
                     $('.unit-status.active').removeClass('active');
                     $('.unit-button.active').removeClass('active');
                     $(this).find('i').addClass('active');
@@ -764,16 +842,7 @@
                     let unitName = $(this).find('button.unit-button').text();
                     $('.text-group span:nth-child(1)').text(unitName);
                     let groupData = data.filter(x => x.unitName === unitName)[0].properties;
-
                     let level = data.filter(x => x.unitName === unitName)[0].level;
-                    if (level == 2) {
-                        $('.group-header').text('Loại yêu cầu');
-                        $('.detail-block').hide();
-                    }
-                    else {
-                        $('.group-header').text('Chọn nhóm nghiệp vụ');
-                        $('.detail-block').show();
-                    }
                     let $group = $('.group-content');
                     groupData.map(function (item, index) {
                         let radioGroup = $('<input>').attr({
@@ -790,11 +859,17 @@
                     });
                 });
                 function handleRadioGroupChange(groupData, unitName, level) {
+                    alert('1')
+                    $('.detail-block').show();
                     $('.radio-detail').remove();
+                    $(this).parent().addClass('active');
                     let groupName = $('input[name=radioGroup]:checked').val();
+                    console.log('groupName', groupName);
                     $('.text-detail span:nth-child(1)').text(groupName);
                     console.log('level', level);
                     if (level == 2) {
+                        $('.detail-block').hide();
+                        $('.request-block').show();
                         $('.submit').remove();
                         let submitButton = $('<input>');
                         submitButton.attr({
@@ -828,6 +903,7 @@
                         });
                     }
                     function handleRadioDetailChange(detailData, unitName, groupName) {
+                        $('.request-block').show();
                         $('.submit').remove();
                         let detail = $('input[name=radioDetail]:checked').val();
                         let $request = $('.request-content');
@@ -842,33 +918,21 @@
                         submitButton.on('click', function () {
                             alert(`${unitName}, ${groupName},${detail}`);
                         });
-
-                        // hover tooltip
-                        // $parent.hover(
-                        //     function () {
-                        //         $(this).find('.hidden-dept').css('visibility', 'visible').animate({ opacity: 1 }, 300);
-                        //     },
-                        //     function () {
-                        //         $(this).find('.hidden-dept').animate({ opacity: 0 }, 300, function () {
-                        //             $(this).css('visibility', 'hidden');
-                        //         });
-                        //     }
-                        // );
                     }
                 }
             };
             handleClickUnit();
 
-            function toggleDisplay(header, content) {
-                $(header).click(function () {
-                    $(this).next('content').toggleClass('hidden');
+            function toggleDisplay(content) {
+                $('.unit-header').click(function () {
+                    $(this).next(content).toggleClass('hidden');
                 });
             }
             // toggle display
-            toggleDisplay('.unit-header', '.unit-content');
-            toggleDisplay('.group-header', '.group-content');
-            toggleDisplay('.detail-header', '.detail-content');
-            toggleDisplay('.request-header', '.request-content');
+            toggleDisplay('.unit-content');
+            toggleDisplay('.group-content');
+            toggleDisplay('.detail-content');
+            toggleDisplay('.request-content');
             // $('.unit-header').click(function () {
             //     $(this).next('.unit-content').toggleClass('hidden');
             // });

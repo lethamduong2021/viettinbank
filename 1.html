@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Radio Button Example (jQuery)</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-			$('input[name=radioGroup]').first().prop('checked', true);
+        $(document).ready(function () {
+            $('input[name=radioGroup]').first().prop('checked', true);
             $('input[name=radioGroup]').on('change', handleRadioChange);
             $('input[name=radioGroup]').first().trigger('change');
-			
+
             function handleRadioChange() {
                 var selectedValue = $('input[name=radioGroup]:checked').val();
                 console.log("Selected value: " + selectedValue);
@@ -16,13 +17,15 @@
         });
     </script>
 </head>
+
 <body>
     <div class="group-content">
         <div class="radio-group">
             <input type="radio" name="radioGroup" value="Hỗ trợ chung"><label>Hỗ trợ chung</label>
         </div>
         <div class="radio-group">
-            <input type="radio" name="radioGroup" value="Hỗ trợ tác nghiệp &amp; Quản trị tham số hệ thống"><label>Hỗ trợ tác nghiệp &amp; Quản trị tham số hệ thống</label>
+            <input type="radio" name="radioGroup" value="Hỗ trợ tác nghiệp &amp; Quản trị tham số hệ thống"><label>Hỗ
+                trợ tác nghiệp &amp; Quản trị tham số hệ thống</label>
         </div>
         <div class="radio-group">
             <input type="radio" name="radioGroup" value="Hạch toán kế toán"><label>Hạch toán kế toán</label>
@@ -37,5 +40,16 @@
         <li></li>
         <li></li>
     </div>
+    <li class="unit-item">
+        <i class="unit-status fa-solid fa-house active"></i>
+        <button class="unit-button active">
+            Khối bán lẻ</button>
+    </li>
+    <li class="unit-item">
+        <i class="unit-status fa-solid fa-house active"></i>
+        <button class="unit-button active">
+            Khối bán buôn</button>
+    </li>
 </body>
+
 </html>

@@ -713,7 +713,8 @@
             });
             function handleClickUnit() {
                 $('.unit-item').click(function () {
-                    $('.unit-status.active').removeClass('.active');
+                    $('.unit-status.active').removeClass('active');
+                    $('.unit-button.active').removeClass('active');
                     $(this).find('i').addClass('active');
                     $(this).find('button').addClass('active');
                     $('.radio-group').remove();

@@ -35,6 +35,7 @@
             display: flex;
             flex-direction: column;
             padding: 15px 12px;
+            padding-top: 0;
         }
 
         .unit-content.hidden {
@@ -120,6 +121,31 @@
         }
 
         .header-collapse {}
+
+        .unit-status {
+            margin-right: 1.5rem;
+        }
+
+        .unit-status::before {
+            color: #A3AED0
+        }
+
+        .unit-status.active::before {
+            color: #6A81D5;
+        }
+
+        .unit-button {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 3rem;
+            border: none;
+            background-color: #F7F8F9;
+            color: #A3AED0
+        }
+
+        .unit-button.active {
+            color: #6A81D5;
+        }
     </style>
 </head>
 
@@ -680,18 +706,31 @@
                     .append(`${item.unitName}`);
                 $unit.append($li);
                 let icon = $('<i></i>');
+                icon.addClass("unit-status");
                 icon.addClass(icons[index] ?? "fa-solid fa-house");
                 $li.append(icon);
                 $li.append($button);
             });
             function handleClickUnit() {
                 $('.unit-item').click(function () {
+                    $('.unit-status.active').removeClass('.active');
+                    $(this).find('i').addClass('active');
+                    $(this).find('button').addClass('active');
                     $('.radio-group').remove();
                     $('.radio-detail').remove();
                     $('.submit').remove();
                     let unitName = $(this).find('button.unit-button').text();
                     let groupData = data.filter(x => x.unitName === unitName)[0].properties;
+
                     let level = data.filter(x => x.unitName === unitName)[0].level;
+                    if (level == 2) {
+                        $('.group-header').text('Gui yeu cau');
+                        $('.detail-block').hide();
+                    }
+                    else{
+                        $('.group-header').text('Chon nhom nghiep vu');
+                        $('.detail-block').show();
+                    }
                     let $group = $('.group-content');
                     groupData.map(function (item, index) {
                         let radioGroup = $('<input>').attr({
@@ -712,11 +751,11 @@
                     let groupName = $('input[name=radioGroup]:checked').val();
                     console.log('level', level);
                     if (level == 2) {
-                        let submitButton = $('<a></a>');
+                        let submitButton = $('<input>');
                         submitButton.attr({
-                            href: 'https://vnexpress.net/the-gioi',
+                            type: 'submit',
                             class: 'submit'
-                        }).text('Gui yeu cau');
+                        });
                         $('.group-content').append(submitButton);
                         submitButton.on('click', function () {
                             alert(`${unitName}, ${groupName}`);
@@ -750,9 +789,9 @@
                         console.log('parent: ', $parent.find('hidden-dept').text());
                         let submitButton = $('<a></a>');
                         submitButton.attr({
-                            href: 'https://vnexpress.net/the-gioi',
+                            type: 'submit',
                             class: 'submit'
-                        }).text('Gui yeu cau');
+                        });
                         $parent.append(submitButton);
                         submitButton.on('click', function () {
                             alert(`${unitName}, ${groupName},${detail}`);

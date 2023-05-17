@@ -207,7 +207,7 @@
 
         .radio-group.active,
         .radio-detail.active {
-            border: 1px solid red
+            border: 1px solid #6A81D5
         }
 
         .radio-group>input[type="radio"],
@@ -227,8 +227,8 @@
             color: #A8B3D2
         }
 
-        .radio-group>label.active,
-        .radio-detail>label.active {
+        .radio-group.active>label,
+        .radio-detail.active>label {
             color: #6A81D5
         }
     </style>
@@ -861,9 +861,14 @@
                 });
                 function handleRadioGroupChange(groupData, unitName, level) {
                     // alert('1')
+                    $('input[name=radioGroup]').parent().removeClass('active');
+                    $('input[name=radioGroup]').parent().find('label').removeClass('active');
                     $('.detail-block').show();
                     $('.radio-detail').remove();
-                    $(this).parent().addClass('active');
+                    // $(this).parent().addClass('active');
+                    console.log('this', $(this).prop('class'));
+                    $('input[name=radioGroup]:checked').parent().addClass('active');
+                    $('input[name=radioGroup]:checked').parent().find('label').addClass('active');
                     let groupName = $('input[name=radioGroup]:checked').val();
                     console.log('groupName', groupName);
                     $('.text-detail span:nth-child(1)').text(groupName);
@@ -905,9 +910,13 @@
                         });
                     }
                     function handleRadioDetailChange(detailData, unitName, groupName) {
+                        $('input[name=radioDetail]').parent().removeClass('active');
+                        $('input[name=radioDetail]').parent().find('label').removeClass('active');
                         $('.request-block').show();
                         $('.submit').remove();
                         let detail = $('input[name=radioDetail]:checked').val();
+                        $('input[name=radioDetail]:checked').parent().addClass('active');
+                        $('input[name=radioDetail]:checked').parent().find('label').addClass('active');
                         let $request = $('.request-content');
                         console.log('parent: ', $request);
                         let submitButton = $('<input>');

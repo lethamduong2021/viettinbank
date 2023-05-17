@@ -1,11 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <div class="container">
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+        <div class="card">
+            <div class="card-header">Header a</div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script>
+       $(document).ready(function() {
+  var cardsPerPage = 8;
+  var cardsPerRow = 4;
+  var cards = $('.container').find('.card');
+  var numPages = Math.ceil(cards.length / cardsPerPage);
+
+  // Create pagination links
+  for (var i = 1; i <= numPages; i++) {
+    $('.pagination-list').append('<li class="page-link">' + i + '</li>');
+  }
+
+  // Show initial page
+  showPage(1);
+
+  // Handle pagination link click event
+  $('.page-link').on('click', function() {
+    var pageNum = parseInt($(this).text());
+    showPage(pageNum);
+  });
+
+  // Function to show the selected page
+  function showPage(pageNum) {
+    var start = (pageNum - 1) * cardsPerPage;
+    var end = start + cardsPerPage;
+
+    // Hide all cards
+    cards.hide();
+
+    // Show cards for the selected page
+    cards.slice(start, end).each(function(index) {
+      if (index % cardsPerRow === 0) {
+        $(this).css('clear', 'left');
+      }
+      $(this).show();
+    });
+
+    // Update active class on pagination links
+    $('.page-link').removeClass('active');
+    $('.page-link').eq(pageNum - 1).addClass('active');
+  }
+});
+
+
+    </script>
 </body>
+
 </html>

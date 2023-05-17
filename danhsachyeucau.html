@@ -1,11 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        html {
+            font-size: 62.5%;
+        }
+
+        /* header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title {
+            font-weight: 500;
+            font-size: 2.9rem;
+            line-height: 3.7rem;
+            margin-bottom: 1.7rem;
+        }
+
+        .progress-bar {
+            font-weight: 400;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            color: #323338;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right>input[type="submit"] {
+            color: #fff;
+            height: 4.2rem;
+            background-color: #007AFF;
+            border-radius: 0.4rem;
+            padding-left: 1rem;
+            border: none;
+            outline: none;
+        }
+
+        /* tab */
+        .tab-container {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .tab-header {
+            display: flex;
+            height: 4.4rem;
+            width: 40%;
+        }
+
+        .tab-button {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            background-color: #fff;
+            color: #787486;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            flex: 1;
+            vertical-align: center;
+            text-align: center;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1.5rem;
+            border-radius: 0.4rem;
+        }
+
+        .tab-button>.tab-number {
+            font-size: 1.1rem;
+            color: #fff;
+            background: #787486;
+            border-radius: 0.9rem;
+            padding: 0 0.7rem;
+        }
+
+        .tab-button.active>.tab-number {
+            color: #fff;
+            background: #4483F7;
+        }
+
+        .tab-button:hover {
+            background-color: #ddd;
+        }
+
+        .tab-button.active {
+            background-color: rgba(68, 131, 247, 0.1);
+            color: #4483F7;
+        }
+
+        .tab-content {
+            display: none;
+            padding-top: 2rem;
+        }
+
+        .tab-content h2 {
+            margin-top: 0;
+        }
+
+        /* search-icon */
+
+        .input-icon {
+            position: relative;
+            flex: 1;
+            align-items: center;
+        }
+
+        .input-icon input {
+            width: 85%;
+            padding-right: 4rem;
+            height: 3.2rem;
+            background: #F7F8F9;
+            border-radius: 1rem;
+            outline: none;
+            border: none;
+            padding-left: 2rem;
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            color: #B6B6B6;
+        }
+
+        .input-icon i {
+            position: absolute;
+            top: 50%;
+            /* right: 10px; */
+            left: 85%;
+            transform: translateY(-50%);
+        }
+
+        /* filter */
+        .filter {
+            display: flex;
+            width: 100%;
+        }
+
+        .filter-select {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-select>span {
+            font-weight: 700;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+            color: #000000;
+            margin-right: 1.6rem;
+        }
+
+        .filter-select>select {
+            height: 4rem;
+            left: 972px;
+            background: #fff;
+            border: 0.1rem solid #EBECF0;
+            border-radius: 0.8rem;
+            outline: none;
+            width: 25rem;
+        }
+
+        .filter-button {
+            flex: 2
+        }
+
+        .filter-button>* {
+            width: 10.8rem;
+            height: 3.6rem;
+            background: #F1F5FE;
+            border-radius: 0.8rem;
+            border: none;
+            outline: none;
+            margin-right: 2.2rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+        }
+
+        .filter-button>*:first-child {
+            color: #4B7BEC;
+            background-color: #F1F5FE;
+        }
+
+        .filter-button>*:last-child {
+            color: #fff;
+            background-color: #4B7BEC;
+        }
+
+        button>span>i {
+            margin-right: 0.8rem;
+        }
+
+        /* card */
+        .card {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3.5rem
+        }
+
+        .card-item {
+            border: 1px solid red;
+            width: 22%;
+            height: 20rem;
+            position: relative;
+        }
+
+        .card-header {
+            font-weight: 600;
+            font-size: 1.2rem;
+            line-height: 1.5rem;
+            height: 2rem;
+            width: max-content;
+            color: #fff;
+            border-radius: 0.4rem;
+            padding: 0.2rem 0.8rem;
+            margin-left: 1.5rem;
+            position: absolute;
+            z-index: 2
+        }
+
+        .card-item:first-child>.card-header {
+            background-color: #5AC3DD;
+        }
+
+        .card-item:nth-child(2)>.card-header {
+            background-color: #007AFF;
+        }
+
+        .card-item:nth-child(3)>.card-header {
+            background-color: #5687E6;
+        }
+
+        .card-item:nth-child(4)>.card-header {
+            background-color: #4698A3;
+        }
+
+        .card-body {
+            background: #F9F9F9;
+            border-radius: 1rem;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 1rem;
+            z-index: 1;
+        }
+
+        .card-link {
+            height: 1.8rem;
+            margin-top: 2rem;
+            margin-right: 1.1rem;
+            margin: 2rem 1.1rem 0 0;
+            display: flex;
+            justify-content: flex-end;
+            font-weight: 800;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            color: #0D062D;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            height: 35%;
+            padding: 0 1.2rem 0 2.1rem;
+
+        }
+
+        .card-title>span:first-child {
+            font-weight: 600;
+            font-size: 1.6rem;
+            line-height: 2.1rem;
+            color: #0D062D;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-status {
+            margin-top: 4rem;
+            width: max-content;
+
+        }
+
+        .card-status>span {
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.2rem;
+            max-height: 1.6rem;
+            border-radius: 0.4rem;
+            padding: 0.2rem 0.5rem;
+        }
+
+        .high {
+            color: #F06A6A;
+            background-color: rgba(255, 46, 0, 0.15);
+        }
+
+        .process {
+            color:#68B266;
+            background: rgba(131, 194, 157, 0.2);
+        }
+        .low{
+            color:#FFA500;
+            background: rgba(255, 165, 0, 0.15);
+        }
+    </style>
+
+    </style>
 </head>
+
 <body>
-    
+    <div class="header">
+        <div class="left">
+            <div class="title">Danh sách yêu cầu</div>
+            <div class="progress-bar">
+                <label for="file">Đã hoàn thành: 25/50</label>
+                <progress id="file" value="32" max="100"> 50% </progress>
+            </div>
+        </div>
+        <div class="right">
+            <input type="submit" value="Tạo mới yêu cầu"></input>
+        </div>
+    </div>
+    <div class="tab-container">
+        <div class="tab-header">
+            <button class="tab-button active" onclick="openTab(event, 'tab1')">
+                <i class="fa-solid fa-house"></i>
+                <span>Tiếp nhận</span>
+                <span class="tab-number">4</span>
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tab2')">
+                <i class="fa-solid fa-house"></i>
+                <span>Bổ sung chất lượng</span>
+                <span class="tab-number">4</span>
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tab3')">
+                <i class="fa-solid fa-house"></i>
+                <span>Đánh giá chất lượng</span>
+                <span class="tab-number">4</span>
+            </button>
+        </div>
+        <div class="tab-content" id="tab1">
+            <div class="filter">
+                <div class="input-icon">
+                    <input type="text" placeholder="Tìm kiếm">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-select">
+                    <span>Đầu mối</span>
+                    <select name="" id="">
+                        <option value="">Hiển thị tất cả</option>
+                    </select>
+                </div>
+                <div class="filter-button">
+                    <button><span><i class="fas fa-search"></i>Làm mới</span></button>
+                    <button><span><i class="fas fa-search"></i>Xuất file</span></button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-item">
+                    <div class="card-header">
+                        Phòng Phát triển sản phẩm bán lẻ
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span>Sản phẩm tín dụng bán lẻ</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                            </div>
+                            <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item">
+                    <div class="card-header">
+                        Phòng Quản lý chất lượng
+                    </div>
+                    <div class="card-body">
+                        body-b
+                    </div>
+                </div>
+                <div class="card-item">
+                    <div class="card-header">
+                        Trung Tâm Thẻ - Phòng Kế toán Tổng hợp
+                    </div>
+                    <div class="card-body">
+                        body-c
+                    </div>
+                </div>
+                <div class="card-item">
+                    <div class="card-header">
+                        Phòng Ngân hàng số
+                    </div>
+                    <div class="card-body">
+                        body-d
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-content" id="tab2">
+            <h2>Tab 2 Content</h2>
+            <p>This is the content for Tab 2.</p>
+        </div>
+        <div class="tab-content" id="tab3">
+            <h2>Tab 3 Content</h2>
+            <p>This is the content for Tab 3.</p>
+        </div>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            var tabContent = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabContent.length; i++) {
+                tabContent[i].style.display = 'none';
+            }
+
+            // Remove 'active' class from all tab buttons
+            var tabButtons = document.getElementsByClassName('tab-button');
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].className = tabButtons[i].className.replace(' active', '');
+            }
+
+            // Show the selected tab content and mark the button as active
+            document.getElementById(tabName).style.display = 'block';
+            evt.currentTarget.className += ' active';
+        }
+
+        // Set the first tab as active by default
+        document.getElementsByClassName('tab-button')[0].click();
+
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .post {
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .post-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-author {
+            font-weight: bold;
+        }
+
+        .post-date {
+            color: #888;
+        }
+
+        .post-content {
+            margin-bottom: 10px;
+        }
+
+        .comment {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .comment-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .comment-text {
+            background-color: #f2f2f2;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .post-files img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="post">
+        <div class="post-header">
+            <img src="avatar.jpg" alt="Avatar" class="avatar">
+            <div class="post-info">
+                <div class="post-author">John Doe</div>
+                <div class="post-date">May 17, 2023</div>
+            </div>
+        </div>
+        <div class="post-content">
+            <div class="post-comments">
+                <div class="comment">
+                    <img src="commenter1.jpg" alt="Commenter 1" class="comment-avatar">
+                    <div class="comment-text">This is a great post!</div>
+                </div>
+                <div class="comment">
+                    <img src="commenter2.jpg" alt="Commenter 2" class="comment-avatar">
+                    <div class="comment-text">I agree!</div>
+                </div>
+                <!-- Add more comments here -->
+            </div>
+            <div class="post-files">
+                <img src="file1.jpg" alt="File 1">
+                <img src="file2.jpg" alt="File 2">
+                <!-- Add more files here -->
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

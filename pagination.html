@@ -46,80 +46,116 @@
             { adName: "AdName 9", lastName: "Last Name 9" },
             { adName: "AdName 10", lastName: "Last Name 10" }
         ];
-
+    
         $(document).ready(function () {
             changePage(current_page);
-
-            $("#btn_prev").on("click", function (e) {
+    
+            $("#btnPrev").on("click", function (e) {
                 e.preventDefault();
                 if (current_page > 1) {
                     current_page--;
                     changePage(current_page);
                 }
             });
-
-            $("#btn_next").on("click", function (e) {
+    
+            $("#btnNext").on("click", function (e) {
                 e.preventDefault();
                 if (current_page < numPages()) {
                     current_page++;
                     changePage(current_page);
                 }
             });
-
+    
             $("#searchInput, #filterSelect").on("input", function () {
                 var searchValue = $("#searchInput").val().toLowerCase();
                 var filterValue = $("#filterSelect").val().toLowerCase();
-
+    
                 var filteredData = objJson.filter(function (item) {
                     // Check if any value in the object contains the search value
                     return Object.values(item).some(function (value) {
                         return value.toString().toLowerCase().includes(searchValue);
                     }) && (filterValue === "" || item.adName.toLowerCase() === filterValue);
                 });
-
+    
                 current_page = 1;
                 objJson = filteredData;
                 changePage(current_page);
             });
         });
-
+    
         function changePage(page) {
-            var btn_next = $("#btn_next");
-            var btn_prev = $("#btn_prev");
+            var btn_next = $("#btnNext");
+            var btn_prev = $("#btnPrev");
             var listing_table = $("#listingTable");
             var page_span = $("#page");
-
+    
             // Validate page
             if (page < 1) page = 1;
             if (page > numPages()) page = numPages();
-
+    
             listing_table.empty();
-
+    
             for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
                 listing_table.append(objJson[i].adName + "<br>");
             }
-
-            page_span.text(page);
-
+    
+            page_span.text(page + " / " + numPages());
+    
             if (page == 1) {
                 btn_prev.css("visibility", "hidden");
             } else {
                 btn_prev.css("visibility", "visible");
             }
-
+    
             if (page == numPages()) {
                 btn_next.css("visibility", "hidden");
             } else {
                 btn_next.css("visibility", "visible");
             }
+    
+            var pageLinks = '';
+            var totalPages = numPages();
+    
+            if (totalPages <= 7) {
+                for (var i = 1; i <= totalPages; i++) {
+                    pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                }
+            } else {
+                if (page <= 4) {
+                    for (var i = 1; i <= 5; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                } else if (page >= totalPages - 3) {
+                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                    pageLinks += '... ';
+                    for (var i = totalPages - 4; i <= totalPages; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                } else {
+                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                    pageLinks += '... ';
+                    for (var i = page - 1; i <= page + 1; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                }
+            }
+    
+            $(".pagination").empty();
+            $(".pagination").append('<a href="#" id="btnPrev">Prev</a> ');
+            $(".pagination").append(pageLinks);
+            $(".pagination").append(' <a href="#" id="btnNext">Next</a>');
+            $(".pagination").find('a:contains("' + page + '")').addClass('active');
         }
-
+    
         function numPages() {
             return Math.ceil(objJson.length / records_per_page);
         }
-
-
     </script>
+    
 </body>
 
 </html>

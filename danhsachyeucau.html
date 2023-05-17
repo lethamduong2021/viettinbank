@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <style>
         html {
             font-size: 62.5%;
@@ -232,19 +233,23 @@
             z-index: 2
         }
 
-        .card-item:first-child>.card-header,.card-item:nth-child(5)>.card-header {
+        .card-item:first-child>.card-header,
+        .card-item:nth-child(5)>.card-header {
             background-color: #5AC3DD;
         }
 
-        .card-item:nth-child(2)>.card-header,.card-item:nth-child(6)>.card-header {
+        .card-item:nth-child(2)>.card-header,
+        .card-item:nth-child(6)>.card-header {
             background-color: #007AFF;
         }
 
-        .card-item:nth-child(3)>.card-header,.card-item:nth-child(7)>.card-header {
+        .card-item:nth-child(3)>.card-header,
+        .card-item:nth-child(7)>.card-header {
             background-color: #5687E6;
         }
 
-        .card-item:nth-child(4)>.card-header,.card-item:nth-child(8)>.card-header {
+        .card-item:nth-child(4)>.card-header,
+        .card-item:nth-child(8)>.card-header {
             background-color: #4698A3;
         }
 
@@ -367,7 +372,7 @@
                 </div>
                 <div class="filter-button">
                     <button><span><i class="fas fa-search"></i>Làm mới</span></button>
-                    <button><span><i class="fas fa-search"></i>Xuất file</span></button>
+                    <button id="exportButton" onclick="exportToExcel(data)"><span><i class="fas fa-search"></i>Xuất file</span></button>
                 </div>
             </div>
             <div class="card" id="listingTable">
@@ -470,6 +475,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script>
         var data = [
             {
@@ -1055,11 +1061,11 @@
             });
         });
 
+
         function changePage(page) {
             var btn_next = $("#btnNext");
             var btn_prev = $("#btnPrev");
             var listing_table = $("#listingTable");
-            var pagination_links = $("#paginationLinks");
             var page_span = $("#page");
 
             // Validate page
@@ -1068,11 +1074,7 @@
 
             listing_table.empty();
 
-            for (
-                var i = (page - 1) * records_per_page;
-                i < page * records_per_page && i < newData.length;
-                i++
-            ) {
+            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < newData.length; i++) {
                 var html = `
                 <div class="card-item">
                     <div class="card-header">
@@ -1094,35 +1096,11 @@
                         </div>
                     </div>
                 </div> 
-                `
+                `;
                 listing_table.append(html);
             }
 
-            page_span.text(page);
-
-            pagination_links.empty();
-
-            if (page > 1) {
-                pagination_links.append(
-                    "<a href='#' class='pagination-link'>" + (page - 1) + "</a>"
-                );
-            }
-
-            pagination_links.append(
-                "<a href='#' class='pagination-link active'>" + page + "</a>"
-            );
-
-            if (page < numPages()) {
-                pagination_links.append(
-                    "<a href='#' class='pagination-link'>" + (page + 1) + "</a>"
-                );
-            }
-
-            $(".pagination-link").on("click", function (e) {
-                e.preventDefault();
-                var selectedPage = parseInt($(this).text());
-                changePage(selectedPage);
-            });
+            page_span.text(page + " / " + numPages());
 
             if (page == 1) {
                 btn_prev.css("visibility", "hidden");
@@ -1135,10 +1113,68 @@
             } else {
                 btn_next.css("visibility", "visible");
             }
+
+            var pageLinks = '';
+            var totalPages = numPages();
+
+            if (totalPages <= 7) {
+                for (var i = 1; i <= totalPages; i++) {
+                    pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                }
+            } else {
+                if (page <= 4) {
+                    for (var i = 1; i <= 5; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                } else if (page >= totalPages - 3) {
+                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                    pageLinks += '... ';
+                    for (var i = totalPages - 4; i <= totalPages; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                } else {
+                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                    pageLinks += '... ';
+                    for (var i = page - 1; i <= page + 1; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                }
+            }
+
+            $(".pagination").empty();
+            $(".pagination").append('<a href="#" id="btnPrev">Prev</a> ');
+            $(".pagination").append(pageLinks);
+            $(".pagination").append(' <a href="#" id="btnNext">Next</a>');
+            $(".pagination").find('a:contains("' + page + '")').addClass('active');
         }
 
         function numPages() {
             return Math.ceil(newData.length / records_per_page);
+        }
+        function exportToExcel(newData) {
+            var workbook = XLSX.utils.book_new();
+            var worksheet = XLSX.utils.json_to_sheet(newData);
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+            var excelBuffer = XLSX.write(workbook, {
+                bookType: "xlsx",
+                type: "array",
+            });
+            saveExcelFile(excelBuffer, "data.xlsx");
+        }
+
+        function saveExcelFile(buffer, filename) {
+            var blob = new Blob([buffer], { type: "application/octet-stream" });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>

@@ -207,9 +207,10 @@
             width: 100%;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            /* justify-content: spabetweence-; */
             align-items: center;
-            margin-top: 3.5rem
+            margin-top: 3.5rem;
+            column-gap: 20px;
         }
 
         .card-item {
@@ -366,13 +367,14 @@
                 </div>
                 <div class="filter-select">
                     <span>Đầu mối</span>
-                    <select name="" id="">
+                    <select name="" id="filterSelect">
                         <option value="">Hiển thị tất cả</option>
                     </select>
                 </div>
                 <div class="filter-button">
                     <button><span><i class="fas fa-search"></i>Làm mới</span></button>
-                    <button id="exportButton" onclick="exportToExcel(data)"><span><i class="fas fa-search"></i>Xuất file</span></button>
+                    <button id="exportButton" onclick="exportToExcel(data)"><span><i class="fas fa-search"></i>Xuất
+                            file</span></button>
                 </div>
             </div>
             <div class="card" id="listingTable">
@@ -985,7 +987,7 @@
             },
         ];
 
-        const newData = [];
+        var newData = [];
         // Đang lấy data cũ tiện tay,data mới lấy dễ hơn dùng doSelect vì giao diện này ko phân cấp bậc nên dùng cách này
         data.forEach(function (unit) {
             var unitName = unit.unitName;
@@ -1003,8 +1005,19 @@
             });
         });
         console.log(newData);
+        var options = [...new Set(newData.map(item => item.unitName))];
+        console.log('1', options);
+        for (var i = 0; i < options.length; i++) {
+            var option = $("<option></option>")
+                .text(options[i])
+                .val(options[i])
+            // Append the option to the select element
+            $("#filterSelect").append(option);
+        }
+        var objJson = newData.slice(); // Make a copy of the original data
     </script>
     <script>
+        // var newData1 = newData.slice
         function openTab(evt, tabName) {
             // Hide all tab content
             $('.tab-content').hide();
@@ -1018,7 +1031,6 @@
         }
         $('.tab-button').eq(0).trigger('click');
         // Set the first tab as active by default
-
         var current_page = 1;
         var records_per_page = 8;
 
@@ -1047,20 +1059,16 @@
 
                 var filteredData = newData.filter(function (item) {
                     // Check if any value in the object contains the search value
-                    return (
-                        Object.values(item).some(function (value) {
-                            return value.toString().toLowerCase().includes(searchValue);
-                        }) &&
-                        (filterValue === "" || item.unitName.toLowerCase() === filterValue)
-                    );
+                    return Object.values(item).some(function (value) {
+                        return value.toString().toLowerCase().includes(searchValue);
+                    }) && (filterValue === "" || item.unitName.toLowerCase() === filterValue);
                 });
 
                 current_page = 1;
-                newData = filteredData;
+                objJson = filteredData;
                 changePage(current_page);
             });
         });
-
 
         function changePage(page) {
             var btn_next = $("#btnNext");
@@ -1074,17 +1082,18 @@
 
             listing_table.empty();
 
-            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < newData.length; i++) {
-                var html = `
-                <div class="card-item">
+            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
+                if (objJson[i]) {
+                    let html =
+                        `<div class="card-item">
                     <div class="card-header">
-                        ${newData[i].deptName}
+                        ${objJson[i].deptName}
                     </div>
                     <div class="card-body">
                         <div class="card-link">...</div>
                         <div class="card-info">
                             <div class="card-title">
-                                <span> ${newData[i].detail}</span>
+                                <span>   ${objJson[i].detail}</span>
                                 <br></br>
                                 <span>Mô tả yêu cầu</span>
                             </div>
@@ -1095,9 +1104,10 @@
                             </div>
                         </div>
                     </div>
-                </div> 
-                `;
-                listing_table.append(html);
+                </div>`
+                    listing_table.append(html);
+                }
+
             }
 
             page_span.text(page + " / " + numPages());
@@ -1153,28 +1163,7 @@
         }
 
         function numPages() {
-            return Math.ceil(newData.length / records_per_page);
-        }
-        function exportToExcel(newData) {
-            var workbook = XLSX.utils.book_new();
-            var worksheet = XLSX.utils.json_to_sheet(newData);
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-            var excelBuffer = XLSX.write(workbook, {
-                bookType: "xlsx",
-                type: "array",
-            });
-            saveExcelFile(excelBuffer, "data.xlsx");
-        }
-
-        function saveExcelFile(buffer, filename) {
-            var blob = new Blob([buffer], { type: "application/octet-stream" });
-            var url = URL.createObjectURL(blob);
-            var link = document.createElement("a");
-            link.href = url;
-            link.setAttribute("download", filename);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            return Math.ceil(objJson.length / records_per_page);
         }
     </script>
 </body>

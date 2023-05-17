@@ -3,307 +3,481 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="demo-files/demo.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<style>
-    .container {
-        width: 100%;
-        height: 100%;
 
-    }
+    <style>
+        html {
+            font-size: 62.5%;
+        }
 
-    .block {
-        display: flex;
-        padding: 20px 30px;
-        /* justify-content: space-between; */
-    }
+        /* header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+        }
 
-    .block>* {
-        width: 20%;
-        min-height: 120px;
-        background-color: #F7F8F9;
-        border-radius: 8px;
-        margin-left: 3rem;
-        height: max-content;
-        max-height: 610px;
-    }
+        .title {
+            font-weight: 500;
+            font-size: 2.9rem;
+            line-height: 3.7rem;
+            margin-bottom: 1.7rem;
+        }
 
-    .block>*:nth-child(3) {
-        min-width: 35%;
-    }
+        .progress-bar {
+            font-weight: 400;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            color: #323338;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .unit-content,
-    .group-content,
-    .detail-content,
-    .request-content {
-        display: flex;
-        flex-direction: column;
-        padding: 15px 12px;
-        padding-top: 0;
+        .right>input[type="submit"] {
+            color: #fff;
+            height: 4.2rem;
+            background-color: #007AFF;
+            border-radius: 0.4rem;
+            padding-left: 1rem;
+            border: none;
+            outline: none;
+        }
 
-    }
+        /* tab */
+        .tab-container {
+            width: 100%;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
 
-    .request-content {
-        align-items: flex-end;
-    }
+        .tab-header {
+            display: flex;
+            height: 4.4rem;
+            width: 40%;
+        }
 
-    .request-content>input {
-        color: #fff;
-        background-color: #409FD4;
-        height: 44px;
-        width: 100px;
-        border-radius: 1.4rem;
-        outline: none;
-        border: none;
-    }
+        .tab-button {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            background-color: #fff;
+            color: #787486;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 1rem 1.5rem;
+            flex: 1;
+            vertical-align: center;
+            text-align: center;
+            transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1.5rem;
+            border-radius: 0.4rem;
+        }
 
-    .unit-content.hidden,
-    .group-content.hidden,
-    .detail-content.hidden,
-    .request-content.hidden {
-        display: none;
-    }
+        .tab-button>.tab-number {
+            font-size: 1.1rem;
+            color: #fff;
+            background: #787486;
+            border-radius: 0.9rem;
+            padding: 0 0.7rem;
+        }
 
-    .unit-block,
-    .group-block,
-    .detail-block {
-        overflow: auto;
-    }
+        .tab-button.active>.tab-number {
+            color: #fff;
+            background: #4483F7;
+        }
 
-    .unit-item {
-        height: 60px;
-        color: red;
-        list-style: none;
-        margin-left: 0.5rem
-    }
+        .tab-button:hover {
+            background-color: #ddd;
+        }
 
-    .hidden-dept {
-        display: none;
-    }
+        .tab-button.active {
+            background-color: rgba(68, 131, 247, 0.1);
+            color: #4483F7;
+        }
 
-    /* tooltip */
-    .tooltip {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-    }
+        .tab-content {
+            display: none;
+            padding-top: 2rem;
+        }
 
-    .tooltip .hidden-dept {
-        visibility: hidden;
-        width: 120px;
-        background-color: #000;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        margin-left: -60px;
-        opacity: 0;
-        transition: opacity 0.3s;
-    }
+        .tab-content h2 {
+            margin-top: 0;
+        }
 
-    .tooltip:hover .hidden-dept {
-        visibility: visible;
-        opacity: 1;
-    }
+        /* search-icon */
 
-    .unit-header,
-    .group-header,
-    .detail-header,
-    .request-header {
-        padding: 1.5rem 1.2rem;
-        height: 3.6rem;
-    }
+        .input-icon {
+            position: relative;
+            flex: 1;
+            align-items: center;
+        }
 
-    .header-content {
-        display: flex;
-        align-items: center;
-    }
+        .input-icon input {
+            width: 85%;
+            padding-right: 4rem;
+            height: 3.2rem;
+            background: #F7F8F9;
+            border-radius: 1rem;
+            outline: none;
+            border: none;
+            padding-left: 2rem;
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            color: #B6B6B6;
+        }
 
-    .header-icon {
-        color: #fff;
-        padding: 1.2rem 1.2rem;
-        border-radius: 0.8rem;
-        height: 100%;
-        margin-right: 1rem;
-    }
-    .header-icon::before{
-        font-size: 12px;
-    }
-    .icon1 {
-        background-color: #64CBF4;
-    }
+        .input-icon i {
+            position: absolute;
+            top: 40%;
+            /* right: 10px; */
+            left: 85%;
+            transform: translateY(-50%);
+        }
 
-    .icon2 {
-        background-color: #FF9F38;
-    }
+        /* filter */
+        .filter {
+            display: flex;
+            width: 100%;
+        }
 
-    .icon3 {
-        background-color: #6C5DD3;
-    }
+        .filter-select {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
 
-    .icon4 {
-        background-color: #F06A6A;
-    }
+        .filter-select>span {
+            font-weight: 700;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+            color: #000000;
+            margin-right: 1.6rem;
+        }
 
-    .header-text {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        width: 90%;
-        justify-content: space-between;
-        height: 3.4rem;
-    }
+        .filter-select>select {
+            height: 4rem;
+            left: 972px;
+            background: #fff;
+            border: 0.1rem solid #EBECF0;
+            border-radius: 0.8rem;
+            outline: none;
+            width: 25rem;
+        }
 
-    .header-text>*:first-child {
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 25px;
-        color: #3E4954;
-    }
+        .filter-button {
+            flex: 2
+        }
 
-    .header-collapse {}
+        .filter-button>* {
+            width: 10.8rem;
+            height: 3.6rem;
+            background: #F1F5FE;
+            border-radius: 0.8rem;
+            border: none;
+            outline: none;
+            margin-right: 2.2rem;
+            font-weight: 600;
+            font-size: 1.4rem;
+            line-height: 1.6rem;
+        }
 
-    .unit-status {
-        margin-right: 1rem;
-    }
+        .filter-button>*:first-child {
+            color: #4B7BEC;
+            background-color: #F1F5FE;
+        }
 
-    .unit-status::before {
-        color: #A3AED0
-    }
+        .filter-button>*:last-child {
+            color: #fff;
+            background-color: #4B7BEC;
+        }
 
-    .unit-status.active::before {
-        color: #6A81D5;
-        scale: 1.5;
-    }
+        button>span>i {
+            margin-right: 0.8rem;
+        }
 
-    .unit-button {
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 3rem;
-        border: none;
-        background-color: #F7F8F9;
-        color: #A3AED0
-    }
+        /* card */
+        .card {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            /* justify-content: spabetweence-; */
+            align-items: center;
+            margin-top: 3.5rem;
+            column-gap: 20px;
+        }
 
-    .unit-button.active {
-        color: #6A81D5;
-    }
+        .card-item {
+            width: calc(100% / 4 - 30px);
+            height: 20rem;
+            position: relative;
+            margin-bottom: 40px;
+        }
 
-    .radio-group,
-    .radio-detail {
-        padding: 13px 28px;
-        box-shadow: 0px 2px 11px rgba(69, 65, 164, 0.06), 0px 4px 10px rgba(31, 37, 89, 0.07);
-        border-radius: 16px;
-        margin-bottom: 1rem;
-    }
+        .card-header {
+            font-weight: 600;
+            font-size: 1.2rem;
+            line-height: 1.5rem;
+            height: 2rem;
+            width: max-content;
+            color: #fff;
+            border-radius: 0.4rem;
+            padding: 0.2rem 0.8rem;
+            margin-left: 1.5rem;
+            position: absolute;
+            z-index: 2
+        }
 
-    .radio-group.active,
-    .radio-detail.active {
-        border: 1px solid #6A81D5
-    }
+        .card-item:first-child>.card-header,
+        .card-item:nth-child(5)>.card-header {
+            background-color: #5AC3DD;
+        }
 
-    .radio-group>input[type="radio"],
-    .radio-detail>input[type="radio"] {
-        margin-right: 2rem;
-        outline: none;
-        border: 2px solid #FF0000
-    }
+        .card-item:nth-child(2)>.card-header,
+        .card-item:nth-child(6)>.card-header {
+            background-color: #007AFF;
+        }
 
-    .radio-group>input[type="radio"] .active {}
+        .card-item:nth-child(3)>.card-header,
+        .card-item:nth-child(7)>.card-header {
+            background-color: #5687E6;
+        }
 
-    .radio-group>label,
-    .radio-detail>label {
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 20px;
-        color: #A8B3D2
-    }
+        .card-item:nth-child(4)>.card-header,
+        .card-item:nth-child(8)>.card-header {
+            background-color: #4698A3;
+        }
 
-    .radio-group.active>label,
-    .radio-detail.active>label {
-        color: #6A81D5
-    }
-</style>
+        .card-body {
+            background: #F9F9F9;
+            border-radius: 1rem;
+            width: 100%;
+            height: 95%;
+            position: absolute;
+            top: 1rem;
+            z-index: 1;
+        }
+
+        .card-link {
+            height: 1.8rem;
+            margin-top: 2rem;
+            margin-right: 1.1rem;
+            margin: 2rem 1.1rem 0 0;
+            display: flex;
+            justify-content: flex-end;
+            font-weight: 800;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+            color: #0D062D;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            height: 35%;
+            padding: 0 1.2rem 0 2.1rem;
+
+        }
+
+        .card-title>span:first-child {
+            font-weight: 600;
+            font-size: 1.6rem;
+            line-height: 2.1rem;
+            color: #0D062D;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-status {
+            margin-top: 4rem;
+            width: max-content;
+
+        }
+
+        .card-status>span {
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.2rem;
+            max-height: 1.6rem;
+            border-radius: 0.4rem;
+            padding: 0.2rem 0.5rem;
+            margin-right: 0.9rem;
+        }
+
+        .high {
+            color: #F06A6A;
+            background-color: rgba(255, 46, 0, 0.15);
+        }
+
+        .process {
+            color: #68B266;
+            background: rgba(131, 194, 157, 0.2);
+        }
+
+        .low {
+            color: #FFA500;
+            background: rgba(255, 165, 0, 0.15);
+        }
+    </style>
+
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="block">
-            <div class="unit-block">
-                <div class="unit-header">
-                    <div class="header-content">
-                        <!-- <i class="fa-solid fa-house header-icon icon1"></i> -->
-                        <span class="icon-alert header-icon icon1"></span>
-                        <div class="header-text text-unit">
-                            <span>Chọn khối</span>
-                            <span>Khối nghiệp vụ</span>
-                        </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
-                    </div>
-                </div>
-                <ul class="unit-content">
-
-                </ul>
-            </div>
-            <div class="group-block">
-                <div class="unit-header">
-                    <div class="header-content">
-                        <i class="fa-solid fa-house header-icon icon2"></i>
-                        <div class="header-text text-group">
-                            <span></span>
-                        </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
-                    </div>
-                </div>
-                <div class="group-content">
-
-                </div>
-            </div>
-            <div class="detail-block">
-                <div class="unit-header">
-                    <div class="header-content">
-                        <i class="fa-solid fa-house header-icon icon3"></i>
-                        <div class="header-text text-detail">
-                            <span></span>
-                        </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
-                    </div>
-                </div>
-                <ul class="detail-content">
-
-                </ul>
-            </div>
-            <div class="request-block">
-                <div class="unit-header">
-                    <div class="header-content">
-                        <i class="fa-solid fa-house header-icon icon4"></i>
-                        <div class="header-text text-request">
-                            <span>Gửi yêu cầu</span>
-                        </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
-                    </div>
-                </div>
-                <ul class="request-content">
-
-                </ul>
+    <div class="header">
+        <div class="left">
+            <div class="title">Danh sách yêu cầu</div>
+            <div class="progress-bar">
+                <label for="file">Đã hoàn thành: 25/50</label>
+                <progress id="file" value="32" max="100"> 50% </progress>
             </div>
         </div>
+        <div class="right">
+            <input type="submit" value="Tạo mới yêu cầu"></input>
+        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.js"
-        integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
+    <div class="tab-container">
+        <div class="tab-header">
+            <button class="tab-button active" onclick="openTab(event, 'tab1')">
+                <i class="fa-solid fa-house"></i>
+                <span>Tiếp nhận</span>
+                <span class="tab-number">4</span>
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tab2')">
+                <i class="fa-solid fa-house"></i>
+                <span>Bổ sung chất lượng</span>
+                <span class="tab-number">4</span>
+            </button>
+            <button class="tab-button" onclick="openTab(event, 'tab3')">
+                <i class="fa-solid fa-house"></i>
+                <span>Đánh giá chất lượng</span>
+                <span class="tab-number">4</span>
+            </button>
+        </div>
+        <div class="tab-content " id="tab1">
+            <div class="filter">
+                <div class="input-icon">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-select">
+                    <span>Đầu mối</span>
+                    <select name="" id="filterSelect">
+                        <option value="">Hiển thị tất cả</option>
+                    </select>
+                </div>
+                <div class="filter-button">
+                    <button><span><i class="fas fa-search"></i>Làm mới</span></button>
+                    <button id="exportButton" onclick="exportToExcel(data)"><span><i class="fas fa-search"></i>Xuất
+                            file</span></button>
+                </div>
+            </div>
+            <div class="card" id="listingTable">
+                <!-- <div class="card-item">
+                    <div class="card-header">
+                        Phòng Phát triển sản phẩm bán lẻ
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span>Sản phẩm tín dụng bán lẻ</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                            </div>
+                            <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item">
+                    <div class="card-header">
+                        Phòng Quản lý chất lượng
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span>Sản phẩm tín dụng bán lẻ</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                            </div>
+                            <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item">
+                    <div class="card-header">
+                        Trung Tâm Thẻ - Phòng Kế toán Tổng hợp
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span>Sản phẩm tín dụng bán lẻ</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                            </div>
+                            <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-item">
+                    <div class="card-header">
+                        Phòng Ngân hàng số
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span>Sản phẩm tín dụng bán lẻ</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                            </div>
+                            <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <!-- <div id="listingTable"></div> -->
+            <div class="pagination">
+                <a href="#" id="btnPrev">Prev</a>
+                <span id="page"></span>
+                <a href="#" id="btnNext">Next</a>
+            </div>
+        </div>
+        <div class="tab-content" id="tab2">
+            <h2>Tab 2 Content</h2>
+            <p>This is the content for Tab 2.</p>
+        </div>
+        <div class="tab-content" id="tab3">
+            <h2>Tab 3 Content</h2>
+            <p>This is the content for Tab 3.</p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script>
         var data = [
             {
@@ -812,152 +986,208 @@
                 ]
             },
         ];
-    </script>
 
-    <script>
-        $(document).ready(function () {
-            var $unit = $('.unit-content');
-            var icons = ["fa-solid fa-house"];
-            data.forEach(function (item, index) {
-                let $li = $("<li>").addClass("unit-item");
-                let $button = $("<button>")
-                    .addClass("unit-button")
-                    .append(`${item.unitName}`);
-                $unit.append($li);
-                let icon = $('<i></i>');
-                icon.addClass("unit-status");
-                icon.addClass(icons[index] ?? "fa-solid fa-house");
-                $li.append(icon);
-                $li.append($button);
+        var newData = [];
+        // Đang lấy data cũ tiện tay,data mới lấy dễ hơn dùng doSelect vì giao diện này ko phân cấp bậc nên dùng cách này
+        data.forEach(function (unit) {
+            var unitName = unit.unitName;
+            unit.properties.forEach(function (group) {
+                var groupName = group.groupName;
+                group.properties.forEach(function (property) {
+                    var newObj = {
+                        unitName: unitName,
+                        groupName: groupName,
+                        deptName: property.deptName,
+                        detail: property.detail
+                    };
+                    newData.push(newObj);
+                });
             });
-            $('.group-block').hide();
-            $('.detail-block').hide();
-            $('.request-block').hide();
-            function handleClickUnit() {
-                $('.unit-item').click(function () {
-                    $('.group-block').show();
-                    $('.unit-status.active').removeClass('active');
-                    $('.unit-button.active').removeClass('active');
-                    $(this).find('i').addClass('active');
-                    $(this).find('button').addClass('active');
-
-                    $('.radio-group').remove();
-                    $('.radio-detail').remove();
-                    $('.submit').remove();
-                    let unitName = $(this).find('button.unit-button').text();
-                    $('.text-group span:nth-child(1)').text(unitName);
-                    let groupData = data.filter(x => x.unitName === unitName)[0].properties;
-                    let level = data.filter(x => x.unitName === unitName)[0].level;
-                    let $group = $('.group-content');
-                    groupData.map(function (item, index) {
-                        let radioGroup = $('<input>').attr({
-                            type: 'radio',
-                            name: 'radioGroup',
-                            id: `group-${index}`,
-                            value: item.groupName
-                        })
-                        let label = $('<label>').text(item.groupName).attr('for', `group-${index}`);
-                        let container = $('<div>').append(radioGroup, label).addClass('radio-group');
-                        $group.append(container);
-                    })
-                    $('input[name=radioGroup]').on('change', function () {
-                        handleRadioGroupChange(groupData, unitName, level);
-                    });
-                });
-                function handleRadioGroupChange(groupData, unitName, level) {
-                    // alert('1')
-                    $('input[name=radioGroup]').parent().removeClass('active');
-                    $('input[name=radioGroup]').parent().find('label').removeClass('active');
-                    $('.detail-block').show();
-                    $('.radio-detail').remove();
-                    // $(this).parent().addClass('active');
-                    console.log('this', $(this).prop('class'));
-                    $('input[name=radioGroup]:checked').parent().addClass('active');
-                    $('input[name=radioGroup]:checked').parent().find('label').addClass('active');
-                    let groupName = $('input[name=radioGroup]:checked').val();
-                    console.log('groupName', groupName);
-                    $('.text-detail span:nth-child(1)').text(groupName);
-                    console.log('level', level);
-                    if (level == 2) {
-                        $('.detail-block').hide();
-                        $('.request-block').show();
-                        $('.submit').remove();
-                        let submitButton = $('<input>');
-                        submitButton.attr({
-                            type: 'submit',
-                            class: 'submit'
-                        });
-                        $('.request-content').append(submitButton);
-                        submitButton.on('click', function () {
-                            alert(`${unitName}, ${groupName}`);
-                        });
-                    } else {
-                        var detailData = groupData.filter(x => x.groupName === groupName)[0].properties;
-                        let $detail = $('.detail-content');
-                        detailData.map(function (item, index) {
-                            let radioDetail = $('<input>').attr({
-                                type: 'radio',
-                                name: 'radioDetail',
-                                id: `detail-${index}`,
-                                value: item.detail
-                            });
-                            let label = $('<label>').text(item.detail).addClass('detail-label').attr('for', `detail-${index}`);
-                            let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
-
-                            // Thông tin ẩn để xử lý hover
-                            let hiddenLabel = $('<label>').text(item.deptName).addClass('hidden-dept');
-                            container.append(hiddenLabel);
-
-                            $detail.append(container);
-                        })
-                        $('input[name=radioDetail]').on('change', function () {
-                            handleRadioDetailChange(detailData, unitName, groupName);
-                        });
-                    }
-                    function handleRadioDetailChange(detailData, unitName, groupName) {
-                        $('input[name=radioDetail]').parent().removeClass('active');
-                        $('input[name=radioDetail]').parent().find('label').removeClass('active');
-                        $('.request-block').show();
-                        $('.submit').remove();
-                        let detail = $('input[name=radioDetail]:checked').val();
-                        $('input[name=radioDetail]:checked').parent().addClass('active');
-                        $('input[name=radioDetail]:checked').parent().find('label').addClass('active');
-                        let $request = $('.request-content');
-                        console.log('parent: ', $request);
-                        let submitButton = $('<input>');
-                        submitButton.attr({
-                            type: 'submit',
-                            class: 'submit'
-                        });
-
-                        $request.append(submitButton);
-                        submitButton.on('click', function () {
-                            alert(`${unitName}, ${groupName},${detail}`);
-                        });
-                    }
-                }
-            };
-            handleClickUnit();
-
-            function toggleDisplay(content) {
-                $('.unit-header').click(function () {
-                    $(this).next(content).toggleClass('hidden');
-                });
-            }
-            // toggle display
-            toggleDisplay('.unit-content');
-            toggleDisplay('.group-content');
-            toggleDisplay('.detail-content');
-            toggleDisplay('.request-content');
-            // $('.unit-header').click(function () {
-            //     $(this).next('.unit-content').toggleClass('hidden');
-            // });
-        })
-
+        });
+        console.log(newData);
+        var options = [...new Set(newData.map(item => item.unitName))];
+        console.log('1', options);
+        for (var i = 0; i < options.length; i++) {
+            var option = $("<option></option>")
+                .text(options[i])
+                .val(options[i])
+            // Append the option to the select element
+            $("#filterSelect").append(option);
+        }
     </script>
     <script>
-        // collapse content
+        function openTab(evt, tabName) {
+            // Hide all tab content
+            $('.tab-content').hide();
 
+            // Remove 'active' class from all tab buttons
+            $('.tab-button').removeClass('active');
+
+            // Show the selected tab content and mark the button as active
+            $('#' + tabName).show();
+            $(evt.currentTarget).addClass('active');
+        }
+        $('.tab-button').eq(0).trigger('click');
+        // Set the first tab as active by default
+
+        var current_page = 1;
+        var records_per_page = 8;
+
+        $(document).ready(function () {
+            changePage(current_page);
+
+            $("#btnPrev").on("click", function (e) {
+                e.preventDefault();
+                if (current_page > 1) {
+                    current_page--;
+                    changePage(current_page);
+                }
+            });
+
+            $("#btnNext").on("click", function (e) {
+                e.preventDefault();
+                if (current_page < numPages()) {
+                    current_page++;
+                    changePage(current_page);
+                }
+            });
+
+
+            $("#searchInput, #filterSelect").on("input", function () {
+                var searchValue = $("#searchInput").val().toLowerCase();
+                var filterValue = $("#filterSelect").val().toLowerCase();
+
+                var filteredData = newData.filter(function (item) {
+                    // Check if any value in the object contains the search value
+                    return (
+                        Object.values(item).some(function (value) {
+                            return value.toString().toLowerCase().includes(searchValue);
+                        }) &&
+                        (filterValue === "" || item.unitName.toLowerCase() === filterValue)
+                    );
+                });
+
+                current_page = 1;
+                newData = filteredData;
+                changePage(current_page);
+            });
+        });
+
+
+        function changePage(page) {
+            var btn_next = $("#btnNext");
+            var btn_prev = $("#btnPrev");
+            var listing_table = $("#listingTable");
+            var page_span = $("#page");
+
+            // Validate page
+            if (page < 1) page = 1;
+            if (page > numPages()) page = numPages();
+
+            listing_table.empty();
+
+            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < newData.length; i++) {
+                var html = `
+                <div class="card-item">
+                    <div class="card-header">
+                        ${newData[i].deptName}
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-info">
+                            <div class="card-title">
+                                <span> ${newData[i].detail}</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                            </div>
+                            <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                `;
+                listing_table.append(html);
+            }
+
+            page_span.text(page + " / " + numPages());
+
+            if (page == 1) {
+                btn_prev.css("visibility", "hidden");
+            } else {
+                btn_prev.css("visibility", "visible");
+            }
+
+            if (page == numPages()) {
+                btn_next.css("visibility", "hidden");
+            } else {
+                btn_next.css("visibility", "visible");
+            }
+
+            var pageLinks = '';
+            var totalPages = numPages();
+
+            if (totalPages <= 7) {
+                for (var i = 1; i <= totalPages; i++) {
+                    pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                }
+            } else {
+                if (page <= 4) {
+                    for (var i = 1; i <= 5; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                } else if (page >= totalPages - 3) {
+                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                    pageLinks += '... ';
+                    for (var i = totalPages - 4; i <= totalPages; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                } else {
+                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                    pageLinks += '... ';
+                    for (var i = page - 1; i <= page + 1; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                }
+            }
+
+            $(".pagination").empty();
+            $(".pagination").append('<a href="#" id="btnPrev">Prev</a> ');
+            $(".pagination").append(pageLinks);
+            $(".pagination").append(' <a href="#" id="btnNext">Next</a>');
+            $(".pagination").find('a:contains("' + page + '")').addClass('active');
+        }
+
+        function numPages() {
+            return Math.ceil(newData.length / records_per_page);
+        }
+        function exportToExcel(newData) {
+            var workbook = XLSX.utils.book_new();
+            var worksheet = XLSX.utils.json_to_sheet(newData);
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+            var excelBuffer = XLSX.write(workbook, {
+                bookType: "xlsx",
+                type: "array",
+            });
+            saveExcelFile(excelBuffer, "data.xlsx");
+        }
+
+        function saveExcelFile(buffer, filename) {
+            var blob = new Blob([buffer], { type: "application/octet-stream" });
+            var url = URL.createObjectURL(blob);
+            var link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     </script>
 </body>
 

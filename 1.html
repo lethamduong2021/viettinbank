@@ -1,173 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div>
-      <input type="text" id="searchInput" placeholder="Search" />
-      <select id="filterSelect">
-        <option value="">All</option>
-        <option value="AdName 1">AdName 1</option>
-        <option value="AdName 2">AdName 2</option>
-        <option value="AdName 3">AdName 3</option>
-        <option value="AdName 4">AdName 4</option>
-        <option value="AdName 5">AdName 5</option>
-        <option value="AdName 6">AdName 6</option>
-        <option value="AdName 7">AdName 7</option>
-        <option value="AdName 8">AdName 8</option>
-        <option value="AdName 9">AdName 9</option>
-        <option value="AdName 10">AdName 10</option>
-      </select>
-    </div>
-    <div id="listingTable"></div>
-    <div class="pagination">
-      <a href="#" id="btnPrev">Prev</a>
-      <span id="paginationLinks"></span>
-      <a href="#" id="btnNext">Next</a>
-    </div>
-    <script>
-      var current_page = 1;
-      var records_per_page = 4;
-      var objJson = [
-        { adName: "AdName 1", lastName: "Last Name 1" },
-        { adName: "AdName 2", lastName: "Last Name 2" },
-        { adName: "AdName 3", lastName: "Last Name 3" },
-        { adName: "AdName 4", lastName: "Last Name 4" },
-        { adName: "AdName 5", lastName: "Last Name 5" },
-        { adName: "AdName 6", lastName: "Last Name 6" },
-        { adName: "AdName 7", lastName: "Last Name 7" },
-        { adName: "AdName 8", lastName: "Last Name 8" },
-        { adName: "AdName 9", lastName: "Last Name 9" },
-        { adName: "AdName 10", lastName: "Last Name 10" },
-        { adName: "AdName 7", lastName: "Last Name 7" },
-        { adName: "AdName 8", lastName: "Last Name 8" },
-        { adName: "AdName 9", lastName: "Last Name 9" },
-        { adName: "AdName 10", lastName: "Last Name 10" },
-        { adName: "AdName 7", lastName: "Last Name 7" },
-        { adName: "AdName 8", lastName: "Last Name 8" },
-        { adName: "AdName 9", lastName: "Last Name 9" },
-        { adName: "AdName 10", lastName: "Last Name 10" },
-        { adName: "AdName 7", lastName: "Last Name 7" },
-        { adName: "AdName 8", lastName: "Last Name 8" },
-        { adName: "AdName 9", lastName: "Last Name 9" },
-        { adName: "AdName 10", lastName: "Last Name 10" },
-        { adName: "AdName 7", lastName: "Last Name 7" },
-        { adName: "AdName 8", lastName: "Last Name 8" },
-        { adName: "AdName 9", lastName: "Last Name 9" },
-        { adName: "AdName 10", lastName: "Last Name 10" },
-        { adName: "AdName 7", lastName: "Last Name 7" },
-        { adName: "AdName 8", lastName: "Last Name 8" },
-        { adName: "AdName 9", lastName: "Last Name 9" },
-        { adName: "AdName 10", lastName: "Last Name 10" },
-        
-      ];
 
-      $(document).ready(function () {
-        changePage(current_page);
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+</head>
 
-        $("#btnPrev").on("click", function (e) {
-          e.preventDefault();
-          if (current_page > 1) {
-            current_page--;
-            changePage(current_page);
-          }
-        });
+<body>
+  <div>
+    <input type="text" id="searchInput" placeholder="Search">
+    <select id="filterSelect">
+      <option value="">All</option>
+      <option value="AdName 1">AdName 1</option>
+      <option value="AdName 2">AdName 2</option>
+      <option value="AdName 3">AdName 3</option>
+      <option value="AdName 4">AdName 4</option>
+      <option value="AdName 5">AdName 5</option>
+      <option value="AdName 6">AdName 6</option>
+      <option value="AdName 7">AdName 7</option>
+      <option value="AdName 8">AdName 8</option>
+      <option value="AdName 9">AdName 9</option>
+      <option value="AdName 10">AdName 10</option>
+    </select>
+  </div>
+  <div id="listingTable"></div>
+  <div id="paginationLinks"></div>
+  <div class="pagination">
+    <a href="#" id="btnPrev">Prev</a>
+    <span id="page"></span>
+    <a href="#" id="btnNext">Next</a>
+  </div>
+  <button id="exportButton">Export to Excel</button>
+  <script>
+    var current_page = 1;
+    var records_per_page = 4;
+    var originalData = [
+      { adName: "AdName 1", lastName: "Last Name 1" },
+      { adName: "AdName 2", lastName: "Last Name 2" },
+      { adName: "AdName 3", lastName: "Last Name 3" },
+      { adName: "AdName 4", lastName: "Last Name 4" },
+      { adName: "AdName 5", lastName: "Last Name 5" },
+      { adName: "AdName 6", lastName: "Last Name 6" },
+      { adName: "AdName 7", lastName: "Last Name 7" },
+      { adName: "AdName 8", lastName: "Last Name 8" },
+      { adName: "AdName 9", lastName: "Last Name 9" },
+      { adName: "AdName 10", lastName: "Last Name 10" }
+    ];
 
-        $("#btnNext").on("click", function (e) {
-          e.preventDefault();
-          if (current_page < numPages()) {
-            current_page++;
-            changePage(current_page);
-          }
-        });
+    var newData = originalData.slice(); // Make a copy of the original data
 
-        $("#searchInput, #filterSelect").on("input", function () {
-          var searchValue = $("#searchInput").val().toLowerCase();
-          var filterValue = $("#filterSelect").val().toLowerCase();
+    $(document).ready(function () {
+      changePage(current_page);
 
-          var filteredData = objJson.filter(function (item) {
-            // Check if any value in the object contains the search value
-            return (
-              Object.values(item).some(function (value) {
-                return value.toString().toLowerCase().includes(searchValue);
-              }) &&
-              (filterValue === "" || item.adName.toLowerCase() === filterValue)
-            );
-          });
-
-          current_page = 1;
-          objJson = filteredData;
+      $("#btnPrev").on("click", function (e) {
+        e.preventDefault();
+        if (current_page > 1) {
+          current_page--;
           changePage(current_page);
-        });
+        }
       });
 
-      function changePage(page) {
-        var btn_next = $("#btnNext");
-        var btn_prev = $("#btnPrev");
-        var listing_table = $("#listingTable");
-        var pagination_links = $("#paginationLinks");
-        var page_span = $("#page");
-
-        // Validate page
-        if (page < 1) page = 1;
-        if (page > numPages()) page = numPages();
-
-        listing_table.empty();
-
-        for (
-          var i = (page - 1) * records_per_page;
-          i < page * records_per_page && i < objJson.length;
-          i++
-        ) {
-          listing_table.append(objJson[i].adName + "<br>");
+      $("#btnNext").on("click", function (e) {
+        e.preventDefault();
+        if (current_page < numPages()) {
+          current_page++;
+          changePage(current_page);
         }
+      });
 
-        page_span.text(page);
+      $("#searchInput, #filterSelect").on("input", function () {
+        var searchValue = $("#searchInput").val().toLowerCase();
+        var filterValue = $("#filterSelect").val().toLowerCase();
 
-        pagination_links.empty();
-
-        if (page > 1) {
-          pagination_links.append(
-            "<a href='#' class='pagination-link'>" + (page - 1) + "</a>"
+        newData = originalData.filter(function (item) {
+          return (
+            item.adName.toLowerCase().includes(searchValue) &&
+            (filterValue === "" || item.adName.toLowerCase() === filterValue)
           );
-        }
-
-        pagination_links.append(
-          "<a href='#' class='pagination-link active'>" + page + "</a>"
-        );
-
-        if (page < numPages()) {
-          pagination_links.append(
-            "<a href='#' class='pagination-link'>" + (page + 1) + "</a>"
-          );
-        }
-
-        $(".pagination-link").on("click", function (e) {
-          e.preventDefault();
-          var selectedPage = parseInt($(this).text());
-          changePage(selectedPage);
         });
 
-        if (page == 1) {
-          btn_prev.css("visibility", "hidden");
-        } else {
-          btn_prev.css("visibility", "visible");
-        }
+        current_page = 1;
+        changePage(current_page);
+      });
 
-        if (page == numPages()) {
-          btn_next.css("visibility", "hidden");
-        } else {
-          btn_next.css("visibility", "visible");
-        }
+      $("#exportButton").on("click", function () {
+        exportToExcel(newData);
+      });
+    });
+
+    function changePage(page) {
+      var btn_next = $("#btnNext");
+      var btn_prev = $("#btnPrev");
+      var listing_table = $("#listingTable");
+      var pagination_links = $("#paginationLinks");
+      var page_span = $("#page");
+
+      // Validate page
+      if (page < 1) page = 1;
+      if (page > numPages()) page = numPages();
+
+      listing_table.empty();
+
+      for (
+        var i = (page - 1) * records_per_page;
+        i < page * records_per_page && i < newData.length;
+        i++
+      ) {
+        listing_table.append(newData[i].adName + "<br>");
       }
 
-      function numPages() {
-        return Math.ceil(objJson.length / records_per_page);
+      page_span.text(page);
+
+      pagination_links.empty();
+
+      if (page > 1) {
+        pagination_links.append(
+          "<a href='#' class='pagination-link'>" + (page - 1) + "</a>"
+        );
       }
-    </script>
-  </body>
+
+      pagination_links.append(
+        "<a href='#' class='pagination-link active'>" + page + "</a>"
+      );
+
+      if (page < numPages()) {
+        pagination_links.append(
+          "<a href='#' class='pagination-link'>" + (page + 1) + "</a>"
+        );
+      }
+
+      $(".pagination-link").on("click", function (e) {
+        e.preventDefault();
+        var selectedPage = parseInt($(this).text());
+        changePage(selectedPage);
+      });
+
+      if (page == 1) {
+        btn_prev.css("visibility", "hidden");
+      } else {
+        btn_prev.css("visibility", "visible");
+      }
+
+      if (page == numPages()) {
+        btn_next.css("visibility", "hidden");
+      } else {
+        btn_next.css("visibility", "visible");
+      }
+    }
+
+    function numPages() {
+      return Math.ceil(newData.length / records_per_page);
+    }
+
+    function exportToExcel(data) {
+      var worksheet = XLSX.utils.json_to_sheet(data);
+      var workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
+      var excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      saveExcelFile(excelBuffer, "data.xlsx");
+    }
+
+    function saveExcelFile(buffer, filename) {
+      var blob = new Blob([buffer], { type: "application/octet-stream" });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+
 </html>

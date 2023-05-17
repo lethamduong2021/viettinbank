@@ -848,9 +848,10 @@
                         let radioGroup = $('<input>').attr({
                             type: 'radio',
                             name: 'radioGroup',
+                            id: `group-${index}`,
                             value: item.groupName
                         })
-                        let label = $('<label>').text(item.groupName);
+                        let label = $('<label>').text(item.groupName).attr('for', `group-${index}`);
                         let container = $('<div>').append(radioGroup, label).addClass('radio-group');
                         $group.append(container);
                     })
@@ -887,9 +888,10 @@
                             let radioDetail = $('<input>').attr({
                                 type: 'radio',
                                 name: 'radioDetail',
+                                id: `detail-${index}`,
                                 value: item.detail
                             });
-                            let label = $('<label>').text(item.detail).addClass('detail-label');
+                            let label = $('<label>').text(item.detail).addClass('detail-label').attr('for', `detail-${index}`);
                             let container = $('<div>').append(radioDetail, label).addClass('radio-detail');
 
                             // Thông tin ẩn để xử lý hover

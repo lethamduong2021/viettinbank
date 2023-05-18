@@ -14,6 +14,26 @@
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <style>
+    :root { 
+        --scroll-bar-color: #c5c5c5;
+        --scroll-bar-bg-color: #f6f6f6;
+    }
+    /* Works on Chrome, Edge, and Safari */
+    *::-webkit-scrollbar {
+        width: 12px;
+        height: 12px;
+    }
+
+    *::-webkit-scrollbar-track {
+        background: var(--scroll-bar-bg-color);
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: var(--scroll-bar-color);
+        border-radius: 20px;
+        border: 3px solid var(--scroll-bar-bg-color);
+    }
+
     img {
         display: block;
         max-width: 100%;
@@ -32,7 +52,7 @@
     }
 
     .block>* {
-        width: calc(25%-20px);
+        width: 25%;
         min-height: 120px;
         background-color: #F7F8F9;
         border-radius: 8px;
@@ -237,7 +257,8 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 20px;
-        color: #A8B3D2
+        color: #A8B3D2;
+        line-height: 2rem;
     }
 
     .radio-group.active>label,
@@ -250,10 +271,10 @@
         height: 100%;
         object-fit: cover;
     }
-    .mr-2{
+
+    .mr-2 {
         margin-right: 1rem;
     }
-
 </style>
 </head>
 
@@ -837,7 +858,7 @@
     <script>
         $(document).ready(function () {
             var $unit = $('.unit-content');
-            var icons = ["fa-solid fa-store","fa-solid fa-user-tie","fa-solid fa-id-card","fa-solid fa-gear","fa-solid fa-cart-plus","fa-solid fa-computer","fa-solid fa-layer-group"];
+            var icons = ["fa-solid fa-store", "fa-solid fa-user-tie", "fa-solid fa-id-card", "fa-solid fa-gear", "fa-solid fa-cart-plus", "fa-solid fa-computer", "fa-solid fa-layer-group"];
             data.forEach(function (item, index) {
                 let $li = $("<li>").addClass("unit-item");
                 let $button = $("<button>")

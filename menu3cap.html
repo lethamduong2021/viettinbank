@@ -10,10 +10,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="demo-files/demo.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="demo-files/demo.css"> -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <style>
+    img {
+        display: block;
+        max-width: 100%;
+    }
+
     .container {
         width: 100%;
         height: 100%;
@@ -27,7 +32,7 @@
     }
 
     .block>* {
-        width: 20%;
+        width: calc(25%-20px);
         min-height: 120px;
         background-color: #F7F8F9;
         border-radius: 8px;
@@ -36,9 +41,9 @@
         max-height: 610px;
     }
 
-    .block>*:nth-child(3) {
+    /* .block>*:nth-child(3) {
         min-width: 35%;
-    }
+    } */
 
     .unit-content,
     .group-content,
@@ -138,9 +143,11 @@
         height: 100%;
         margin-right: 1rem;
     }
-    .header-icon::before{
+
+    .header-icon::before {
         font-size: 12px;
     }
+
     .icon1 {
         background-color: #64CBF4;
     }
@@ -163,7 +170,7 @@
         flex-direction: column;
         width: 90%;
         justify-content: space-between;
-        height: 3.4rem;
+        /* height: 3.4rem; */
     }
 
     .header-text>*:first-child {
@@ -199,6 +206,7 @@
 
     .unit-button.active {
         color: #6A81D5;
+        font-weight: 600;
     }
 
     .radio-group,
@@ -207,6 +215,7 @@
         box-shadow: 0px 2px 11px rgba(69, 65, 164, 0.06), 0px 4px 10px rgba(31, 37, 89, 0.07);
         border-radius: 16px;
         margin-bottom: 1rem;
+        background-color: #fff;
     }
 
     .radio-group.active,
@@ -235,6 +244,16 @@
     .radio-detail.active>label {
         color: #6A81D5
     }
+
+    .css-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .mr-2{
+        margin-right: 1rem;
+    }
+
 </style>
 </head>
 
@@ -245,12 +264,13 @@
                 <div class="unit-header">
                     <div class="header-content">
                         <!-- <i class="fa-solid fa-house header-icon icon1"></i> -->
-                        <span class="icon-alert header-icon icon1"></span>
+                        <!-- <span class="icon-alert header-icon icon1"></span> -->
+                        <span class="mr-2"><img src="./img/khoi.svg" alt="" class="css-img"></span>
                         <div class="header-text text-unit">
                             <span>Chọn khối</span>
                             <span>Khối nghiệp vụ</span>
                         </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
                 </div>
                 <ul class="unit-content">
@@ -260,11 +280,12 @@
             <div class="group-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon icon2"></i>
+                        <span class="mr-2"><img src="./img/nhomnv.svg" alt="" class="css-img"></span>
+                        <!-- <i class="fa-solid fa-house header-icon icon2"></i> -->
                         <div class="header-text text-group">
                             <span></span>
                         </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
                 </div>
                 <div class="group-content">
@@ -274,11 +295,11 @@
             <div class="detail-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon icon3"></i>
+                        <span class="mr-2"><img src="./img/phongban.svg" alt="" class="css-img"></span>
                         <div class="header-text text-detail">
                             <span></span>
                         </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
                 </div>
                 <ul class="detail-content">
@@ -288,15 +309,14 @@
             <div class="request-block">
                 <div class="unit-header">
                     <div class="header-content">
-                        <i class="fa-solid fa-house header-icon icon4"></i>
+                        <span class="mr-2"><img src="./img/sendrequest.svg" alt="" class="css-img"></span>
                         <div class="header-text text-request">
                             <span>Gửi yêu cầu</span>
                         </div>
-                        <i class="fa-solid fa-house header-collapse"></i>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
                 </div>
                 <ul class="request-content">
-
                 </ul>
             </div>
         </div>
@@ -817,7 +837,7 @@
     <script>
         $(document).ready(function () {
             var $unit = $('.unit-content');
-            var icons = ["fa-solid fa-house"];
+            var icons = ["fa-solid fa-store","fa-solid fa-user-tie","fa-solid fa-id-card","fa-solid fa-gear","fa-solid fa-cart-plus","fa-solid fa-computer","fa-solid fa-layer-group"];
             data.forEach(function (item, index) {
                 let $li = $("<li>").addClass("unit-item");
                 let $button = $("<button>")

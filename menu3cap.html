@@ -280,6 +280,7 @@
 
 <body>
     <div class="container">
+        <!-- <input type="text" id="searchInput" placeholder="Tìm kiếm"> -->
         <div class="block">
             <div class="unit-block">
                 <div class="unit-header">
@@ -858,7 +859,7 @@
     <script>
         $(document).ready(function () {
             var $unit = $('.unit-content');
-            var icons = ["fa-solid fa-store", "fa-solid fa-user-tie", "fa-solid fa-id-card", "fa-solid fa-gear", "fa-solid fa-cart-plus", "fa-solid fa-computer", "fa-solid fa-layer-group"];
+            var icons = ["fa-solid fa-store", "fa-solid fa-user-tie", "fa-solid fa-id-card", "fa-solid fa-gear", "fa-solid fa-cart-plus", "fa-solid fa-computer", "fa-solid fa-layer-group","fa-solid fa-bookmark","fa-solid fa-globe"];
             data.forEach(function (item, index) {
                 let $li = $("<li>").addClass("unit-item");
                 let $button = $("<button>")
@@ -993,6 +994,10 @@
             // $('.unit-header').click(function () {
             //     $(this).next('.unit-content').toggleClass('hidden');
             // });
+            $("#searchInput, #filterSelect").on("input", function () {
+                var searchValue = $("#searchInput").val().toLowerCase();
+                console.log('searchValue', searchValue);
+            })
         })
 
     </script>

@@ -17,93 +17,90 @@
     <div class="header">
         <div class="left">
             <div class="title">Danh sách yêu cầu</div>
-            <div class="progress-bar">
-                <label for="file">Đã hoàn thành: 25/50</label>
-                <progress id="file" value="32" max="100"> 50% </progress>
-            </div>
         </div>
         <div class="right">
+           
+        </div>
+    </div>
+    
+    <div class="filter">
+        <div class="input-icon">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-select">
+            <span>Đầu mối</span>
+            <select name="" id="filterSelect">
+                <option value="">Hiển thị tất cả</option>
+            </select>
+        </div>
+        <div class="filter-select">
+            <span>Mô tả yêu cầu</span>
+            <select name="" id="detailSelect">
+                <option value="">Hiển thị tất cả</option>
+            </select>
+        </div>
+        <div class="filter-button">
+            <button id="refresh"><span><i class="fas fa-search"></i>Làm mới</span></button>
+            <button id="exportButton"><span><i class="fas fa-search"></i>Xuất file</span></button>
             <button id="createNew"><span><i class="fas fa-search"></i>Tạo mới</span></button>
         </div>
     </div>
-    <div class="tab-container">
-        <div class="tab-header">
-            <button class="tab-button active" onclick="openTab(event, 'tab1')">
-                <i class="fa-solid fa-house"></i>
-                <span>Tiếp nhận</span>
-                <span class="tab-number">4</span>
-            </button>
-            <button class="tab-button" onclick="openTab(event, 'tab2')">
-                <i class="fa-solid fa-house"></i>
-                <span>Bổ sung chất lượng</span>
-                <span class="tab-number">4</span>
-            </button>
-            <button class="tab-button" onclick="openTab(event, 'tab3')">
-                <i class="fa-solid fa-house"></i>
-                <span>Đánh giá chất lượng</span>
-                <span class="tab-number">4</span>
-            </button>
-        </div>
-        <div class="tab-content " id="tab1">
-            <div class="filter">
-                <div class="input-icon">
-                    <input type="text" id="searchInput" placeholder="Tìm kiếm">
-                    <i class="fas fa-search"></i>
-                </div>
-                <div class="filter-select">
-                    <span>Đầu mối</span>
-                    <select name="" id="filterSelect">
-                        <option value="">Hiển thị tất cả</option>
-                    </select>
-                </div>
-                <div class="filter-button">
-                    <button id="refresh"><span><i class="fas fa-search"></i>Làm mới</span></button>
-                    <button id="exportButton"><span><i class="fas fa-search"></i>Xuất
-                            file</span></button>
-                </div>
-            </div>
-            <div class="card" id="listingTable">
-            </div>
-            <div class="pagination">
-                <a href="#" id="btnPrev">Trước</a>
-                <span id="page"></span>
-                <a href="#" id="btnNext">Sau</a>
-            </div>
-        </div>
-        <div class="tab-content" id="tab2">
-            <h2>Tab 2 Content</h2>
-            <p>This is the content for Tab 2.</p>
-        </div>
-        <div class="tab-content" id="tab3">
-            <h2>Tab 3 Content</h2>
-            <p>This is the content for Tab 3.</p>
-        </div>
+    
+    <div class="card" id="listingTable"></div>
+    
+    <div class="pagination">
+        <a href="#" id="btnPrev">Trước</a>
+        <span id="page"></span>
+        <a href="#" id="btnNext">Sau</a>
     </div>
+    
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
     <script src="./data.js"></script>
     <script>
         var options = [...new Set(newData.map(item => item.unitName))];
-        for (var i = 0; i < options.length; i++) {
-            var option = $("<option></option>")
-                .text(options[i])
-                .val(options[i])
-            $("#filterSelect").append(option);
+        if (options.length > 0) {
+            options.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+            for (var i = 0; i < options.length; i++) {
+                var option = $("<option></option>")
+                    .text(options[i])
+                    .val(options[i]);
+                $("#filterSelect").append(option);
+            }
         }
+
+        var detailOptions = [...new Set(newData.map(item => item.detail))];
+        if (detailOptions.length > 0) {
+            detailOptions.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+            for (var i = 0; i < detailOptions.length; i++) {
+                var detailOption = $("<option></option>")
+                    .text(detailOptions[i])
+                    .val(detailOptions[i]);
+                $("#detailSelect").append(detailOption);
+            }
+        }
+
+
+
         var objJson = newData.slice();
+
         function openTab(evt, tabName) {
             $('.tab-content').hide();
             $('.tab-button').removeClass('active');
             $('#' + tabName).show();
             $(evt.currentTarget).addClass('active');
         }
+
         $('.tab-button').eq(0).trigger('click');
         var current_page = 1;
         var records_per_page = 8;
+
         $(document).ready(function () {
             $('.tab-button').eq(0).addClass('active');
             changePage(current_page);
+
             $("#btnPrev").on("click", function (e) {
                 e.preventDefault();
                 if (current_page > 1) {
@@ -111,6 +108,7 @@
                     changePage(current_page);
                 }
             });
+
             $("#btnNext").on("click", function (e) {
                 e.preventDefault();
                 if (current_page < numPages()) {
@@ -118,35 +116,53 @@
                     changePage(current_page);
                 }
             });
-            $("#searchInput, #filterSelect").on("input", function () {
+
+            $("#searchInput, #filterSelect, #detailSelect").on("input", function () {
                 var searchValue = $("#searchInput").val().toLowerCase();
                 var filterValue = $("#filterSelect").val().toLowerCase();
+                var detailValue = $("#detailSelect").val().toLowerCase();
+
                 var filteredData = newData.filter(function (item) {
-                    return Object.values(item).some(function (value) {
-                        return value.toString().toLowerCase().includes(searchValue);
-                    }) && (filterValue === "" || item.unitName.toLowerCase() === filterValue);
+                    return (
+                        Object.values(item).some(function (value) {
+                            return value.toString().toLowerCase().includes(searchValue);
+                        }) &&
+                        (filterValue === "" || item.unitName.toLowerCase() === filterValue) &&
+                        (detailValue === "" || item.detail.toLowerCase() === detailValue)
+                    );
                 });
+
                 current_page = 1;
                 objJson = filteredData;
                 changePage(current_page);
             });
+
             $("#exportButton").click(function () {
                 console.log('1', objJson);
                 exportToExcel(objJson);
             });
+
             $("#refresh").click(function () {
                 location.reload();
             });
         });
+
         function changePage(page) {
             var btn_next = $("#btnNext");
             var btn_prev = $("#btnPrev");
             var listing_table = $("#listingTable");
             var page_span = $("#page");
+
             if (page < 1) page = 1;
             if (page > numPages()) page = numPages();
+
             listing_table.empty();
-            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
+
+            for (
+                var i = (page - 1) * records_per_page;
+                i < page * records_per_page && i < objJson.length;
+                i++
+            ) {
                 if (objJson[i]) {
                     let html =
                         `<div class="card-item">
@@ -166,23 +182,28 @@
                                 <span class="low">Thấp</span>
                         </div>
                     </div>
-                </div>`
+                </div>`;
                     listing_table.append(html);
                 }
             }
+
             page_span.text(page + " / " + numPages());
+
             if (page == 1) {
                 btn_prev.css("visibility", "hidden");
             } else {
                 btn_prev.css("visibility", "visible");
             }
+
             if (page == numPages()) {
                 btn_next.css("visibility", "hidden");
             } else {
                 btn_next.css("visibility", "visible");
             }
+
             var pageLinks = '';
             var totalPages = numPages();
+
             if (totalPages <= 7) {
                 for (var i = 1; i <= totalPages; i++) {
                     pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
@@ -210,16 +231,18 @@
                     pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
                 }
             }
+
             $(".pagination").empty();
             $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');
             $(".pagination").append(pageLinks);
             $(".pagination").append(' <a href="#" id="btnNext">Sau</a>');
-            $(".pagination").find('a').removeClass('active');
             $(".pagination").find('a:contains("' + page + '")').addClass('active');
         }
+
         function numPages() {
             return Math.ceil(objJson.length / records_per_page);
         }
+
         function exportToExcel(newData) {
             var workbook = XLSX.utils.book_new();
             var worksheet = XLSX.utils.json_to_sheet(newData);

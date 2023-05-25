@@ -62,12 +62,27 @@
 
     </html>
 
-    <script>
-        function toggleSidebar() {
-            var sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('active');
-        }
 
+    <script>
+        function appendStatusElements() {
+            var statusContainer = $(".card-status");
+            statusContainer.find('span').each(function () {
+                var text = $(this).text().trim();
+
+                switch (text) {
+                    case "Closed":
+                        $(this).addClass("high");
+                        break;
+                    case "Tiếp nhận & phân loại":
+                        $(this).addClass("low");
+                        break;
+                    default:
+                        $(this).addClass("process");
+                        break;
+                }
+            });
+        }
+        appendStatusElements();
     </script>
 </body>
 

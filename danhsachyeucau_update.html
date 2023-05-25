@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +11,6 @@
         @import url(./danhsachyeucau.css);
     </style>
 </head>
-
 <body>
     <div class="header">
         <div class="left">
@@ -22,7 +20,6 @@
            
         </div>
     </div>
-    
     <div class="filter">
         <div class="input-icon">
             <input type="text" id="searchInput" placeholder="Tìm kiếm">
@@ -46,15 +43,12 @@
             <button id="createNew"><span><i class="fas fa-search"></i>Tạo mới</span></button>
         </div>
     </div>
-    
     <div class="card" id="listingTable"></div>
-    
     <div class="pagination">
         <a href="#" id="btnPrev">Trước</a>
         <span id="page"></span>
         <a href="#" id="btnNext">Sau</a>
     </div>
-    
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
@@ -70,7 +64,6 @@
                 $("#filterSelect").append(option);
             }
         }
-
         var detailOptions = [...new Set(newData.map(item => item.detail))];
         if (detailOptions.length > 0) {
             detailOptions.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
@@ -81,22 +74,16 @@
                 $("#detailSelect").append(detailOption);
             }
         }
-
-
-
         var objJson = newData.slice();
-
         function openTab(evt, tabName) {
             $('.tab-content').hide();
             $('.tab-button').removeClass('active');
             $('#' + tabName).show();
             $(evt.currentTarget).addClass('active');
         }
-
         $('.tab-button').eq(0).trigger('click');
         var current_page = 1;
         var records_per_page = 8;
-
         $(document).ready(function () {
             $('.tab-button').eq(0).addClass('active');
             changePage(current_page);
@@ -108,7 +95,6 @@
                     changePage(current_page);
                 }
             });
-
             $("#btnNext").on("click", function (e) {
                 e.preventDefault();
                 if (current_page < numPages()) {
@@ -116,7 +102,6 @@
                     changePage(current_page);
                 }
             });
-
             $("#searchInput, #filterSelect, #detailSelect").on("input", function () {
                 var searchValue = $("#searchInput").val().toLowerCase();
                 var filterValue = $("#filterSelect").val().toLowerCase();
@@ -131,7 +116,6 @@
                         (detailValue === "" || item.detail.toLowerCase() === detailValue)
                     );
                 });
-
                 current_page = 1;
                 objJson = filteredData;
                 changePage(current_page);
@@ -146,7 +130,6 @@
                 location.reload();
             });
         });
-
         function changePage(page) {
             var btn_next = $("#btnNext");
             var btn_prev = $("#btnPrev");
@@ -186,7 +169,6 @@
                     listing_table.append(html);
                 }
             }
-
             page_span.text(page + " / " + numPages());
 
             if (page == 1) {
@@ -200,10 +182,8 @@
             } else {
                 btn_next.css("visibility", "visible");
             }
-
             var pageLinks = '';
             var totalPages = numPages();
-
             if (totalPages <= 7) {
                 for (var i = 1; i <= totalPages; i++) {
                     pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
@@ -231,18 +211,15 @@
                     pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
                 }
             }
-
             $(".pagination").empty();
             $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');
             $(".pagination").append(pageLinks);
             $(".pagination").append(' <a href="#" id="btnNext">Sau</a>');
             $(".pagination").find('a:contains("' + page + '")').addClass('active');
         }
-
         function numPages() {
             return Math.ceil(objJson.length / records_per_page);
         }
-
         function exportToExcel(newData) {
             var workbook = XLSX.utils.book_new();
             var worksheet = XLSX.utils.json_to_sheet(newData);
@@ -265,5 +242,4 @@
         }
     </script>
 </body>
-
 </html>

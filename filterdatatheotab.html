@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tab Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .tab {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <button id="tab1">Tab 1</button>
+        <button id="tab2">Tab 2</button>
+        <button id="tab3">Tab 3</button>
+    </div>
+
+    <div class="tab" id="tab1Content">
+        <!-- Content for tab 1 -->
+        <pre id="data"></pre>
+    </div>
+
+    <div class="tab" id="tab2Content">
+        <!-- Content for tab 2 -->
+        <pre id="status"></pre>
+    </div>
+
+    <div class="tab" id="tab3Content">
+        <!-- Content for tab 3 -->
+        <pre id="filteredData"></pre>
+    </div>
+    <script src="./data.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Show Tab 1 content on initial load
+            $("#tab1Content").show();  // Show tab 1 content
+
+            // Display all data
+            function displayData() {
+                var dataHtml = "";
+                data.forEach(function (obj) {
+                    dataHtml += JSON.stringify(obj, null, 4) + "\n";
+                });
+                $("#data").text(dataHtml);
+            }
+            displayData(); // Display
+            // Display filtered data
+            function displayFilteredData(filter) {
+                var filteredDataHtml = "";
+                var filteredData = data.filter(function (obj) {
+                    return obj.name === filter;
+                });
+                filteredData.forEach(function (obj) {
+                    filteredDataHtml += JSON.stringify(obj, null, 4) + "\n";
+                });
+                $("#filteredData").text(filteredDataHtml);
+                $("#status").text(filteredDataHtml);
+            }
+
+            // Function to handle tab clicks
+            function handleTabClick(tabId, filter) {
+                $(".tab").hide();  // Hide all tab content
+                $("#" + tabId + "Content").show();  // Show corresponding tab content
+
+                if (filter) {
+                    displayFilteredData(filter);
+                } else {
+                    displayData();
+                }
+            }
+
+            // Tab 1 click event
+            $("#tab1").click(function () {
+                handleTabClick("tab1");
+            });
+
+            // Tab 2 click event
+            $("#tab2").click(function () {
+                handleTabClick("tab2", "Jane");
+            });
+
+            // Tab 3 click event
+            $("#tab3").click(function () {
+                handleTabClick("tab3", "Tom");
+            });
+        });
+
+        // Sample data
+        var data = [
+            { "name": "John", "age": 30 },
+            { "name": "Jane", "age": 25 },
+            { "name": "Tom", "age": 35 },
+            { "name": "Tom", "age": 40 }
+        ];
+    </script>
+</body>
+
+</html>

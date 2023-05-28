@@ -21,7 +21,7 @@
   </div>
   <div class="tab-container">
     <div class="tab-header">
-      <button id="button1" class="tab-button active" onclick="openTab(event, 'tab-1')">
+      <button id="button1" class="tab-button " onclick="openTab(event, 'tab-1')">
         <i class="fa-solid fa-house"></i>
         <span>Yêu cầu chung</span>
         <span class="tab-number">4</span>
@@ -37,30 +37,51 @@
         <span class="tab-number">4</span>
       </button>
     </div>
-
     <div class="tab-content" id="tab-1">
     </div>
     <div class="tab-content" id="tab-2">
-      <h2>Tab 2 Content</h2>
-      <p>This is the content for Tab 2.</p>
     </div>
     <div class="tab-content" id="tab-3">
-      <h2>Tab 3 Content</h2>
-      <p>This is the content for Tab 3.</p>
     </div>
   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
   crossorigin="anonymous"></script>
-<script src="./1.js"></script>
+<script src="./data.js"></script>
 <script>
   $(document).ready(function () {
+    var dataWithId = data.map((item, index) => {
+      return { id: index + 1, ...item };
+    });
+    var tatCa = data.length;
+    $('#button1 .tab-number').text(tatCa)
+    var choThongTin = data.reduce(function (accumulator, obj) {
+      return accumulator + (obj.status === "UpdateSR" ? 1 : 0);
+    }, 0);
+    $('#button2 .tab-number').text(choThongTin)
+    var danhGia = data.reduce(function (accumulator, obj) {
+      return accumulator + (obj.status === "ConfirmSR" ? 1 : 0);
+    }, 0);
+    $('#button3 .tab-number').text(danhGia)
     openTab('', 'tab-1');
+    $('#button1').addClass('active');
+
+    // var options = [...new Set(data.map(item => item.deptName))];
+    // for (var i = 0; i < options.length; i++) {
+    //   var option = $("<option></option>")
+    //     .text(options[i])
+    //     .val(options[i])
+    //   $("#filterSelect").append(option);
+    // }
+
+    // getContent();
+
   });
 
   function openTab(evt, tabName) {
     $('.tab-content').hide();
     $('.tab-button').removeClass('active');
+    $('#button1').removeClass('active');
     $('#' + tabName).show();
     $(evt.currentTarget).addClass('active');
 
@@ -78,6 +99,15 @@
   }
 
   function fetchAndRenderData(tabName, status) {
+    var getIdTab = ['tab-1', 'tab-2', 'tab-3'];
+    var filteredIds = getIdTab.filter(function (tabId) {
+      return tabId !== tabName;
+    });
+
+    $.each(filteredIds, function (index, tabId) {
+      $('#' + tabId).empty();
+    });
+
     var filteredData = [...data];
     if (status) {
       // Filter data based on the status
@@ -85,27 +115,27 @@
         return item.status === status;
       });
     }
-
-
-    // Render the filtered data in the specified tab
-    renderData(tabName, filteredData);
-  }
-
-  function renderData(tabName, data) {
     var tabContent = $('#' + tabName);
 
     // Create the filter section
+    // Create the filter section
     var filterDiv = $('<div>').addClass('filter');
     var inputDiv = $('<div>').addClass('input-icon');
-    var searchInput = $('<input>').attr('type', 'text').attr('id', 'searchInput').attr('placeholder', 'Tìm kiếm');
+    var searchInput = $('<input>').attr({
+      type: 'text',
+      id: 'searchInput',
+      placeholder: 'Tìm kiếm'
+    });
     var searchIcon = $('<i>').addClass('fas fa-search');
     inputDiv.append(searchInput, searchIcon);
+
     var selectDiv = $('<div>').addClass('filter-select');
     var span = $('<span>').text('Phòng ban');
     var select = $('<select>').attr('id', 'filterSelect');
     var option = $('<option>').val('').text('Hiển thị tất cả');
     select.append(option);
     selectDiv.append(span, select);
+
     filterDiv.append(inputDiv, selectDiv);
 
     // Create the table section
@@ -116,12 +146,139 @@
     var pageSpan = $('<span>').attr('id', 'page');
     var btnNext = $('<a>').attr('href', '#').attr('id', 'btnNext').text('Sau');
     paginationDiv.append(btnPrev, pageSpan, btnNext);
+
     tableDiv.append(cardDiv, paginationDiv);
 
     // Append the created elements to the tab
     tabContent.append(filterDiv, tableDiv);
-    console.log(`data in ${tabName}`, data)
+    var options = [...new Set(filteredData.map(item => item.deptName))];
+    for (var i = 0; i < options.length; i++) {
+      var option = $("<option></option>")
+        .text(options[i])
+        .val(options[i])
+      $("#filterSelect").append(option);
+    }
+    var objJson = filteredData.slice();
+    var current_page = 1;
+    var records_per_page = 8;
+    getContent();
+    function getContent() {
+      // $(document).ready(function () {
+      // $('.tab-button').eq(0).addClass('active');
+      changePage(current_page);
+      $("#btnPrev").on("click", function (e) {
+        e.preventDefault();
+        if (current_page > 1) {
+          current_page--;
+          changePage(current_page);
+        }
+      });
+      $("#btnNext").on("click", function (e) {
+        e.preventDefault();
+        if (current_page < numPages()) {
+          current_page++;
+          changePage(current_page);
+        }
+      });
+      $("#searchInput, #filterSelect").on("input", function () {
+        var searchValue = $("#searchInput").val().toLowerCase();
+        var filterValue = $("#filterSelect").val().toLowerCase();
+        var filteredData = data.filter(function (item) {
+          return Object.values(item).some(function (value) {
+            return value.toString().toLowerCase().includes(searchValue);
+          }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue);
+        });
+        current_page = 1;
+        objJson = filteredData;
+        changePage(current_page);
+      });
+      // });
+    }
+    function changePage(page) {
+      var btn_next = $("#btnNext");
+      var btn_prev = $("#btnPrev");
+      var listing_table = $("#listingTable");
+      var page_span = $("#page");
+      if (page < 1) page = 1;
+      if (page > numPages()) page = numPages();
+      listing_table.empty();
+      for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
+        if (objJson[i]) {
+          let html =
+            `<div class="card-item">
+                    <div class="card-header">
+                        ${objJson[i].deptName}
+                    </div>
+                    <div class="card-body">
+                        <div class="card-link">...</div>
+                        <div class="card-title">
+                                <span>   ${objJson[i].detail}</span>
+                                <br></br>
+                                <span>Mô tả yêu cầu</span>
+                        </div>
+                        <div class="card-status">
+                                <span class="high">Cao</span>
+                                <span class="process">Đang xử lý</span>
+                                <span class="low">Thấp</span>
+                        </div>
+                    </div>
+                </div>`
+          listing_table.append(html);
+        }
+      }
+      page_span.text(page + " / " + numPages());
+      if (page == 1) {
+        btn_prev.css("visibility", "hidden");
+      } else {
+        btn_prev.css("visibility", "visible");
+      }
+      if (page == numPages()) {
+        btn_next.css("visibility", "hidden");
+      } else {
+        btn_next.css("visibility", "visible");
+      }
+      var pageLinks = '';
+      var totalPages = numPages();
+      if (totalPages <= 7) {
+        for (var i = 1; i <= totalPages; i++) {
+          pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+        }
+      } else {
+        if (page <= 4) {
+          for (var i = 1; i <= 5; i++) {
+            pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+          }
+          pageLinks += '... ';
+          pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+        } else if (page >= totalPages - 3) {
+          pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+          pageLinks += '... ';
+          for (var i = totalPages - 4; i <= totalPages; i++) {
+            pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+          }
+        } else {
+          pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+          pageLinks += '... ';
+          for (var i = page - 1; i <= page + 1; i++) {
+            pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+          }
+          pageLinks += '... ';
+          pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+        }
+      }
+      $(".pagination").empty();
+      $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');
+      $(".pagination").append(pageLinks);
+      $(".pagination").append(' <a href="#" id="btnNext">Sau</a>');
+      $(".pagination").find('a').removeClass('active');
+      $(".pagination").find('a:contains("' + page + '")').addClass('active');
+    }
+    function numPages() {
+      return Math.ceil(objJson.length / records_per_page);
+    }
   }
+
+
 
 </script>
 

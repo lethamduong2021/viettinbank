@@ -1,4 +1,4 @@
-var newData = [
+var data = [
     {
         "unitName": "Khối KHDN",
         "groupName": "Hỗ trợ chung",

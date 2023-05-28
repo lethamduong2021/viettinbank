@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,6 +63,7 @@
                     <a href="#" id="btnNext">Sau</a>
                 </div>
             </div>
+
         </div>
         <div class="tab-content" id="tab-2">
             <h2>Tab 2 Content</h2>
@@ -111,13 +113,10 @@
             $('#' + tabName).show();
             $(evt.currentTarget).addClass('active');
             if (tabName === 'tab-1') {
-
                 getContent()
             } else if (tabName === 'tab-2') {
                 getContentFilteredByStatus('CategorizeSR');
             }
-            
-            
         }
         function getContentFilteredByStatus(status) {
             $(document).ready(function () {
@@ -164,6 +163,13 @@
                     current_page = 1;
                     objJson = filteredData;
                     changePage(current_page);
+                });
+                $("#exportButton").click(function () {
+                    console.log('1', objJson);
+                    exportToExcel(objJson);
+                });
+                $("#refresh").click(function () {
+                    location.reload();
                 });
             });
         }

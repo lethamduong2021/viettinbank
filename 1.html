@@ -5,178 +5,124 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <style>
+    @import url(./danhsachyeucau.css);
+  </style>
 </head>
 
 <body>
-  <div>
-    <input type="text" id="searchInput" placeholder="Search">
-    <select id="filterSelect">
-      <option value="">All</option>
-      <option value="AdName 1">AdName 1</option>
-      <option value="AdName 2">AdName 2</option>
-      <option value="AdName 3">AdName 3</option>
-      <option value="AdName 4">AdName 4</option>
-      <option value="AdName 5">AdName 5</option>
-      <option value="AdName 6">AdName 6</option>
-      <option value="AdName 7">AdName 7</option>
-      <option value="AdName 8">AdName 8</option>
-      <option value="AdName 9">AdName 9</option>
-      <option value="AdName 10">AdName 10</option>
-    </select>
+  <div class="header">
+    <div class="left">
+      <div class="title">Danh sách yêu cầu</div>
+    </div>
+    <div class="right">
+      <button id="createNew"><span><i class="fas fa-search"></i>Tạo mới</span></button>
+    </div>
   </div>
-  <div id="listingTable"></div>
-  <div id="paginationLinks"></div>
-  <div class="pagination">
-    <a href="#" id="btnPrev">Prev</a>
-    <span id="page"></span>
-    <a href="#" id="btnNext">Next</a>
+  <div class="tab-container">
+    <div class="tab-header">
+      <button id="button1" class="tab-button active" onclick="openTab(event, 'tab-1')">
+        <i class="fa-solid fa-house"></i>
+        <span>Yêu cầu chung</span>
+        <span class="tab-number">4</span>
+      </button>
+      <button id="button2" class="tab-button" onclick="openTab(event, 'tab-2')">
+        <i class="fa-solid fa-house"></i>
+        <span>Yêu cầu chờ bổ sung thông tin</span>
+        <span class="tab-number">4</span>
+      </button>
+      <button id="button3" class="tab-button" onclick="openTab(event, 'tab-3')">
+        <i class="fa-solid fa-house"></i>
+        <span>Yêu cầu đã xử lý xong</span>
+        <span class="tab-number">4</span>
+      </button>
+    </div>
+
+    <div class="tab-content" id="tab-1">
+    </div>
+    <div class="tab-content" id="tab-2">
+      <h2>Tab 2 Content</h2>
+      <p>This is the content for Tab 2.</p>
+    </div>
+    <div class="tab-content" id="tab-3">
+      <h2>Tab 3 Content</h2>
+      <p>This is the content for Tab 3.</p>
+    </div>
   </div>
-  <button id="exportButton">Export to Excel</button>
-  <script>
-    var current_page = 1;
-    var records_per_page = 4;
-    var originalData = [
-      { adName: "AdName 1", lastName: "Last Name 1" },
-      { adName: "AdName 2", lastName: "Last Name 2" },
-      { adName: "AdName 3", lastName: "Last Name 3" },
-      { adName: "AdName 4", lastName: "Last Name 4" },
-      { adName: "AdName 5", lastName: "Last Name 5" },
-      { adName: "AdName 6", lastName: "Last Name 6" },
-      { adName: "AdName 7", lastName: "Last Name 7" },
-      { adName: "AdName 8", lastName: "Last Name 8" },
-      { adName: "AdName 9", lastName: "Last Name 9" },
-      { adName: "AdName 10", lastName: "Last Name 10" }
-    ];
-
-    var newData = originalData.slice(); // Make a copy of the original data
-
-    $(document).ready(function () {
-      changePage(current_page);
-
-      $("#btnPrev").on("click", function (e) {
-        e.preventDefault();
-        if (current_page > 1) {
-          current_page--;
-          changePage(current_page);
-        }
-      });
-
-      $("#btnNext").on("click", function (e) {
-        e.preventDefault();
-        if (current_page < numPages()) {
-          current_page++;
-          changePage(current_page);
-        }
-      });
-
-      $("#searchInput, #filterSelect").on("input", function () {
-        var searchValue = $("#searchInput").val().toLowerCase();
-        var filterValue = $("#filterSelect").val().toLowerCase();
-
-        newData = originalData.filter(function (item) {
-          return (
-            item.adName.toLowerCase().includes(searchValue) &&
-            (filterValue === "" || item.adName.toLowerCase() === filterValue)
-          );
-        });
-
-        current_page = 1;
-        changePage(current_page);
-      });
-
-      $("#exportButton").on("click", function () {
-        exportToExcel(newData);
-      });
-    });
-
-    function changePage(page) {
-      var btn_next = $("#btnNext");
-      var btn_prev = $("#btnPrev");
-      var listing_table = $("#listingTable");
-      var pagination_links = $("#paginationLinks");
-      var page_span = $("#page");
-
-      // Validate page
-      if (page < 1) page = 1;
-      if (page > numPages()) page = numPages();
-
-      listing_table.empty();
-
-      for (
-        var i = (page - 1) * records_per_page;
-        i < page * records_per_page && i < newData.length;
-        i++
-      ) {
-        listing_table.append(newData[i].adName + "<br>");
-      }
-
-      page_span.text(page);
-
-      pagination_links.empty();
-
-      if (page > 1) {
-        pagination_links.append(
-          "<a href='#' class='pagination-link'>" + (page - 1) + "</a>"
-        );
-      }
-
-      pagination_links.append(
-        "<a href='#' class='pagination-link active'>" + page + "</a>"
-      );
-
-      if (page < numPages()) {
-        pagination_links.append(
-          "<a href='#' class='pagination-link'>" + (page + 1) + "</a>"
-        );
-      }
-
-      $(".pagination-link").on("click", function (e) {
-        e.preventDefault();
-        var selectedPage = parseInt($(this).text());
-        changePage(selectedPage);
-      });
-
-      if (page == 1) {
-        btn_prev.css("visibility", "hidden");
-      } else {
-        btn_prev.css("visibility", "visible");
-      }
-
-      if (page == numPages()) {
-        btn_next.css("visibility", "hidden");
-      } else {
-        btn_next.css("visibility", "visible");
-      }
-    }
-
-    function numPages() {
-      return Math.ceil(newData.length / records_per_page);
-    }
-
-    function exportToExcel(data) {
-      var worksheet = XLSX.utils.json_to_sheet(data);
-      var workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Data");
-      var excelBuffer = XLSX.write(workbook, {
-        bookType: "xlsx",
-        type: "array",
-      });
-      saveExcelFile(excelBuffer, "data.xlsx");
-    }
-
-    function saveExcelFile(buffer, filename) {
-      var blob = new Blob([buffer], { type: "application/octet-stream" });
-      var url = URL.createObjectURL(blob);
-      var link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", filename);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  </script>
 </body>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
+  crossorigin="anonymous"></script>
+<script src="./1.js"></script>
+<script>
+  $(document).ready(function () {
+    openTab('', 'tab-1');
+  });
+
+  function openTab(evt, tabName) {
+    $('.tab-content').hide();
+    $('.tab-button').removeClass('active');
+    $('#' + tabName).show();
+    $(evt.currentTarget).addClass('active');
+
+    // Remove existing elements in the tab
+    $('#' + tabName).empty();
+
+    if (tabName === 'tab-1') {
+      fetchAndRenderData(tabName, '');
+    } else if (tabName === 'tab-2') {
+      fetchAndRenderData(tabName, 'ProgressSR');
+    }
+    else if (tabName === 'tab-3') {
+      fetchAndRenderData(tabName, 'UpdateSR');
+    }
+  }
+
+  function fetchAndRenderData(tabName, status) {
+    var filteredData = [...data];
+    if (status) {
+      // Filter data based on the status
+      filteredData = data.filter(function (item) {
+        return item.status === status;
+      });
+    }
+
+
+    // Render the filtered data in the specified tab
+    renderData(tabName, filteredData);
+  }
+
+  function renderData(tabName, data) {
+    var tabContent = $('#' + tabName);
+
+    // Create the filter section
+    var filterDiv = $('<div>').addClass('filter');
+    var inputDiv = $('<div>').addClass('input-icon');
+    var searchInput = $('<input>').attr('type', 'text').attr('id', 'searchInput').attr('placeholder', 'Tìm kiếm');
+    var searchIcon = $('<i>').addClass('fas fa-search');
+    inputDiv.append(searchInput, searchIcon);
+    var selectDiv = $('<div>').addClass('filter-select');
+    var span = $('<span>').text('Phòng ban');
+    var select = $('<select>').attr('id', 'filterSelect');
+    var option = $('<option>').val('').text('Hiển thị tất cả');
+    select.append(option);
+    selectDiv.append(span, select);
+    filterDiv.append(inputDiv, selectDiv);
+
+    // Create the table section
+    var tableDiv = $('<div>').addClass('table');
+    var cardDiv = $('<div>').addClass('card').attr('id', 'listingTable');
+    var paginationDiv = $('<div>').addClass('pagination');
+    var btnPrev = $('<a>').attr('href', '#').attr('id', 'btnPrev').text('Trước');
+    var pageSpan = $('<span>').attr('id', 'page');
+    var btnNext = $('<a>').attr('href', '#').attr('id', 'btnNext').text('Sau');
+    paginationDiv.append(btnPrev, pageSpan, btnNext);
+    tableDiv.append(cardDiv, paginationDiv);
+
+    // Append the created elements to the tab
+    tabContent.append(filterDiv, tableDiv);
+    console.log(`data in ${tabName}`, data)
+  }
+
+</script>
 
 </html>

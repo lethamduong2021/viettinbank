@@ -78,18 +78,18 @@
     <script src="./data.js"></script>
     <script>
 
-        var newDataWithId = newData.map((item, index) => {
+        var dataWithId = data.map((item, index) => {
             return { id: index + 1, ...item };
         });
-        console.log('2', newDataWithId);
-        var tatCa = newData.length;
+        console.log('2', dataWithId);
+        var tatCa = data.length;
         $('#button1 .tab-number').text(tatCa)
         console.log('tatCa', tatCa);
-        var choThongTin = newData.reduce(function (accumulator, obj) {
+        var choThongTin = data.reduce(function (accumulator, obj) {
             return accumulator + (obj.status === "UpdateSR" ? 1 : 0);
         }, 0);
         $('#button2 .tab-number').text(choThongTin)
-        var danhGia = newData.reduce(function (accumulator, obj) {
+        var danhGia = data.reduce(function (accumulator, obj) {
             return accumulator + (obj.status === "ConfirmSR" ? 1 : 0);
         }, 0);
         $('#button3 .tab-number').text(danhGia)
@@ -97,14 +97,14 @@
         console.log('countChoThongTin', choThongTin);
 
 
-        var options = [...new Set(newData.map(item => item.deptName))];
+        var options = [...new Set(data.map(item => item.deptName))];
         for (var i = 0; i < options.length; i++) {
             var option = $("<option></option>")
                 .text(options[i])
                 .val(options[i])
             $("#filterSelect").append(option);
         }
-        var objJson = newData.slice();
+        var objJson = data.slice();
         function openTab(evt, tabName) {
             $('.tab-content').hide();
             $('.tab-button').removeClass('active');
@@ -117,13 +117,12 @@
                 getContentFilteredByStatus('CategorizeSR');
             }
             
-            
         }
         function getContentFilteredByStatus(status) {
             $(document).ready(function () {
                 $('.tab-button').eq(1).addClass('active');
                 // Filter the data based on the "status" property
-                var filteredData = newData.filter(function (item) {
+                var filteredData = data.filter(function (item) {
                     return item.status === status;
                 });
                 current_page = 1;
@@ -133,8 +132,7 @@
             });
         }
         $('.tab-button').eq(0).trigger('click');
-        var current_page = 1;
-        var records_per_page = 8;
+    
         function getContent() {
             $(document).ready(function () {
                 $('.tab-button').eq(0).addClass('active');
@@ -156,7 +154,7 @@
                 $("#searchInput, #filterSelect").on("input", function () {
                     var searchValue = $("#searchInput").val().toLowerCase();
                     var filterValue = $("#filterSelect").val().toLowerCase();
-                    var filteredData = newData.filter(function (item) {
+                    var filteredData = data.filter(function (item) {
                         return Object.values(item).some(function (value) {
                             return value.toString().toLowerCase().includes(searchValue);
                         }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue);

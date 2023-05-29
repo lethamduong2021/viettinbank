@@ -289,7 +289,9 @@ button > span > i {
 
 .card-status {
   padding: 10px;
-  width: max-content;
+  /* width: max-content; */
+  display: flex;
+  justify-content: space-between;
 }
 
 .card-status > span {

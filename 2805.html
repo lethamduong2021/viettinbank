@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @import url(./danhsachyeucau.css);
     </style>
@@ -21,7 +25,7 @@
     </div>
     <div class="tab-container">
         <div class="tab-header">
-            <button id="button1" class="tab-button " onclick="openTab(event, 'tab-1')">
+            <button id="button1" class="tab-button active" onclick="openTab(event, 'tab-1')">
                 <i class="fa-solid fa-house"></i>
                 <span>Yêu cầu chung</span>
                 <span class="tab-number">4</span>
@@ -37,142 +41,136 @@
                 <span class="tab-number">4</span>
             </button>
         </div>
-        <div class="tab-content" id="tab-1">
+        <div class="tab-content " id="tab-1">
+            <div class="filter">
+                <div class="input-icon">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="filter-select">
+                    <span>Phòng ban</span>
+                    <select name="" id="filterSelect">
+                        <option value="">Hiển thị tất cả</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table">
+                <div class="card" id="listingTable">
+                </div>
+                <div class="pagination">
+                    <a href="#" id="btnPrev">Trước</a>
+                    <span id="page"></span>
+                    <a href="#" id="btnNext">Sau</a>
+                </div>
+            </div>
+
         </div>
         <div class="tab-content" id="tab-2">
+            <h2>Tab 2 Content</h2>
+            <p>This is the content for Tab 2.</p>
         </div>
         <div class="tab-content" id="tab-3">
+            <h2>Tab 3 Content</h2>
+            <p>This is the content for Tab 3.</p>
         </div>
     </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="anonymous"></script>
-<script src="./data.js"></script>
-<script>
-    var current_page = 1;
-    var records_per_page = 8;
-    $(document).ready(function () {
-        var dataWithId = data.map((item, index) => {
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="./data.js"></script>
+    <script>
+
+        var newDataWithId = newData.map((item, index) => {
             return { id: index + 1, ...item };
         });
-        var tatCa = data.length;
+        console.log('2', newDataWithId);
+        var tatCa = newData.length;
         $('#button1 .tab-number').text(tatCa)
-        var choThongTin = data.reduce(function (accumulator, obj) {
+        console.log('tatCa', tatCa);
+        var choThongTin = newData.reduce(function (accumulator, obj) {
             return accumulator + (obj.status === "UpdateSR" ? 1 : 0);
         }, 0);
         $('#button2 .tab-number').text(choThongTin)
-        var danhGia = data.reduce(function (accumulator, obj) {
+        var danhGia = newData.reduce(function (accumulator, obj) {
             return accumulator + (obj.status === "ConfirmSR" ? 1 : 0);
         }, 0);
         $('#button3 .tab-number').text(danhGia)
-        openTab('', 'tab-1');
-        $('#button1').addClass('active');
-    });
+        console.log('danhGia', danhGia);
+        console.log('countChoThongTin', choThongTin);
 
-    function openTab(evt, tabName) {
-        $('.tab-content').hide();
-        $('.tab-button').removeClass('active');
-        $('#button1').removeClass('active');
-        $('#' + tabName).show();
-        $(evt.currentTarget).addClass('active');
-        $('#' + tabName).empty();
-        if (tabName === 'tab-1') {
-            fetchAndRenderData(tabName, '');
-        } else if (tabName === 'tab-2') {
-            fetchAndRenderData(tabName, 'ProgressSR');
-        }
-        else if (tabName === 'tab-3') {
-            fetchAndRenderData(tabName, 'UpdateSR');
-        }
-    }
 
-    function fetchAndRenderData(tabName, status) {
-        var getIdTab = ['tab-1', 'tab-2', 'tab-3'];
-        var filteredIds = getIdTab.filter(function (tabId) {
-            return tabId !== tabName;
-        });
-
-        $.each(filteredIds, function (index, tabId) {
-            $('#' + tabId).empty();
-        });
-
-        var filteredData = [...data];
-        if (status) {
-            filteredData = data.filter(function (item) {
-                return item.status === status;
-            });
-        }
-        var tabContent = $('#' + tabName);
-        var filterDiv = $('<div>').addClass('filter');
-        var inputDiv = $('<div>').addClass('input-icon');
-        var searchInput = $('<input>').attr({
-            type: 'text',
-            id: 'searchInput',
-            placeholder: 'Tìm kiếm'
-        });
-        var searchIcon = $('<i>').addClass('fas fa-search');
-        inputDiv.append(searchInput, searchIcon);
-
-        var selectDiv = $('<div>').addClass('filter-select');
-        var span = $('<span>').text('Phòng ban');
-        var select = $('<select>').attr('id', 'filterSelect');
-        var option = $('<option>').val('').text('Hiển thị tất cả');
-        select.append(option);
-        selectDiv.append(span, select);
-
-        filterDiv.append(inputDiv, selectDiv);
-
-        // Create the table section
-        var tableDiv = $('<div>').addClass('table');
-        var cardDiv = $('<div>').addClass('card').attr('id', 'listingTable');
-        var paginationDiv = $('<div>').addClass('pagination');
-        var btnPrev = $('<a>').attr('href', '#').attr('id', 'btnPrev').text('Trước');
-        var pageSpan = $('<span>').attr('id', 'page');
-        var btnNext = $('<a>').attr('href', '#').attr('id', 'btnNext').text('Sau');
-        paginationDiv.append(btnPrev, pageSpan, btnNext);
-        tableDiv.append(cardDiv, paginationDiv);
-
-        // Append the created elements to the tab
-        tabContent.append(filterDiv, tableDiv);
-        var options = [...new Set(filteredData.map(item => item.deptName))];
+        var options = [...new Set(newData.map(item => item.deptName))];
         for (var i = 0; i < options.length; i++) {
             var option = $("<option></option>")
                 .text(options[i])
                 .val(options[i])
             $("#filterSelect").append(option);
         }
-        var objJson = filteredData.slice();
-
-        getContent();
-
-        function getContent() {
-            $('.tab-button').eq(0).addClass('active');
-            changePage(current_page);
-            $("#btnPrev").on("click", function (e) {
-                e.preventDefault();
-                if (current_page > 1) {
-                    current_page--;
-                    changePage(current_page);
-                }
-            });
-            $("#btnNext").on("click", function (e) {
-                e.preventDefault();
-                if (current_page < numPages()) {
-                    current_page++;
-                    changePage(current_page);
-                }
-            });
-            $("#searchInput, #filterSelect").on("input", function () {
-                var searchValue = $("#searchInput").val().toLowerCase();
-                var filterValue = $("#filterSelect").val().toLowerCase();
-                var filteredData = data.filter(function (item) {
-                    return Object.values(item).some(function (value) {
-                        return value.toString().toLowerCase().includes(searchValue);
-                    }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue);
+        var objJson = newData.slice();
+        function openTab(evt, tabName) {
+            $('.tab-content').hide();
+            $('.tab-button').removeClass('active');
+            $('#' + tabName).show();
+            $(evt.currentTarget).addClass('active');
+            if (tabName === 'tab-1') {
+                getContent()
+            } else if (tabName === 'tab-2') {
+                getContentFilteredByStatus('CategorizeSR');
+            }
+        }
+        function getContentFilteredByStatus(status) {
+            $(document).ready(function () {
+                $('.tab-button').eq(1).addClass('active');
+                // Filter the data based on the "status" property
+                var filteredData = newData.filter(function (item) {
+                    return item.status === status;
                 });
                 current_page = 1;
                 objJson = filteredData;
                 changePage(current_page);
+                // Add any additional logic specific to Tab-2 content
+            });
+        }
+        $('.tab-button').eq(0).trigger('click');
+        var current_page = 1;
+        var records_per_page = 8;
+        function getContent() {
+            $(document).ready(function () {
+                $('.tab-button').eq(0).addClass('active');
+                changePage(current_page);
+                $("#btnPrev").on("click", function (e) {
+                    e.preventDefault();
+                    if (current_page > 1) {
+                        current_page--;
+                        changePage(current_page);
+                    }
+                });
+                $("#btnNext").on("click", function (e) {
+                    e.preventDefault();
+                    if (current_page < numPages()) {
+                        current_page++;
+                        changePage(current_page);
+                    }
+                });
+                $("#searchInput, #filterSelect").on("input", function () {
+                    var searchValue = $("#searchInput").val().toLowerCase();
+                    var filterValue = $("#filterSelect").val().toLowerCase();
+                    var filteredData = newData.filter(function (item) {
+                        return Object.values(item).some(function (value) {
+                            return value.toString().toLowerCase().includes(searchValue);
+                        }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue);
+                    });
+                    current_page = 1;
+                    objJson = filteredData;
+                    changePage(current_page);
+                });
+                $("#exportButton").click(function () {
+                    console.log('1', objJson);
+                    exportToExcel(objJson);
+                });
+                $("#refresh").click(function () {
+                    location.reload();
+                });
             });
         }
 
@@ -255,11 +253,11 @@
             $(".pagination").find('a').removeClass('active');
             $(".pagination").find('a:contains("' + page + '")').addClass('active');
         }
-
         function numPages() {
             return Math.ceil(objJson.length / records_per_page);
         }
-    }
-</script>
+
+    </script>
+</body>
 
 </html>

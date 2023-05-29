@@ -41,6 +41,16 @@
             </button>
         </div>
         <div class="tab-content " id="tab-1">
+        </div>
+        <div class="tab-content" id="tab-2">
+            <h2>Tab 2 Content</h2>
+            <p>This is the content for Tab 2.</p>
+        </div>
+        <div class="tab-content" id="tab-3">
+            <h2>Tab 3 Content</h2>
+            <p>This is the content for Tab 3.</p>
+        </div>
+        <div class="content">
             <div class="filter">
                 <div class="input-icon">
                     <input type="text" id="searchInput" placeholder="Tìm kiếm">
@@ -53,69 +63,90 @@
                     </select>
                 </div>
             </div>
-            <div class="card" id="listingTable">
+            <div class="table">
+                <div class="card" id="listingTable">
+                </div>
+                <div class="pagination">
+                    <a href="#" id="btnPrev">Trước</a>
+                    <span id="page"></span>
+                    <a href="#" id="btnNext">Sau</a>
+                </div>
             </div>
-            <div class="pagination">
-                <a href="#" id="btnPrev">Trước</a>
-                <span id="page"></span>
-                <a href="#" id="btnNext">Sau</a>
-            </div>
         </div>
-        <div class="tab-content" id="tab-2">
-            <h2>Tab 2 Content</h2>
-            <p>This is the content for Tab 2.</p>
-        </div>
-        <div class="tab-content" id="tab-3">
-            <h2>Tab 3 Content</h2>
-            <p>This is the content for Tab 3.</p>
-        </div>
+       
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js"
         integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
-    <script src="./data.js"></script>
+    <script src="./1.js"></script>
     <script>
 
-        var newDataWithId = newData.map((item, index) => {
+        var newDataWithId = data.map((item, index) => {
             return { id: index + 1, ...item };
         });
-        console.log('2', newDataWithId);
-        var tatCa = newData.length;
+        var tatCa = data.length;
         $('#button1 .tab-number').text(tatCa)
-        console.log('tatCa', tatCa);
-        var choThongTin = newData.reduce(function (accumulator, obj) {
+        var choThongTin = data.reduce(function (accumulator, obj) {
             return accumulator + (obj.status === "UpdateSR" ? 1 : 0);
         }, 0);
         $('#button2 .tab-number').text(choThongTin)
-        var danhGia = newData.reduce(function (accumulator, obj) {
+        var danhGia = data.reduce(function (accumulator, obj) {
             return accumulator + (obj.status === "ConfirmSR" ? 1 : 0);
         }, 0);
         $('#button3 .tab-number').text(danhGia)
-        console.log('danhGia', danhGia);
-        console.log('countChoThongTin', choThongTin);
-        var options = [...new Set(newData.map(item => item.deptName))];
-        for (var i = 0; i < options.length; i++) {
-            var option = $("<option></option>")
-                .text(options[i])
-                .val(options[i])
-            $("#filterSelect").append(option);
+        var options = [...new Set(data.map(item => item.deptName))];
+
+        if (options.length > 0) {
+            options.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+            for (var i = 0; i < options.length; i++) {
+                var option = $("<option></option>")
+                    .text(options[i])
+                    .val(options[i]);
+                $("#filterSelect").append(option);
+            }
         }
-        var objJson = newData.slice();
+
+
         function openTab(evt, tabName) {
-            $('.tab-content').empty();
+            $('.tab-content').hide();
             $('.tab-button').removeClass('active');
             $('#' + tabName).show();
             $(evt.currentTarget).addClass('active');
             if (tabName === 'tab-1') {
-                getContent()
+                // getContent(data, tabName);
+            } else if (tabName === 'tab-2') {
+                var data1 = data.filter(function (obj) {
+                    return obj.status === 'UpdateSR';
+                });
+                getContent(data1, tabName);
+
             }
+
         }
-        $('.tab-button').eq(0).trigger('click');
-        var current_page = 1;
-        var records_per_page = 8;
-        function getContent(data) {
+        function getContent(data, tabName) {
+            var objJson = data.slice();
+            $('.tab-button').eq(0).trigger('click');
+            var current_page = 1;
+            var records_per_page = 8;
             $(document).ready(function () {
-                $('.tab-button').eq(0).addClass('active');
+                console.log('day la data', data);
+
+                $('#page').empty();
+                $('.pagination').empty();
+                switch (tabName) {
+                    case 'tab-1':
+                        $('.tab-button').eq(0).addClass('active');
+                        break;
+                    case 'tab-2':
+                        $('.tab-button').eq(1).addClass('active');
+                        break;
+                    case 'tab-3':
+                        $('.tab-button').eq(2).addClass('active');
+                        break;
+                    default:
+                        break;
+                }
+
                 changePage(current_page);
                 $("#btnPrev").on("click", function (e) {
                     e.preventDefault();
@@ -134,7 +165,7 @@
                 $("#searchInput, #filterSelect").on("input", function () {
                     var searchValue = $("#searchInput").val().toLowerCase();
                     var filterValue = $("#filterSelect").val().toLowerCase();
-                    var filteredData = newData.filter(function (item) {
+                    var filteredData = data.filter(function (item) {
                         return Object.values(item).some(function (value) {
                             return value.toString().toLowerCase().includes(searchValue);
                         }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue);
@@ -151,20 +182,18 @@
                     location.reload();
                 });
             });
-        }
-
-        function changePage(page) {
-            var btn_next = $("#btnNext");
-            var btn_prev = $("#btnPrev");
-            var listing_table = $("#listingTable");
-            var page_span = $("#page");
-            if (page < 1) page = 1;
-            if (page > numPages()) page = numPages();
-            listing_table.empty();
-            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
-                if (objJson[i]) {
-                    let html =
-                        `<div class="card-item">
+            function changePage(page) {
+                var btn_next = $("#btnNext");
+                var btn_prev = $("#btnPrev");
+                var listing_table = $("#listingTable");
+                var page_span = $("#page");
+                if (page < 1) page = 1;
+                if (page > numPages()) page = numPages();
+                listing_table.empty();
+                for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
+                    if (objJson[i]) {
+                        let html =
+                            `<div class="card-item">
                     <div class="card-header">
                         ${objJson[i].deptName}
                     </div>
@@ -182,61 +211,62 @@
                         </div>
                     </div>
                 </div>`
-                    listing_table.append(html);
-                }
-            }
-            page_span.text(page + " / " + numPages());
-            if (page == 1) {
-                btn_prev.css("visibility", "hidden");
-            } else {
-                btn_prev.css("visibility", "visible");
-            }
-            if (page == numPages()) {
-                btn_next.css("visibility", "hidden");
-            } else {
-                btn_next.css("visibility", "visible");
-            }
-            var pageLinks = '';
-            var totalPages = numPages();
-            if (totalPages <= 7) {
-                for (var i = 1; i <= totalPages; i++) {
-                    pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
-                }
-            } else {
-                if (page <= 4) {
-                    for (var i = 1; i <= 5; i++) {
-                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                        listing_table.append(html);
                     }
-                    pageLinks += '... ';
-                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
-                } else if (page >= totalPages - 3) {
-                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
-                    pageLinks += '... ';
-                    for (var i = totalPages - 4; i <= totalPages; i++) {
+                }
+                page_span.text(page + " / " + numPages());
+                if (page == 1) {
+                    btn_prev.css("visibility", "hidden");
+                } else {
+                    btn_prev.css("visibility", "visible");
+                }
+                if (page == numPages()) {
+                    btn_next.css("visibility", "hidden");
+                } else {
+                    btn_next.css("visibility", "visible");
+                }
+                var pageLinks = '';
+                var totalPages = numPages();
+                if (totalPages <= 7) {
+                    for (var i = 1; i <= totalPages; i++) {
                         pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
                     }
                 } else {
-                    pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
-                    pageLinks += '... ';
-                    for (var i = page - 1; i <= page + 1; i++) {
-                        pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                    if (page <= 4) {
+                        for (var i = 1; i <= 5; i++) {
+                            pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                        }
+                        pageLinks += '... ';
+                        pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
+                    } else if (page >= totalPages - 3) {
+                        pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                        pageLinks += '... ';
+                        for (var i = totalPages - 4; i <= totalPages; i++) {
+                            pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                        }
+                    } else {
+                        pageLinks += '<a href="#" onclick="changePage(1)">1</a>';
+                        pageLinks += '... ';
+                        for (var i = page - 1; i <= page + 1; i++) {
+                            pageLinks += '<a href="#" onclick="changePage(' + i + ')">' + i + '</a>';
+                        }
+                        pageLinks += '... ';
+                        pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
                     }
-                    pageLinks += '... ';
-                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ')">' + totalPages + '</a>';
                 }
+                $(".pagination").empty();
+                $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');
+                $(".pagination").append(pageLinks);
+                $(".pagination").append(' <a href="#" id="btnNext">Sau</a>');
+                $(".pagination").find('a').removeClass('active');
+                $(".pagination").find('a:contains("' + page + '")').addClass('active');
             }
-            $(".pagination").empty();
-            $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');
-            $(".pagination").append(pageLinks);
-            $(".pagination").append(' <a href="#" id="btnNext">Sau</a>');
-            $(".pagination").find('a').removeClass('active');
-            $(".pagination").find('a:contains("' + page + '")').addClass('active');
+            function numPages() {
+                return Math.ceil(objJson.length / records_per_page);
+            }
         }
-        function numPages() {
-            return Math.ceil(objJson.length / records_per_page);
-        }
+
+
 
     </script>
-</body>
-
-</html>
+</body> fix my code

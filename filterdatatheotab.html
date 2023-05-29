@@ -19,62 +19,69 @@
     </div>
 
     <div class="tab" id="tab1Content">
-        <!-- Content for tab 1 -->
-        <pre id="data"></pre>
+        <div id="content1"></div>
+        <div class="filter">
+            <div class="input-icon">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-select">
+                <span>Phòng ban</span>
+                <select name="" id="filterSelect">
+                    <option value="">Hiển thị tất cả</option>
+                </select>
+            </div>
+        </div>
+        <div class="table">
+            <div class="card" id="listingTable">
+            </div>
+            <div class="pagination">
+                <a href="#" id="btnPrev">Trước</a>
+                <span id="page"></span>
+                <a href="#" id="btnNext">Sau</a>
+            </div>
+        </div>
+
     </div>
 
     <div class="tab" id="tab2Content">
-        <!-- Content for tab 2 -->
-        <pre id="status"></pre>
+        <div id="content2"></div>
+
     </div>
 
     <div class="tab" id="tab3Content">
-        <!-- Content for tab 3 -->
-        <pre id="filteredData"></pre>
+        <div id="content3"></div>
+
     </div>
-    <script src="./data.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <script src="./1.js"></script>
     <script>
         $(document).ready(function () {
-            // Show Tab 1 content on initial load
-            $("#tab1Content").show();  // Show tab 1 content
-
-            // Display all data
-            function displayData() {
-                var dataHtml = "";
-                data.forEach(function (obj) {
-                    dataHtml += JSON.stringify(obj, null, 4) + "\n";
-                });
-                $("#data").text(dataHtml);
-            }
-            displayData(); // Display
-            // Display filtered data
+            $("#tab1Content").show();
             function displayFilteredData(filter) {
                 var filteredDataHtml = "";
                 var filteredData = data.filter(function (obj) {
-                    return obj.name === filter;
+                    return obj.status === filter;
                 });
                 filteredData.forEach(function (obj) {
                     filteredDataHtml += JSON.stringify(obj, null, 4) + "\n";
                 });
-                $("#filteredData").text(filteredDataHtml);
-                $("#status").text(filteredDataHtml);
+                $("#content1").text(filteredDataHtml);
+                $("#content2").text(filteredDataHtml);
+                $("#content3").text(filteredDataHtml);
             }
-
-            // Function to handle tab clicks
+            displayFilteredData("Khối KHDN");
             function handleTabClick(tabId, filter) {
-                $(".tab").hide();  // Hide all tab content
-                $("#" + tabId + "Content").show();  // Show corresponding tab content
-
-                if (filter) {
-                    displayFilteredData(filter);
-                } else {
-                    displayData();
-                }
+                $(".tab").hide();
+                $("#" + tabId + "Content").show();
+                displayFilteredData(filter);
             }
-
             // Tab 1 click event
             $("#tab1").click(function () {
-                handleTabClick("tab1");
+                handleTabClick("tab1", "UpdateSR");
             });
 
             // Tab 2 click event
@@ -86,15 +93,77 @@
             $("#tab3").click(function () {
                 handleTabClick("tab3", "Tom");
             });
+            // function addElement(tabId) {
+            //     // Create the filter div
+            //     var filterDiv = $('<div>').addClass('filter');
+
+            //     // Create the input icon div
+            //     var inputIconDiv = $('<div>').addClass('input-icon');
+
+            //     // Create the search input element
+            //     var searchInput = $('<input>').attr('type', 'text').attr('id', 'searchInput').attr('placeholder', 'Tìm kiếm');
+
+            //     // Create the search icon element
+            //     var searchIcon = $('<i>').addClass('fas fa-search');
+
+            //     // Append the search input and icon to the input icon div
+            //     inputIconDiv.append(searchInput, searchIcon);
+
+            //     // Create the filter select div
+            //     var filterSelectDiv = $('<div>').addClass('filter-select');
+
+            //     // Create the span element for "Phòng ban"
+            //     var filterSpan = $('<span>').text('Phòng ban');
+
+            //     // Create the select element
+            //     var filterSelect = $('<select>').attr('id', 'filterSelect');
+
+            //     // Create the default option for "Hiển thị tất cả"
+            //     var defaultOption = $('<option>').attr('value', '').text('Hiển thị tất cả');
+
+            //     // Append the default option to the select element
+            //     filterSelect.append(defaultOption);
+
+            //     // Append the span and select elements to the filter select div
+            //     filterSelectDiv.append(filterSpan, filterSelect);
+
+            //     // Append the input icon div and filter select div to the filter div
+            //     filterDiv.append(inputIconDiv, filterSelectDiv);
+
+            //     // Create the table div
+            //     var tableDiv = $('<div>').addClass('table');
+
+            //     // Create the listingTable div
+            //     var listingTableDiv = $('<div>').addClass('card').attr('id', 'listingTable');
+
+            //     // Create the pagination div
+            //     var paginationDiv = $('<div>').addClass('pagination');
+
+            //     // Create the previous and next links for pagination
+            //     var prevLink = $('<a>').attr('href', '#').attr('id', 'btnPrev').text('Trước');
+            //     var nextLink = $('<a>').attr('href', '#').attr('id', 'btnNext').text('Sau');
+
+            //     // Create the span element for page number
+            //     var pageSpan = $('<span>').attr('id', 'page');
+
+            //     // Append the previous link, page span, and next link to the pagination div
+            //     paginationDiv.append(prevLink, pageSpan, nextLink);
+
+            //     // Append the listingTable div and pagination div to the table div
+            //     tableDiv.append(listingTableDiv, paginationDiv);
+
+            //     // Append the filter div and table div to the body
+            //     $("#" + tab).append(filterDiv, tableDiv);
+            // }
         });
 
         // Sample data
-        var data = [
-            { "name": "John", "age": 30 },
-            { "name": "Jane", "age": 25 },
-            { "name": "Tom", "age": 35 },
-            { "name": "Tom", "age": 40 }
-        ];
+        // var data = [
+        //     { "name": "John", "age": 30 },
+        //     { "name": "Jane", "age": 25 },
+        //     { "name": "Tom", "age": 35 },
+        //     { "name": "Tom", "age": 40 }
+        // ];
     </script>
 </body>
 

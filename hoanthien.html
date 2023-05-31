@@ -173,20 +173,39 @@
       var objJson1 = [...objJson];
       console.log('objJson1', objJson1);
       changePage(current_page, objJson);
+      // $("#btnPrev").on("click", function (e) {
+      //   e.preventDefault();
+      //   if (current_page > 1) {
+      //     current_page--;
+      //     changePage(current_page, objJson);
+      //   }
+      // });
+      // $("#btnNext").on("click", function (e) {
+      //   e.preventDefault();
+      //   if (current_page < numPages()) {
+      //     current_page++;
+      //     changePage(current_page, objJson);
+      //   }
+      // });
+      // Add event handlers for the pagination buttons
       $("#btnPrev").on("click", function (e) {
         e.preventDefault();
-        if (current_page > 1) {
-          current_page--;
-          changePage(current_page, objJson);
+        var currentPage = getCurrentPage(); // Implement a function to get the current page
+        if (currentPage > 1) {
+          changePage(currentPage - 1, objJson);
         }
       });
+
       $("#btnNext").on("click", function (e) {
         e.preventDefault();
-        if (current_page < numPages()) {
-          current_page++;
-          changePage(current_page, objJson);
+        var currentPage = getCurrentPage(); // Implement a function to get the current page
+        var numPages = Math.ceil(objJson.length / records_per_page);
+        if (currentPage < numPages) {
+          changePage(currentPage + 1, objJson);
         }
       });
+
+      
       $("#searchInput, #filterSelect").on("input", function () {
         var searchValue = $("#searchInput").val().toLowerCase();
         var filterValue = $("#filterSelect").val().toLowerCase();
@@ -287,6 +306,7 @@
         pageLinks += '<a href="#" onclick="changePage(' + totalPages + ', objJson)">' + totalPages + '</a>';
       }
     }
+
 
     $(".pagination").empty();
     $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');

@@ -1,42 +1,311 @@
-<link rel='stylesheet' type='text/css' href='/sm/css/typography.css' />
-<link rel='stylesheet' type='text/css' href='/sm/branding/css/1609383931852_htmlviewer.css' />
-<link rel='stylesheet' type='text/css' href='/sm/css/9.71.0008/webtier.css' />
+<link rel='stylesheet' type='text/css' href='/sm/css/typography.css'/>
+<link rel='stylesheet' type='text/css' href='/sm/branding/css/1609383931852_htmlviewer.css'/>
+<link rel='stylesheet' type='text/css' href='/sm/css/9.71.0008/webtier.css'/>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        @import url(./danhsachyeucau.css);
-    </style>
-</head>
-
-<body>
-    <div class="header">
-        <div class="left">
-            <div class="title">Danh sách yêu cầu</div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" / target="_blank">
+        <link rel="stylesheet" href="../js/9.71.0008/customSL/EssView/datatable/css/base.css" target="_blank">
+        <link href="../js/9.71.0008/customSL/EssView/css/fontawesome6.css" rel="stylesheet" target="_blank">
+        <link rel="stylesheet" href="../js/9.71.0008/customSL/EssView/datatable/css/danhsachyeucau.css" target="_blank">
+    </head>
+    <body>
+        <div class="tab-container">
+            <div class="tab-header">
+                <button id="button1" class="tab-button " onclick="openTab(event, 'tab-1')">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Yêu cầu chung</span>
+                    <span class="tab-number"></span>
+                </button>
+                <button id="button2" class="tab-button" onclick="openTab(event, 'tab-2')">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>Yêu cầu chờ bổ sung thông tin</span>
+                    <span class="tab-number"></span>
+                </button>
+                <button id="button3" class="tab-button" onclick="openTab(event, 'tab-3')">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Yêu cầu đã xử lý xong</span>
+                    <span class="tab-number"></span>
+                </button>
+            </div>
+            <div class="tab-content" id="tab-1"></div>
+            <div class="tab-content" id="tab-2"></div>
+            <div class="tab-content" id="tab-3"></div>
         </div>
-        <div class="right"> <button id="createNew"><span><i class="fas fa-search"></i>Tạo mới</span></button> </div>
-    </div>
-    <div class="tab-container">
-        <div class="tab-header"> <button id="button1" class="tab-button " onclick="openTab(event, 'tab-1')"> <i
-                    class="fa-solid fa-house"></i> <span>Yêu cầu chung</span> <span class="tab-number"></span> </button>
-            <button id="button2" class="tab-button" onclick="openTab(event, 'tab-2')"> <i class="fa-solid fa-house"></i>
-                <span>Yêu cầu chờ bổ sung thông tin</span> <span class="tab-number"></span> </button> <button
-                id="button3" class="tab-button" onclick="openTab(event, 'tab-3')"> <i class="fa-solid fa-house"></i>
-                <span>Yêu cầu đã xử lý xong</span> <span class="tab-number"></span> </button> </div>
-        <div class="tab-content" id="tab-1"> </div>
-        <div class="tab-content" id="tab-2"> </div>
-        <div class="tab-content" id="tab-3"> </div>
-    </div>
-</body>
-<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
-    crossorigin="anonymous"></script>
-<script src="./data.js"></script>
-<script>  var records_per_page = 8; var objJson = [...data]; $(document).ready(function () { var dataWithId = data.map((item, index) => { return { id: index + 1, ...item }; }); var tatCa = data.length; $('#button1 .tab-number').text(tatCa); var choThongTin = data.reduce(function (accumulator, obj) { return accumulator + (obj.status === "UpdateSR" ? 1 : 0); }, 0); $('#button2 .tab-number').text(choThongTin); var danhGia = data.reduce(function (accumulator, obj) { return accumulator + (obj.status === "ConfirmSR" ? 1 : 0); }, 0); $('#button3 .tab-number').text(danhGia); openTab('', 'tab-1'); $('#button1').addClass('active'); }); function openTab(evt, tabName) { $('.tab-content').hide(); $('.tab-button').removeClass('active'); $('#button1').removeClass('active'); $('#' + tabName).show(); $(evt.currentTarget).addClass('active'); $('#' + tabName).empty(); if (tabName === 'tab-1') { fetchAndRenderData(tabName, ''); } else if (tabName === 'tab-2') { fetchAndRenderData(tabName, 'UpdateSR'); } else if (tabName === 'tab-3') { fetchAndRenderData(tabName, 'ConfirmSR'); } } function fetchAndRenderData(tabName, status) { var getIdTab = ['tab-1', 'tab-2', 'tab-3']; var filteredIds = getIdTab.filter(function (tabId) { return tabId !== tabName; }); $.each(filteredIds, function (index, tabId) { $('#' + tabId).empty(); }); if (status) { objJson = data.filter(function (item) { return item.status === status; }); } else { objJson = [...data]; } var tabContent = $('#' + tabName); var filterDiv = $('<div>').addClass('filter'); var inputDiv = $('<div>').addClass('input-icon'); var searchInput = $('<input>').attr({ type: 'text', id: 'searchInput', placeholder: 'Tìm kiếm' }); var searchIcon = $('<i>').addClass('fas fa-search'); inputDiv.append(searchInput, searchIcon); var selectDiv = $('<div>').addClass('filter-select'); var span = $('<span>').text('Phòng ban'); var select = $('<select>').attr('id', 'filterSelect'); var option = $('<option>').val('').text('Hiển thị tất cả'); select.append(option); selectDiv.append(span, select); filterDiv.append(inputDiv, selectDiv); var tableDiv = $('<div>').addClass('table'); var cardDiv = $('<div>').addClass('card').attr('id', 'listingTable'); var paginationDiv = $('<div>').addClass('pagination'); var btnPrev = $('<a>').attr('href', '#').attr('id', 'btnPrev').text('Trước'); var pageSpan = $('<span>').attr('id', 'page'); var btnNext = $('<a>').attr('href', '#').attr('id', 'btnNext').text('Sau'); paginationDiv.append(btnPrev, pageSpan, btnNext); tableDiv.append(cardDiv, paginationDiv); tabContent.append(filterDiv, tableDiv); var options = [...new Set(objJson.map(item => item.deptName))]; for (var i = 0; i < options.length; i++) { var option = $("<option></option>").text(options[i]).val(options[i])      $("#filterSelect").append(option); } var current_page = 1; getContent(objJson); function getContent() { var objJson1 = [...objJson]; console.log('objJson1', objJson1); changePage(current_page, objJson); $("#btnPrev").on("click", function (e) { e.preventDefault(); if (current_page > 1) { current_page--; changePage(current_page, objJson); } }); $("#btnNext").on("click", function (e) { e.preventDefault(); if (current_page < numPages()) { current_page++; changePage(current_page, objJson); } }); $("#searchInput, #filterSelect").on("input", function () { var searchValue = $("#searchInput").val().toLowerCase(); var filterValue = $("#filterSelect").val().toLowerCase(); var filteredData = objJson1.filter(function (item) { return Object.values(item).some(function (value) { return value.toString().toLowerCase().includes(searchValue); }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue); }); current_page = 1; objJson = filteredData; changePage(current_page, objJson); }); } } function changePage(page, objJson) { var numPages = Math.ceil(objJson.length / records_per_page); var btn_next = $("#btnNext"); var btn_prev = $("#btnPrev"); var listing_table = $("#listingTable"); var page_span = $("#page"); if (page < 1) page = 1; if (page > numPages) page = numPages; listing_table.empty(); for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) { if (objJson[i]) { var status = objJson[i].status; var html = ''; switch (status) { case 'UpdateSR': { html = `<div class="card-item">                    <div class="card-header">                        ${objJson[i].deptName}                    </div>                    <div class="card-body">                        <div class="card-link">...</div>                        <div class="card-title">                            <span>Mã ID</span>                            <br></br>                            <span>${objJson[i].detail}</span>                        </div>                    </div>                </div>`; } break; default: { html = `<div class="card-item">                    <div class="card-header">                        ${objJson[i].deptName}                    </div>                    <div class="card-body">                        <div class="card-link">...</div>                        <div class="card-title">                            <span>Mã ID</span>                            <br></br>                            <span>${objJson[i].detail}</span>                        </div>                        <div class="card-status">                          <span class="${objJson[i].status === 'Closed' ? 'high' : (objJson[i].status === 'Tiếp nhận & phân loại' ? 'low' : 'process')}">                             ${objJson[i].status}                          </span>                          <span>SLA</span>                        </div>                    </div>                </div>`; } break; }        listing_table.append(html); } }; page_span.text(page + " / " + numPages); if (page == 1) { btn_prev.css("visibility", "hidden"); } else { btn_prev.css("visibility", "visible"); } if (page == numPages) { btn_next.css("visibility", "hidden"); } else { btn_next.css("visibility", "visible"); } var pageLinks = ''; var totalPages = numPages; if (totalPages <= 7) { for (var i = 1; i <= totalPages; i++) { pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson)">' + i + '</a>'; } } else { if (page <= 4) { for (var i = 1; i <= 5; i++) { pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson)">' + i + '</a>'; } pageLinks += '... '; pageLinks += '<a href="#" onclick="changePage(' + totalPages + ', objJson)">' + totalPages + '</a>'; } else if (page >= totalPages - 3) { pageLinks += '<a href="#" onclick="changePage(1, objJson)">1</a>'; pageLinks += '... '; for (var i = totalPages - 4; i <= totalPages; i++) { pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson)">' + i + '</a>'; } } else { pageLinks += '<a href="#" onclick="changePage(1, objJson)">1</a>'; pageLinks += '... '; for (var i = page - 1; i <= page + 1; i++) { pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson)">' + i + '</a>'; } pageLinks += '... '; pageLinks += '<a href="#" onclick="changePage(' + totalPages + ', objJson)">' + totalPages + '</a>'; } }; $(".pagination").empty(); $(".pagination").append('<a href="#" id="btnPrev">Trước</a> '); $(".pagination").append(pageLinks); $(".pagination").append(' <a href="#" id="btnNext">Sau</a>'); $(".pagination").find('a').removeClass('active'); $(".pagination").find('a:contains("' + page + '")').addClass('active'); $(".pagination").find('a:contains("' + page + '")').eq($(this).length).removeClass('active'); }</script>
-
+    </body>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <script>
+        var data = [{
+            "unitName": "Khối Khách Hàng Doanh Nghiệp",
+            "deptName": "NHCT6-Phòng Khách hàng doanh nghiệp vừa và nhỏ",
+            "link": `<a target=_parent href="recordlink?table=vtbservicerequest&query=id%3D%22SR-002617%22&key=Fko1LQJE733C8BuNLWhDPtRS8h" target="detail">Yêu cầu trình chủ trương tiếp cập khách hàng doanh nghiệp vừa và nhỏ thuộc lĩnh vực hạn chế</a>`,
+            "status": "CategorizeSR",
+            "id": "SR-002617",
+            "sla": `-1d:17h:07m:15s`,
+            "ycbs": `<p><strong>Below are the most powerful and resourceful free Bootstrap admin dashboard templates. </strong></p>
+,
+,<p><u><strong>These easily fit all types of applications and projects for your convenience.</strong></u></p>`,
+            "feedBack": ``,
+            "solution": ``
+        }, {
+            "unitName": "Khối Khách Hàng Doanh Nghiệp",
+            "deptName": "NHCT56.3-Phòng Phát triển giải pháp tài chính",
+            "link": `<a target=_parent href="recordlink?table=vtbservicerequest&query=id%3D%22SR-002641%22&key=48e9JbxvpwWOtV1bxB033QUvtY" target="detail">Yêu cầu giải đáp vướng mắc liên quan đến kênh giao dịch điện tử đã triển khai của khối KHDN</a>`,
+            "status": "CategorizeSR",
+            "id": "SR-002641",
+            "sla": `-1d:16h:29m:60s`,
+            "ycbs": ``,
+            "feedBack": ``,
+            "solution": ``
+        }, {
+            "unitName": "Khối Khách Hàng Doanh Nghiệp",
+            "deptName": "NHCT6-Phòng Khách hàng doanh nghiệp vừa và nhỏ",
+            "link": `<a target=_parent href="recordlink?table=vtbservicerequest&query=id%3D%22SR-002643%22&key=wX6Lr1iLI05Mdzi4XK3EZKm2hB" target="detail">Yêu cầu giải đáp vướng mắc phát sinh trong công tác đẩy bán</a>`,
+            "status": "CategorizeSR",
+            "id": "SR-002643",
+            "sla": `-1d:16h:29m:16s`,
+            "ycbs": `<p>Lạ gì bỉ sắc tư phong,<br />Trời xanh quen thói má hồng đánh ghen.<br />Cảo thơm lần giở trước đèn,<br />Phong tình cổ lục còn truyền sử xanh.</p>`,
+            "feedBack": ``,
+            "solution": ``
+        }, {
+            "unitName": "Khối Khách Hàng Doanh Nghiệp",
+            "deptName": "NHCT6-Phòng Khách hàng doanh nghiệp vừa và nhỏ",
+            "link": `<a target=_parent href="recordlink?table=vtbservicerequest&query=id%3D%22SR-002655%22&key=DCQgieToeWWdQUFhgYG61zauUr" target="detail">Yêu cầu giải đáp vướng mắc phát sinh trong công tác đẩy bán</a>`,
+            "status": "UpdateSR",
+            "id": "SR-002655",
+            "sla": `-1d:09h:13m:55s`,
+            "ycbs": `<p>YÊU CẦU CẬP NHẬT THÔNG TIN</p>`,
+            "feedBack": ``,
+            "solution": ``
+        }, ];
+        console.log('4', data1);
+        data = data.concat(data1);
+        var records_per_page = 8;
+        var objJson = [...data];
+        $(document).ready(function() {
+            var dataWithId = data.map((item,index)=>{
+                return {
+                    id: index + 1,
+                    ...item
+                };
+            }
+            );
+            var tatCa = data.length;
+            $('#button1 .tab-number').text(tatCa);
+            var choThongTin = data.reduce(function(accumulator, obj) {
+                return accumulator + ((obj.status === "UpdateSR" || obj.status === "UpdateST") ? 1 : 0);
+            }, 0);
+            $('#button2 .tab-number').text(choThongTin);
+            var danhGia = data.reduce(function(accumulator, obj) {
+                return accumulator + (obj.status === "ConfirmSR" ? 1 : 0);
+            }, 0);
+            $('#button3 .tab-number').text(danhGia);
+            openTab('', 'tab-1');
+            $('#button1').addClass('active');
+        });
+        function openTab(evt, tabName) {
+            $('.tab-content').hide();
+            $('.tab-button').removeClass('active');
+            $('#button1').removeClass('active');
+            $('#' + tabName).show();
+            $(evt.currentTarget).addClass('active');
+            $('#' + tabName).empty();
+            if (tabName === 'tab-1') {
+                fetchAndRenderData(tabName, '');
+            } else if (tabName === 'tab-2') {
+                fetchAndRenderData(tabName, 'UpdateSR');
+            } else if (tabName === 'tab-3') {
+                fetchAndRenderData(tabName, 'ConfirmSR');
+            }
+        }
+        function fetchAndRenderData(tabName, status) {
+            var getIdTab = ['tab-1', 'tab-2', 'tab-3'];
+            var filteredIds = getIdTab.filter(function(tabId) {
+                return tabId !== tabName;
+            });
+            $.each(filteredIds, function(index, tabId) {
+                $('#' + tabId).empty();
+            });
+            if (status) {
+                if (status == "UpdateSR") {
+                    objJson = data.filter(function(item) {
+                        return (item.status === "UpdateSR" || item.status === "UpdateST");
+                    });
+                } else {
+                    objJson = data.filter(function(item) {
+                        return item.status === status;
+                    });
+                }
+            } else {
+                objJson = data.filter(function(item) {
+                    return (item.status !== "UpdateST");
+                });
+            }
+            var tabContent = $('#' + tabName);
+            var filterDiv = $('<div>').addClass('filter');
+            var inputDiv = $('<div>').addClass('input-icon');
+            var searchInput = $('<input>').attr({
+                type: 'text',
+                id: 'searchInput',
+                placeholder: 'Tìm kiếm'
+            });
+            var searchIcon = $('<i>').addClass('fas fa-search');
+            inputDiv.append(searchInput, searchIcon);
+            var selectDiv = $('<div>').addClass('filter-select');
+            var span = $('<span>').text('Phòng ban');
+            var select = $('<select>').attr('id', 'filterSelect');
+            var option = $('<option>').val('').text('Hiển thị tất cả');
+            select.append(option);
+            selectDiv.append(span, select);
+            filterDiv.append(inputDiv, selectDiv);
+            var tableDiv = $('<div>').addClass('table');
+            var cardDiv = $('<div>').addClass('card').attr('id', 'listingTable');
+            var paginationDiv = $('<div>').addClass('pagination');
+            var btnPrev = $('<a>').attr('href', '#').attr('id', 'btnPrev').text('Trước');
+            var pageSpan = $('<span>').attr('id', 'page');
+            var btnNext = $('<a>').attr('href', '#').attr('id', 'btnNext').text('Sau');
+            paginationDiv.append(btnPrev, pageSpan, btnNext);
+            tableDiv.append(cardDiv, paginationDiv);
+            tabContent.append(filterDiv, tableDiv);
+            var options = [...new Set(objJson.map(item=>item.deptName))];
+            for (var i = 0; i < options.length; i++) {
+                var option = $("<option></option>").text(options[i]).val(options[i]);
+                $("#filterSelect").append(option);
+            }
+            var current_page = 1;
+            getContent(objJson);
+            function getContent() {
+                var objJson1 = [...objJson];
+                console.log('objJson1', objJson1);
+                changePage(current_page, objJson);
+                $("#btnPrev").on("click", function(e) {
+                    e.preventDefault();
+                    if (current_page > 1) {
+                        current_page--;
+                        changePage(current_page, objJson);
+                    }
+                });
+                $("#btnNext").on("click", function(e) {
+                    e.preventDefault();
+                    if (current_page < numPages()) {
+                        current_page++;
+                        changePage(current_page, objJson);
+                    }
+                });
+                $("#searchInput, #filterSelect").on("input", function() {
+                    var searchValue = $("#searchInput").val().toLowerCase();
+                    var filterValue = $("#filterSelect").val().toLowerCase();
+                    var filteredData = objJson1.filter(function(item) {
+                        return Object.values(item).some(function(value) {
+                            return value.toString().toLowerCase().includes(searchValue);
+                        }) && (filterValue === "" || item.deptName.toLowerCase() === filterValue);
+                    });
+                    current_page = 1;
+                    objJson = filteredData;
+                    changePage(current_page, objJson);
+                });
+            }
+        }
+        function changePage(page, objJson) {
+            var numPages = Math.ceil(objJson.length / records_per_page);
+            var btn_next = $("#btnNext");
+            var btn_prev = $("#btnPrev");
+            var listing_table = $("#listingTable");
+            var page_span = $("#page");
+            if (page < 1)
+                page = 1;
+            if (page > numPages)
+                page = numPages;
+            listing_table.empty();
+            for (var i = (page - 1) * records_per_page; i < page * records_per_page && i < objJson.length; i++) {
+                if (objJson[i]) {
+                    var status = objJson[i].status;
+                    var html = '';
+                    switch (status) {
+                    case 'UpdateSR':
+                        {
+                            html = `<div class="card-item">                    <div class="card-header">                        ${objJson[i].deptName}                    </div>                    <div class="card-body">                        <div class="card-title card-title-1">                            <span>${objJson[i].link}</span>                            <span>...</span>                        </div>                        <div class="card-status">    							<fieldset class="tooltip">          						<legend>Yêu cầu bổ sung thông tin</legend>        							<span class="tooltiptext">${objJson[i].ycbs}</span>                        			<div class="card-text">                          			${objJson[i].ycbs}                        			</div>        						</fieldset>                        </div>                    </div>                </div>`;
+                        }
+                        break;
+                    case 'UpdateST':
+                        {
+                            console.log('1', objJson[i].deptName);
+                            objJson[i].deptName = objJson[i].deptName !== "null" ? objJson[i].deptName : "N/A";
+                            html = `<div class="card-item">                    <div class="card-header">                        ${objJson[i].deptName}                    </div>                    <div class="card-body">                        <div class="card-title card-title-1">                            <span>${objJson[i].link}</span>                            <span>...</span>                        </div>                        <div class="card-status">    							<fieldset class="tooltip">          						<legend>Yêu cầu bổ sung thông tin</legend>        							<span class="tooltiptext">${objJson[i].ycbs}</span>                        			<div class="card-text">                          			${objJson[i].ycbs}                        			</div>        						</fieldset>                        </div>                    </div>                </div>`;
+                        }
+                        break;
+                    case 'ConfirmSR':
+                        {
+                            html = `<div class="card-item">                    <div class="card-header">                        ${objJson[i].deptName}                    </div>                    <div class="card-body">                        <div class="card-title card-title-1">                            <span>${objJson[i].link}</span>                            <span>...</span>                        </div>                        <div class="card-status">    							<fieldset class="tooltip">          						<legend>Giải pháp chi tiết</legend>        							<span class="tooltiptext">${objJson[i].solution}</span>                        			<div class="card-text">                          			${objJson[i].solution}                        			</div>        						</fieldset>                        </div>                    </div>                </div>`;
+                        }
+                        break;
+                    default:
+                        {
+                            html = `<div class="card-item">                    <div class="card-header">                        ${objJson[i].deptName}                    </div>                    <div class="card-body">                        <div class="card-link">...</div>                        <div class="card-title">                            <span>${objJson[i].link}</span>                            <br></br>                            <span>Mã yêu cầu: ${objJson[i].id}</span>                        </div>                        <div class="card-status">                          <span class="${objJson[i].status === 'Closed' ? 'high' : (objJson[i].status === 'Tiếp nhận & phân loại' ? 'low' : 'process')}">                             ${objJson[i].status}                          </span>                          <span>${objJson[i].sla}</span>                        </div>                    </div>                </div>`;
+                        }
+                        break;
+                    }
+                    listing_table.append(html);
+                }
+            }
+            ;page_span.text(page + " / " + numPages);
+            if (page == 1) {
+                btn_prev.css("visibility", "hidden");
+            } else {
+                btn_prev.css("visibility", "visible");
+            }
+            if (page == numPages) {
+                btn_next.css("visibility", "hidden");
+            } else {
+                btn_next.css("visibility", "visible");
+            }
+            var pageLinks = '';
+            var totalPages = numPages;
+            if (totalPages <= 7) {
+                for (var i = 1; i <= totalPages; i++) {
+                    pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson);return false;">' + i + '</a>';
+                }
+            } else {
+                if (page <= 4) {
+                    for (var i = 1; i <= 5; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson);return false;">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ', objJson);return false;">' + totalPages + '</a>';
+                } else if (page >= totalPages - 3) {
+                    pageLinks += '<a href="#" onclick="changePage(1, objJson);return false;">1</a>';
+                    pageLinks += '... ';
+                    for (var i = totalPages - 4; i <= totalPages; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson);return false;">' + i + '</a>';
+                    }
+                } else {
+                    pageLinks += '<a href="#" onclick="changePage(1, objJson);return false;">1</a>';
+                    pageLinks += '... ';
+                    for (var i = page - 1; i <= page + 1; i++) {
+                        pageLinks += '<a href="#" onclick="changePage(' + i + ', objJson);return false;">' + i + '</a>';
+                    }
+                    pageLinks += '... ';
+                    pageLinks += '<a href="#" onclick="changePage(' + totalPages + ', objJson)">' + totalPages + '</a>';
+                }
+            }
+            ;$(".pagination").empty();
+            $(".pagination").append('<a href="#" id="btnPrev">Trước</a> ');
+            $(".pagination").append(pageLinks);
+            $(".pagination").append(' <a href="#" id="btnNext">Sau</a>');
+            $(".pagination").find('a').removeClass('active');
+            $(".pagination").find('a:contains("' + page + '")').addClass('active');
+            $(".pagination").find('a:contains("' + page + '")').eq($(this).length).removeClass('active');
+            $(".pagination a").click(function(e) {
+                e.preventDefault();
+            });
+        }
+    </script>
 </html>
-<script
-    type='text/javascript'>var isHover = false; var isEmbeddedFrame = true; parent.cwc.mapKeys(document); parent.cwc.preventDragAndDrop(document);</script>
+<script type='text/javascript'>
+    var isHover = false;
+    var isEmbeddedFrame = true;
+    parent.cwc.mapKeys(document);
+    parent.cwc.preventDragAndDrop(document);
+</script>

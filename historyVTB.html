@@ -1,0 +1,315 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <style>
+        html {
+            line-height: 1.4;
+        }
+
+        .m-0 {
+            margin: 0;
+        }
+
+        .sr-only {
+            position: absolute;
+            left: -10000px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+        }
+
+        .comment {
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .comment-heading {
+            display: flex;
+            align-items: center;
+            height: 50px;
+            font-size: 14px;
+        }
+
+        .comment-voting {
+            background: #32ae53;
+            border: 0.3rem solid #ebecf0;
+            border-radius: 50%;
+            content: "";
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+
+        .comment-voting.sub-cmt {
+            background: #5e6b62;
+            border: 3px solid #ebecf0;
+            border-radius: 50%;
+            content: "";
+            height: 1.2rem;
+            width: 1.2rem;
+        }
+
+        .comment-info {
+            color: rgba(0, 0, 0, 0.5);
+            margin-left: 10px;
+        }
+
+        .comment-author {
+            color: rgba(0, 0, 0, 0.85);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .comment-author:hover {
+            text-decoration: underline;
+        }
+
+        .replies {
+            margin-left: 20px;
+        }
+
+        .comment-border-link {
+            display: block;
+            position: absolute;
+            top: 50px;
+            left: 4px;
+            width: 12px;
+            height: calc(100% - 50px);
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            background-color: rgba(0, 0, 0, 0.1);
+            background-clip: padding-box;
+        }
+
+        .comment-border-link:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .comment-body {
+            padding: 0 20px;
+            padding-left: 28px;
+        }
+
+        .replies {
+            margin-left: 28px;
+        }
+
+        details.comment summary {
+            position: relative;
+            list-style: none;
+            cursor: pointer;
+        }
+
+        details.comment summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details.comment:not([open]) .comment-heading {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        }
+
+        .comment-heading::after {
+            display: inline-block;
+            position: absolute;
+            right: 5px;
+            align-self: center;
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.55);
+        }
+
+        details.comment[open] .comment-heading::after {
+            content: "Thu gọn";
+        }
+
+        details.comment:not([open]) .comment-heading::after {
+            content: "Hiển thị đầy đủ";
+        }
+
+        @media screen and (-ms-high-contrast: active),
+        (-ms-high-contrast: none) {
+            .comment-heading {
+                cursor: default;
+            }
+
+            details.comment[open] .comment-heading::after,
+            details.comment:not([open]) .comment-heading::after {
+                content: "";
+            }
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        .comment-body p {
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="comment-thread">
+        <details open class="comment" id="comment-1">
+            <p class="comment-border-link">
+                <span class="sr-only">Jump to comment-1</span>
+            </p>
+            <summary>
+                <div class="comment-heading">
+                    <div class="comment-voting">
+
+                    </div>
+                    <div class="comment-info">
+                        <p class="comment-author">Lương Ngọc Hảo</a>
+                        <p class="m-0">
+                            29/05/2023 17:28:30
+                        </p>
+                    </div>
+                </div>
+            </summary>
+            <div class="comment-body">
+                <p>
+                    This is really great! I fully agree with what you wrote, and this is sure to help me out in the
+                    future. Thank you for posting this.This is really great! I fully agree with what you wrote, and this
+                    is sure to help me out in the future. Thank you for posting this.This is really great! I fully agree
+                    with what you wrote, and this is sure to help me out in the future. Thank you for posting this.
+                </p>
+            </div>
+            <div class="replies">
+                <details open class="comment" id="comment-2">
+                    <a href="#" class="comment-border-link">
+                        <span class="sr-only">Jump to comment-2</span>
+                    </a>
+                    <summary>
+                        <div class="comment-heading">
+                            <div class="comment-voting sub-cmt">
+                            </div>
+                            <div class="comment-info">
+                                <a href="#" class="comment-author">randomperson81</a>
+                                <p class="m-0">
+                                    4 points &bull; 3 days ago
+                                </p>
+                            </div>
+                        </div>
+                    </summary>
+                    <div class="comment-body">
+                        <p>
+                            Took the words right out of my mouth!
+                        </p>
+                    </div>
+                </details>
+            </div>
+            <div class="replies">
+                <details open class="comment" id="comment-2">
+                    <a href="#" class="comment-border-link">
+                        <span class="sr-only">Jump to comment-2</span>
+                    </a>
+                    <summary>
+                        <div class="comment-heading">
+                            <div class="comment-voting sub-cmt">
+                            </div>
+                            <div class="comment-info">
+                                <a href="#" class="comment-author">randomperson81</a>
+                                <p class="m-0">
+                                    4 points &bull; 3 days ago
+                                </p>
+                            </div>
+                        </div>
+                    </summary>
+                    <div class="comment-body">
+                        <p>
+                            Took the words right out of my mouth!
+                        </p>
+                    </div>
+                </details>
+            </div>
+        </details>
+    </div>
+    <script>
+        var data = [
+            {
+                "count": "null",
+                "visible": "null",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 16:57:00",
+                "description": "File đính kèm trong \"screenshot.png\" đã được thêm mới."
+            },
+            {
+                "count": "null",
+                "visible": "null",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 16:57:00",
+                "description": "File đính kèm trong \"334670864_980220936298661_727240739974107220_n.jpg\" đã được thêm mới."
+            },
+            {
+                "count": "3",
+                "visible": "false",
+                "operator": "vtb.cn.129.bhn",
+                "datestamp": "31/05/2023 16:41:45",
+                "description": "<p>đã bổ sung 3</p>"
+            },
+            {
+                "count": "null",
+                "visible": "null",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 15:40:20",
+                "description": "File đính kèm trong \"bg.png\" đã được thêm mới."
+            },
+            {
+                "count": "3",
+                "visible": "true",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 14:38:16",
+                "description": "<p>yêu cầu bs 3</p>"
+            },
+            {
+                "count": "null",
+                "visible": "null",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 14:09:01",
+                "description": "<p>test bổ sung thêm từ enduser</p>"
+            },
+            {
+                "count": "2",
+                "visible": "false",
+                "operator": "vtb.cn.129.bhn",
+                "datestamp": "31/05/2023 14:05:57",
+                "description": "<p>đã bổ sun 2</p>"
+            },
+            {
+                "count": "2",
+                "visible": "true",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 14:05:38",
+                "description": "<p>yêu cầu bổ sung thông tin 2</p>"
+            },
+            {
+                "count": "null",
+                "visible": "null",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 13:43:59",
+                "description": "<p>abc</p>"
+            },
+            {
+                "count": "1",
+                "visible": "false",
+                "operator": "vtb.cn.129.bhn",
+                "datestamp": "31/05/2023 11:30:05",
+                "description": "<p>đã bổ sung</p>"
+            },
+            {
+                "count": "1",
+                "visible": "true",
+                "operator": "vtb.bld.1",
+                "datestamp": "31/05/2023 11:29:43",
+                "description": "<p>yêu cầu bổ sung id 1</p>"
+            }
+        ]
+    </script>
+</body>
+
+</html>

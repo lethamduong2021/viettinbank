@@ -1,6 +1,20 @@
 var data = [
     {
         "count": "4",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 19:58:00",
+        "description": "File đính kèm trong \"screenshot.png\" đã được thêm mới."
+    },
+    {
+        "count": "null",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 19:57:00",
+        "description": "File đính kèm trong \"screenshot.png\" đã được thêm mới."
+    },
+    {
+        "count": "4",
         "visible": "true",
         "operator": "vtb.cn.129.bhn",
         "datestamp": "31/05/2023 19:41:45",
@@ -166,7 +180,9 @@ const sortedData = mergedArray.sort((a, b) => {
         return 0;
     }
 });
-console.log(sortedData);
+// console.log(sortedData);
+var result = sortedData.flat();
+console.log(result);
 
 
 

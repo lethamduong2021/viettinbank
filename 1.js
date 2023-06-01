@@ -1,4 +1,4 @@
-var data =[
+var data = [
     {
         "id": 1,
         "unitName": "Khối KHDN",
@@ -255,4 +255,189 @@ var data =[
         "detail": "Thiết bị đầu cuối: ATM, POS",
         "status": "UpdateSR"
     }
+]
+
+
+var data = [
+    {
+        "count": "4",
+        "visible": "true",
+        "operator": "vtb.cn.129.bhn",
+        "datestamp": "31/05/2023 19:41:45",
+        "description": "<p>đã bổ sung 3</p>"
+    },
+    {
+        "count": "null",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 16:57:00",
+        "description": "File đính kèm trong \"screenshot.png\" đã được thêm mới."
+    },
+    {
+        "count": "null",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 16:57:00",
+        "description": "File đính kèm trong \"334670864_980220936298661_727240739974107220_n.jpg\" đã được thêm mới."
+    },
+    {
+        "count": "null",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 15:40:20",
+        "description": "File đính kèm trong \"bg.png\" đã được thêm mới."
+    },
+    {
+        "count": "3",
+        "visible": "false",
+        "operator": "vtb.cn.129.bhn",
+        "datestamp": "31/05/2023 16:41:45",
+        "description": "<p>đã bổ sung 3</p>"
+    },
+    {
+        "count": "3",
+        "visible": "true",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 14:38:16",
+        "description": "<p>yêu cầu bs 3</p>"
+    },
+    {
+        "count": "null",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 14:09:01",
+        "description": "<p>test bổ sung thêm từ enduser</p>"
+    },
+    {
+        "count": "2",
+        "visible": "false",
+        "operator": "vtb.cn.129.bhn",
+        "datestamp": "31/05/2023 14:05:57",
+        "description": "<p>đã bổ sun 2</p>"
+    },
+    {
+        "count": "2",
+        "visible": "true",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 14:05:38",
+        "description": "<p>yêu cầu bổ sung thông tin 2</p>"
+    },
+    {
+        "count": "null",
+        "visible": "null",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 13:43:59",
+        "description": "<p>abc</p>"
+    },
+    {
+        "count": "1",
+        "visible": "false",
+        "operator": "vtb.cn.129.bhn",
+        "datestamp": "31/05/2023 11:30:05",
+        "description": "<p>đã bổ sung</p>"
+    },
+    {
+        "count": "1",
+        "visible": "true",
+        "operator": "vtb.bld.1",
+        "datestamp": "31/05/2023 11:29:43",
+        "description": "<p>yêu cầu bổ sung id 1</p>"
+    }
+]
+
+
+User
+[
+    [
+        {
+            count: '4',
+            visible: 'true',
+            operator: 'vtb.cn.129.bhn',
+            datestamp: '31/05/2023 19:41:45',
+            description: '<p>đã bổ sung 3</p>'
+        }
+    ],
+    {
+        count: 'null',
+        visible: 'null',
+        operator: 'vtb.bld.1',
+        datestamp: '31/05/2023 16:57:00',
+        description: 'File đính kèm trong "screenshot.png" đã được thêm mới.'
+    },
+    {
+        count: 'null',
+        visible: 'null',
+        operator: 'vtb.bld.1',
+        datestamp: '31/05/2023 16:57:00',
+        description: 'File đính kèm trong "334670864_980220936298661_727240739974107220_n.jpg" đã được thêm mới.'
+    },
+    {
+        count: 'null',
+        visible: 'null',
+        operator: 'vtb.bld.1',
+        datestamp: '31/05/2023 15:40:20',
+        description: 'File đính kèm trong "bg.png" đã được thêm mới.'
+    },
+    [
+        {
+            count: '3',
+            visible: 'false',
+            operator: 'vtb.cn.129.bhn',
+            datestamp: '31/05/2023 16:41:45',
+            description: '<p>đã bổ sung 3</p>'
+        },
+        {
+            count: '3',
+            visible: 'true',
+            operator: 'vtb.bld.1',
+            datestamp: '31/05/2023 14:38:16',
+            description: '<p>yêu cầu bs 3</p>'
+        }
+    ],
+    {
+        count: 'null',
+        visible: 'null',
+        operator: 'vtb.bld.1',
+        datestamp: '31/05/2023 14:09:01',
+        description: '<p>test bổ sung thêm từ enduser</p>'
+    },
+    [
+        {
+            count: '2',
+            visible: 'false',
+            operator: 'vtb.cn.129.bhn',
+            datestamp: '31/05/2023 14:05:57',
+            description: '<p>đã bổ sun 2</p>'
+        },
+        {
+            count: '2',
+            visible: 'true',
+            operator: 'vtb.bld.1',
+            datestamp: '31/05/2023 14:05:38',
+            description: '<p>yêu cầu bổ sung thông tin 2</p>'
+        }
+    ],
+    {
+        count: 'null',
+        visible: 'null',
+        operator: 'vtb.bld.1',
+        datestamp: '31/05/2023 13:43:59',
+        description: '<p>abc</p>'
+    },
+    [
+        {
+            count: '1',
+            visible: 'false',
+            operator: 'vtb.cn.129.bhn',
+            datestamp: '31/05/2023 11:30:05',
+            description: '<p>đã bổ sung</p>'
+        },
+        {
+            count: '1',
+            visible: 'true',
+            operator: 'vtb.bld.1',
+            datestamp: '31/05/2023 11:29:43',
+            description: '<p>yêu cầu bổ sung id 1</p>'
+        }
+    ]
 ]
